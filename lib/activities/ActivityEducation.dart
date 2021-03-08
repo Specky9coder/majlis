@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:almajlis/activities/ActivityBase.dart';
-import 'package:almajlis/activities/ActivityProfile.dart';
 import 'package:almajlis/core/server/wrappers/ResponseOk.dart';
 import 'package:almajlis/core/server/wrappers/ResponseSignedUrl.dart';
 import 'package:almajlis/core/server/wrappers/ResponseUser.dart';
@@ -10,7 +9,6 @@ import 'package:almajlis/core/wrappers/User.dart';
 import 'package:almajlis/utils/Constants.dart';
 import 'package:almajlis/views/bottomsheets/PostMenuBottomSheet.dart';
 import 'package:almajlis/views/components/AlMajlisBackButton.dart';
-import 'package:almajlis/views/components/AlMajlisBackground.dart';
 import 'package:almajlis/views/components/AlmajlisProfileImageWithStatus.dart';
 import 'package:almajlis/views/widgets/AlMajlisDatePicker.dart';
 import 'package:almajlis/views/widgets/AlMajlisTextFiled.dart';
@@ -25,9 +23,12 @@ import 'package:path/path.dart' as path;
 import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart' as path_provider;
 
+// ignore: must_be_immutable
 class ActivityEducation extends StatefulWidget {
   bool fromProfile;
+
   ActivityEducation({this.fromProfile = false});
+
   @override
   _ActivityEducationState createState() => _ActivityEducationState();
 }
@@ -55,206 +56,212 @@ class _ActivityEducationState extends ActivityStateBase<ActivityEducation> {
   Widget build(BuildContext context) {
     _context = context;
     return SafeArea(
-        child: Scaffold(
-      key: scaffoldState,
-      appBar: AppBar(
-        leading: Padding(
-          padding: const EdgeInsets.only(left: 20.0),
-          child: AlMajlisBackButton(
-            onClick: () {
-              Navigator.pop(context);
-            },
+      child: Scaffold(
+        key: scaffoldState,
+        appBar: AppBar(
+          leading: Padding(
+            padding: const EdgeInsets.only(left: 20.0),
+            child: AlMajlisBackButton(
+              onClick: () {
+                Navigator.pop(context);
+              },
+            ),
           ),
-        ),
-        title: AlMajlisTextViewBold(
-          "Education",
-          size: 16,
-        ),
-        centerTitle: true,
-        backgroundColor: Colors.black,
-        actions: <Widget>[
-          Center(
-            child: Padding(
-              padding: const EdgeInsets.only(right: 20.0),
-              child: GestureDetector(
-                onTap: () {
-                  if (null != image) {
-                    getSignedUrls();
-                  } else {
-                    editUser(imageUrl);
-                  }
-                },
-                child: AlMajlisTextViewBold(
-                  "UPDATE",
-                  size: 12,
-                  color: Constants.COLOR_PRIMARY_TEAL,
+          title: AlMajlisTextViewBold(
+            "Education",
+            size: 16,
+          ),
+          centerTitle: true,
+          backgroundColor: Colors.black,
+          actions: <Widget>[
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.only(right: 20.0),
+                child: GestureDetector(
+                  onTap: () {
+                    if (null != image) {
+                      getSignedUrls();
+                    } else {
+                      editUser(imageUrl);
+                    }
+                  },
+                  child: AlMajlisTextViewBold(
+                    "UPDATE",
+                    size: 12,
+                    color: Constants.COLOR_PRIMARY_TEAL,
+                  ),
                 ),
               ),
             ),
-          )
-        ],
-      ),
-      body: Container(
-        height: double.infinity,
-        width: double.infinity,
-        color: Colors.black,
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: SingleChildScrollView(
-            child: Column(
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.only(top: 32.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Container(
-                        height: 100,
-                        width: 100,
-                        child: Stack(
-                          children: <Widget>[
-                            null != image
-                                ? AlMajlisProfileImageWithStatus(
-                                    image,
-                                    100,
-                                    isFileImage: isFileImage,
-                                  )
-                                : null != imageUrl && !imageUrl.isEmpty
-                                    ? AlMajlisProfileImageWithStatus(
-                                        imageUrl, 100)
-                                    : Container(
-                                        decoration: BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            color: Colors.white),
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(4.0),
-                                          child: Container(
-                                            decoration: BoxDecoration(
+          ],
+        ),
+        body: Container(
+          height: double.infinity,
+          width: double.infinity,
+          color: Colors.black,
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: SingleChildScrollView(
+              child: Column(
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.only(top: 32.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Container(
+                          height: 100,
+                          width: 100,
+                          child: Stack(
+                            children: <Widget>[
+                              null != image
+                                  ? AlMajlisProfileImageWithStatus(
+                                      image,
+                                      100,
+                                      isFileImage: isFileImage,
+                                    )
+                                  : null != imageUrl && !imageUrl.isEmpty
+                                      ? AlMajlisProfileImageWithStatus(
+                                          imageUrl, 100)
+                                      : Container(
+                                          decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              color: Colors.white),
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(4.0),
+                                            child: Container(
+                                              decoration: BoxDecoration(
                                                 shape: BoxShape.circle,
                                                 gradient: LinearGradient(
-                                                    colors: [
-                                                      Colors.purple,
-                                                      Colors.teal
-                                                    ])),
+                                                  colors: [
+                                                    Colors.purple,
+                                                    Colors.teal
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
                                           ),
                                         ),
-                                      ),
-                            Positioned(
-                              top: 0,
-                              right: 0,
-                              child: Container(
-                                height: 36,
-                                width: 36,
-                                decoration: BoxDecoration(
-                                    shape: BoxShape.circle, color: Colors.teal),
-                                child: GestureDetector(
+                              Positioned(
+                                top: 0,
+                                right: 0,
+                                child: Container(
+                                  height: 36,
+                                  width: 36,
+                                  decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: Colors.teal),
+                                  child: GestureDetector(
                                     onTap: () {
                                       scaffoldState.currentState
-                                          .showBottomSheet((context) =>
-                                              PostMenuBottomSheet(
-                                                  getImageFromCamera,
-                                                  getImageFromGallary));
+                                          .showBottomSheet(
+                                        (context) => PostMenuBottomSheet(
+                                            getImageFromCamera,
+                                            getImageFromGallary),
+                                      );
                                     },
                                     child: Icon(
                                       Icons.edit,
                                       color: Colors.white,
-                                    )),
+                                    ),
+                                  ),
+                                ),
                               ),
-                            )
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 32.0),
-                  child: AlMajlisTextField(
-                    "University Name*",
-                    universityName,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 32.0),
-                  child: AlMajlisTextField(
-                    "Class/Degree*",
-                    classController,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 16.0),
-                  child: Row(
-                    children: <Widget>[
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.only(right: 8.0),
-                          child: AlMajlisDatePicker(
-                            "From",
-                            onFromDateChnaged,
-                            controller: fromDateController,
-                            initialDate: fromDate,
-                            suffixIcon: Icon(
-                              Icons.calendar_today,
-                              color: Colors.white,
-                            ),
-                            errorText: fromDateErrorMessage,
+                            ],
                           ),
                         ),
-                      ),
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 8.0),
-                          child: AlMajlisDatePicker(
-                            "To",
-                            onToDateChnaged,
-                            controller: toDateController,
-                            startDate: fromDate,
-                            initialDate: toDate,
-                            suffixIcon: Icon(
-                              Icons.calendar_today,
-                              color: Colors.white,
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 32.0),
+                    child: AlMajlisTextField(
+                      "University Name*",
+                      universityName,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 32.0),
+                    child: AlMajlisTextField(
+                      "Class/Degree*",
+                      classController,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 16.0),
+                    child: Row(
+                      children: <Widget>[
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.only(right: 8.0),
+                            child: AlMajlisDatePicker(
+                              "From",
+                              onFromDateChnaged,
+                              controller: fromDateController,
+                              initialDate: fromDate,
+                              suffixIcon: Icon(
+                                Icons.calendar_today,
+                                color: Colors.white,
+                              ),
+                              errorText: fromDateErrorMessage,
                             ),
-                            errorText: toDateErrorMessage,
                           ),
                         ),
-                      )
-                    ],
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 8.0),
+                            child: AlMajlisDatePicker(
+                              "To",
+                              onToDateChnaged,
+                              controller: toDateController,
+                              startDate: fromDate,
+                              initialDate: toDate,
+                              suffixIcon: Icon(
+                                Icons.calendar_today,
+                                color: Colors.white,
+                              ),
+                              errorText: toDateErrorMessage,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 16.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      AlMajlisTextViewBold(
-                        "This is my current University",
-                        size: 16,
-                      ),
-                      Switch(
-                        value: toogleValue,
-                        onChanged: (value) {
-                          setState(() {
-                            toogleValue = value;
-                            if (value) {
-                              toDate = DateTime.now();
-                              var dateFormat = DateFormat("dd/MM/y");
-                              String date = dateFormat.format(toDate);
-                              toDateController.text = date;
-                            }
-                          });
-                        },
-                        activeColor: Colors.green,
-                        inactiveTrackColor: Constants.COLOR_PRIMARY_GREY,
-                      )
-                    ],
+                  Padding(
+                    padding: const EdgeInsets.only(top: 16.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        AlMajlisTextViewBold(
+                          "This is my current University",
+                          size: 16,
+                        ),
+                        Switch(
+                          value: toogleValue,
+                          onChanged: (value) {
+                            setState(() {
+                              toogleValue = value;
+                              if (value) {
+                                toDate = DateTime.now();
+                                var dateFormat = DateFormat("dd/MM/y");
+                                String date = dateFormat.format(toDate);
+                                toDateController.text = date;
+                              }
+                            });
+                          },
+                          activeColor: Colors.green,
+                          inactiveTrackColor: Constants.COLOR_PRIMARY_GREY,
+                        ),
+                      ],
+                    ),
                   ),
-                )
-              ],
+                ],
+              ),
             ),
           ),
         ),
       ),
-    ));
+    );
   }
 
   onToDateChnaged(DateTime date) {
@@ -298,6 +305,7 @@ class _ActivityEducationState extends ActivityStateBase<ActivityEducation> {
       isFileImage = true;
     });
   }
+
 //var targetPath = dir.absolute.path + "/" + DateTime.now().millisecondsSinceEpoch.toString() + ".jpg";
 
   Future getImageFromGallary() async {
@@ -380,13 +388,15 @@ class _ActivityEducationState extends ActivityStateBase<ActivityEducation> {
               classController.text = user.education.degree;
             }
             if (null != user.education.educationStart) {
-              fromDate = user.education.educationStart.add(DateTime.now().timeZoneOffset);
+              fromDate = user.education.educationStart
+                  .add(DateTime.now().timeZoneOffset);
               var dateFormat = DateFormat("dd/MM/y");
               String date = dateFormat.format(fromDate);
               fromDateController.text = date;
             }
             if (null != user.education.educationEnd) {
-              toDate = user.education.educationEnd.add(DateTime.now().timeZoneOffset);
+              toDate = user.education.educationEnd
+                  .add(DateTime.now().timeZoneOffset);
               var dateFormat = DateFormat("dd/MM/y");
               String date = dateFormat.format(toDate);
               toDateController.text = date;
@@ -513,8 +523,7 @@ class _ActivityEducationState extends ActivityStateBase<ActivityEducation> {
 
     if (hasError) {
       setState(() {});
-    }
-    else {
+    } else {
       if (universityName.text.isEmpty) {
         fromDate = null;
         toDate = null;

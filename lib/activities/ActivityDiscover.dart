@@ -68,7 +68,9 @@ class _ActivityDiscoverState extends ActivityStateBase<ActivityDiscover> {
   @override
   Widget build(BuildContext context) {
     _context = context;
-    print("length++++++++++++++++++++++++++++++" + userList.length.toString());
+    print(
+      "length++++++++++++++++++++++++++++++" + userList.length.toString(),
+    );
     return AlMajlisBackground(
       Stack(
         children: <Widget>[
@@ -100,11 +102,12 @@ class _ActivityDiscoverState extends ActivityStateBase<ActivityDiscover> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => ActivitySearch()),
+                              builder: (context) => ActivitySearch(),
+                            ),
                           );
                         });
                       },
-                    )
+                    ),
                   ],
                 ),
                 isSelected
@@ -116,23 +119,24 @@ class _ActivityDiscoverState extends ActivityStateBase<ActivityDiscover> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: <Widget>[
                                 Container(
-                                    child: Row(
-                                  children: <Widget>[
-                                    AlMajlisTextViewMedium(
-                                      "Majlis",
-                                      size: 16,
-                                    ),
-                                    AlMajlisTextViewMedium(
-                                      " Pro ",
-                                      size: 16,
-                                      color: Constants.COLOR_DARK_TEAL,
-                                    ),
-                                    AlMajlisTextViewMedium(
-                                      "users only",
-                                      size: 16,
-                                    ),
-                                  ],
-                                )),
+                                  child: Row(
+                                    children: <Widget>[
+                                      AlMajlisTextViewMedium(
+                                        "Majlis",
+                                        size: 16,
+                                      ),
+                                      AlMajlisTextViewMedium(
+                                        " Pro ",
+                                        size: 16,
+                                        color: Constants.COLOR_DARK_TEAL,
+                                      ),
+                                      AlMajlisTextViewMedium(
+                                        "users only",
+                                        size: 16,
+                                      ),
+                                    ],
+                                  ),
+                                ),
                                 Switch(
                                   value: toogleValue,
                                   onChanged: (value) {
@@ -164,7 +168,7 @@ class _ActivityDiscoverState extends ActivityStateBase<ActivityDiscover> {
                                   activeColor: Colors.green,
                                   inactiveTrackColor:
                                       Constants.COLOR_PRIMARY_GREY,
-                                )
+                                ),
                               ],
                             ),
                             Divider(
@@ -206,10 +210,11 @@ class _ActivityDiscoverState extends ActivityStateBase<ActivityDiscover> {
                                                   border: Border.all(
                                                       width: 1.0,
                                                       color: Colors.white),
-                                                  borderRadius: BorderRadius.all(
-                                                      Radius.circular(
-                                                          10.0) //         <--- border radius here
-                                                      ),
+                                                  borderRadius:
+                                                      BorderRadius.all(
+                                                    Radius.circular(
+                                                        10.0), //         <--- border radius here
+                                                  ),
                                                   color: isCountySelected
                                                       ? Constants
                                                           .COLOR_PRIMARY_TEAL
@@ -274,7 +279,7 @@ class _ActivityDiscoverState extends ActivityStateBase<ActivityDiscover> {
                                           );
                                         }),
                                   ),
-                                )
+                                ),
                               ],
                             ),
                             Divider(
@@ -315,10 +320,11 @@ class _ActivityDiscoverState extends ActivityStateBase<ActivityDiscover> {
                                                     border: Border.all(
                                                         width: 1.0,
                                                         color: Colors.white),
-                                                    borderRadius: BorderRadius.all(
-                                                        Radius.circular(
-                                                            10.0) //         <--- border radius here
-                                                        ),
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                      Radius.circular(
+                                                          10.0), //         <--- border radius here
+                                                    ),
                                                     color: isDistanceSelected
                                                         ? Constants
                                                             .COLOR_PRIMARY_TEAL
@@ -388,10 +394,10 @@ class _ActivityDiscoverState extends ActivityStateBase<ActivityDiscover> {
                                             );
                                           }),
                                     ),
-                                  )
+                                  ),
                                 ],
                               ),
-                            )
+                            ),
                           ],
                         ),
                       )
@@ -425,7 +431,7 @@ class _ActivityDiscoverState extends ActivityStateBase<ActivityDiscover> {
                                         discoveryClosed = !discoveryClosed;
                                       });
                                     },
-                                  )
+                                  ),
                           ],
                         ),
                       ),
@@ -438,7 +444,7 @@ class _ActivityDiscoverState extends ActivityStateBase<ActivityDiscover> {
                         showTotalCards("drawables/contact.png",
                             totalUsers.toString(), "TOTAL USERS"),
                         showTotalCards("drawables/Mask Group 120.png",
-                            totalPosts.toString(), "TOTAL POSTS")
+                            totalPosts.toString(), "TOTAL POSTS"),
                       ],
                     ),
                   ),
@@ -519,18 +525,21 @@ class _ActivityDiscoverState extends ActivityStateBase<ActivityDiscover> {
                                                           !proUsers
                                                               .elementAt(index)
                                                               .thumbUrl
-                                                              .isEmpty
+                                                              .isNotEmpty
                                                       ? GestureDetector(
                                                           onTap: () {
                                                             Navigator.push(
                                                               context,
                                                               MaterialPageRoute(
-                                                                  builder:
-                                                                      (context) =>
-                                                                          ActivityProfile(
-                                                                            userId:
-                                                                                proUsers.elementAt(index).userId,
-                                                                          )),
+                                                                builder:
+                                                                    (context) =>
+                                                                        ActivityProfile(
+                                                                  userId: proUsers
+                                                                      .elementAt(
+                                                                          index)
+                                                                      .userId,
+                                                                ),
+                                                              ),
                                                             );
                                                           },
                                                           child:
@@ -551,12 +560,15 @@ class _ActivityDiscoverState extends ActivityStateBase<ActivityDiscover> {
                                                             Navigator.push(
                                                               context,
                                                               MaterialPageRoute(
-                                                                  builder:
-                                                                      (context) =>
-                                                                          ActivityProfile(
-                                                                            userId:
-                                                                                proUsers.elementAt(index).userId,
-                                                                          )),
+                                                                builder:
+                                                                    (context) =>
+                                                                        ActivityProfile(
+                                                                  userId: proUsers
+                                                                      .elementAt(
+                                                                          index)
+                                                                      .userId,
+                                                                ),
+                                                              ),
                                                             );
                                                           },
                                                           child: Container(
@@ -578,17 +590,20 @@ class _ActivityDiscoverState extends ActivityStateBase<ActivityDiscover> {
                                                                   const EdgeInsets
                                                                       .all(2.0),
                                                               child: Container(
-                                                                decoration: BoxDecoration(
-                                                                    shape: BoxShape
-                                                                        .circle,
-                                                                    gradient:
-                                                                        LinearGradient(
-                                                                            colors: [
-                                                                          Colors
-                                                                              .purple,
-                                                                          Colors
-                                                                              .teal
-                                                                        ])),
+                                                                decoration:
+                                                                    BoxDecoration(
+                                                                  shape: BoxShape
+                                                                      .circle,
+                                                                  gradient:
+                                                                      LinearGradient(
+                                                                    colors: [
+                                                                      Colors
+                                                                          .purple,
+                                                                      Colors
+                                                                          .teal
+                                                                    ],
+                                                                  ),
+                                                                ),
                                                               ),
                                                             ),
                                                           ),
@@ -609,11 +624,15 @@ class _ActivityDiscoverState extends ActivityStateBase<ActivityDiscover> {
                                                               Navigator.push(
                                                                 context,
                                                                 MaterialPageRoute(
-                                                                    builder:
-                                                                        (context) =>
-                                                                            ActivityProfile(
-                                                                              userId: proUsers.elementAt(index).userId,
-                                                                            )),
+                                                                  builder:
+                                                                      (context) =>
+                                                                          ActivityProfile(
+                                                                    userId: proUsers
+                                                                        .elementAt(
+                                                                            index)
+                                                                        .userId,
+                                                                  ),
+                                                                ),
                                                               );
                                                             },
                                                             child:
@@ -627,14 +646,14 @@ class _ActivityDiscoverState extends ActivityStateBase<ActivityDiscover> {
                                                         ),
                                                       ],
                                                     ),
-                                                  )
+                                                  ),
                                                 ],
                                               ),
                                             ),
                                           );
                                         }),
                                   ),
-                                )
+                                ),
                               ],
                             );
                           } else {
@@ -661,159 +680,167 @@ class _ActivityDiscoverState extends ActivityStateBase<ActivityDiscover> {
                                   child: Container(
                                     height: 150,
                                     child: ListView.builder(
-                                        scrollDirection: Axis.horizontal,
-                                        itemCount: nearMeUsers.length,
-                                        itemBuilder:
-                                            (BuildContext ctxt, int index) {
-                                          String nearMeUser = "";
-                                          if (null !=
-                                              nearMeUsers
-                                                  .elementAt(index)
-                                                  .firstName) {
-                                            nearMeUser = nearMeUsers
-                                                    .elementAt(index)
-                                                    .firstName +
-                                                " ";
-                                          }
-                                          if (null !=
-                                              nearMeUsers
-                                                  .elementAt(index)
-                                                  .lastName) {
-                                            nearMeUser += nearMeUsers
+                                      scrollDirection: Axis.horizontal,
+                                      itemCount: nearMeUsers.length,
+                                      itemBuilder:
+                                          (BuildContext ctxt, int index) {
+                                        String nearMeUser = "";
+                                        if (null !=
+                                            nearMeUsers
                                                 .elementAt(index)
-                                                .lastName;
-                                          }
-                                          return Padding(
-                                            padding: const EdgeInsets.only(
-                                                right: 16.0, top: 8, left: 4),
-                                            child: Container(
-                                              width: 70,
-                                              child: Column(
-                                                children: <Widget>[
-                                                  null !=
-                                                              nearMeUsers
-                                                                  .elementAt(
-                                                                      index)
-                                                                  .thumbUrl &&
-                                                          !nearMeUsers
-                                                              .elementAt(index)
-                                                              .thumbUrl
-                                                              .isEmpty
-                                                      ? GestureDetector(
-                                                          onTap: () {
-                                                            Navigator.push(
-                                                              context,
-                                                              MaterialPageRoute(
-                                                                  builder:
-                                                                      (context) =>
-                                                                          ActivityProfile(
-                                                                            userId:
-                                                                                nearMeUsers.elementAt(index).userId,
-                                                                          )),
-                                                            );
-                                                          },
-                                                          child:
-                                                              AlMajlisProfileImageWithStatus(
+                                                .firstName) {
+                                          nearMeUser = nearMeUsers
+                                                  .elementAt(index)
+                                                  .firstName +
+                                              " ";
+                                        }
+                                        if (null !=
+                                            nearMeUsers
+                                                .elementAt(index)
+                                                .lastName) {
+                                          nearMeUser += nearMeUsers
+                                              .elementAt(index)
+                                              .lastName;
+                                        }
+                                        return Padding(
+                                          padding: const EdgeInsets.only(
+                                              right: 16.0, top: 8, left: 4),
+                                          child: Container(
+                                            width: 70,
+                                            child: Column(
+                                              children: <Widget>[
+                                                null !=
                                                             nearMeUsers
                                                                 .elementAt(
                                                                     index)
-                                                                .thumbUrl,
-                                                            70.0,
-                                                            isPro: nearMeUsers
-                                                                .elementAt(
-                                                                    index)
-                                                                .isPro,
-                                                          ),
-                                                        )
-                                                      : GestureDetector(
-                                                          onTap: () {
-                                                            Navigator.push(
-                                                              context,
-                                                              MaterialPageRoute(
-                                                                  builder:
-                                                                      (context) =>
-                                                                          ActivityProfile(
-                                                                            userId:
-                                                                                nearMeUsers.elementAt(index).userId,
-                                                                          )),
-                                                            );
-                                                          },
-                                                          child: Container(
-                                                            height: 70,
-                                                            width: 70,
-                                                            decoration: BoxDecoration(
+                                                                .thumbUrl &&
+                                                        !nearMeUsers
+                                                            .elementAt(index)
+                                                            .thumbUrl
+                                                            .isNotEmpty
+                                                    ? GestureDetector(
+                                                        onTap: () {
+                                                          Navigator.push(
+                                                            context,
+                                                            MaterialPageRoute(
+                                                              builder: (context) =>
+                                                                  ActivityProfile(
+                                                                userId: nearMeUsers
+                                                                    .elementAt(
+                                                                        index)
+                                                                    .userId,
+                                                              ),
+                                                            ),
+                                                          );
+                                                        },
+                                                        child:
+                                                            AlMajlisProfileImageWithStatus(
+                                                          nearMeUsers
+                                                              .elementAt(index)
+                                                              .thumbUrl,
+                                                          70.0,
+                                                          isPro: nearMeUsers
+                                                              .elementAt(index)
+                                                              .isPro,
+                                                        ),
+                                                      )
+                                                    : GestureDetector(
+                                                        onTap: () {
+                                                          Navigator.push(
+                                                            context,
+                                                            MaterialPageRoute(
+                                                              builder: (context) =>
+                                                                  ActivityProfile(
+                                                                userId: nearMeUsers
+                                                                    .elementAt(
+                                                                        index)
+                                                                    .userId,
+                                                              ),
+                                                            ),
+                                                          );
+                                                        },
+                                                        child: Container(
+                                                          height: 70,
+                                                          width: 70,
+                                                          decoration: BoxDecoration(
+                                                              shape: BoxShape
+                                                                  .circle,
+                                                              color: nearMeUsers
+                                                                      .elementAt(
+                                                                          index)
+                                                                      .isPro
+                                                                  ? Constants
+                                                                      .COLOR_PRIMARY_TEAL
+                                                                  : Colors
+                                                                      .white),
+                                                          child: Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .all(2.0),
+                                                            child: Container(
+                                                              decoration:
+                                                                  BoxDecoration(
                                                                 shape: BoxShape
                                                                     .circle,
-                                                                color: nearMeUsers
-                                                                        .elementAt(
-                                                                            index)
-                                                                        .isPro
-                                                                    ? Constants
-                                                                        .COLOR_PRIMARY_TEAL
-                                                                    : Colors
-                                                                        .white),
-                                                            child: Padding(
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                      .all(2.0),
-                                                              child: Container(
-                                                                decoration: BoxDecoration(
-                                                                    shape: BoxShape
-                                                                        .circle,
-                                                                    gradient:
-                                                                        LinearGradient(
-                                                                            colors: [
-                                                                          Colors
-                                                                              .purple,
-                                                                          Colors
-                                                                              .teal
-                                                                        ])),
+                                                                gradient:
+                                                                    LinearGradient(
+                                                                  colors: [
+                                                                    Colors
+                                                                        .purple,
+                                                                    Colors.teal
+                                                                  ],
+                                                                ),
                                                               ),
                                                             ),
                                                           ),
                                                         ),
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                            top: 8.0),
-                                                    child: Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .center,
-                                                      children: <Widget>[
-                                                        Expanded(
+                                                      ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          top: 8.0),
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: <Widget>[
+                                                      Expanded(
+                                                        child: GestureDetector(
+                                                          onTap: () {
+                                                            Navigator.push(
+                                                              context,
+                                                              MaterialPageRoute(
+                                                                builder:
+                                                                    (context) =>
+                                                                        ActivityProfile(
+                                                                  userId: nearMeUsers
+                                                                      .elementAt(
+                                                                          index)
+                                                                      .userId,
+                                                                ),
+                                                              ),
+                                                            );
+                                                          },
                                                           child:
-                                                              GestureDetector(
-                                                            onTap: () {
-                                                              Navigator.push(
-                                                                context,
-                                                                MaterialPageRoute(
-                                                                    builder:
-                                                                        (context) =>
-                                                                            ActivityProfile(
-                                                                              userId: nearMeUsers.elementAt(index).userId,
-                                                                            )),
-                                                              );
-                                                            },
-                                                            child:
-                                                                AlMajlisTextViewSemiBold(
-                                                              nearMeUser,
-                                                              align: TextAlign
-                                                                  .center,
-                                                              size: 12,
-                                                            ),
+                                                              AlMajlisTextViewSemiBold(
+                                                            nearMeUser,
+                                                            align: TextAlign
+                                                                .center,
+                                                            size: 12,
                                                           ),
                                                         ),
-                                                      ],
-                                                    ),
-                                                  )
-                                                ],
-                                              ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ],
                                             ),
-                                          );
-                                        }),
+                                          ),
+                                        );
+                                      },
+                                    ),
                                   ),
-                                )
+                                ),
                               ],
                             );
                           } else {
@@ -878,7 +905,7 @@ class _ActivityDiscoverState extends ActivityStateBase<ActivityDiscover> {
                                             !userList
                                                 .elementAt(index - 2)
                                                 .thumbUrl
-                                                .isEmpty
+                                                .isNotEmpty
                                         ? Padding(
                                             padding: const EdgeInsets.only(
                                                 left: 4.0),
@@ -887,13 +914,13 @@ class _ActivityDiscoverState extends ActivityStateBase<ActivityDiscover> {
                                                 await Navigator.push(
                                                   context,
                                                   MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          ActivityProfile(
-                                                            userId: userList
-                                                                .elementAt(
-                                                                    index - 2)
-                                                                .userId,
-                                                          )),
+                                                    builder: (context) =>
+                                                        ActivityProfile(
+                                                      userId: userList
+                                                          .elementAt(index - 2)
+                                                          .userId,
+                                                    ),
+                                                  ),
                                                 );
                                                 fetchMore = true;
                                                 hasRemovedSelf = false;
@@ -927,13 +954,13 @@ class _ActivityDiscoverState extends ActivityStateBase<ActivityDiscover> {
                                               await Navigator.push(
                                                 context,
                                                 MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        ActivityProfile(
-                                                          userId: userList
-                                                              .elementAt(
-                                                                  index - 2)
-                                                              .userId,
-                                                        )),
+                                                  builder: (context) =>
+                                                      ActivityProfile(
+                                                    userId: userList
+                                                        .elementAt(index - 2)
+                                                        .userId,
+                                                  ),
+                                                ),
                                               );
                                               fetchMore = true;
                                               hasRemovedSelf = false;
@@ -966,12 +993,14 @@ class _ActivityDiscoverState extends ActivityStateBase<ActivityDiscover> {
                                                     const EdgeInsets.all(2.0),
                                                 child: Container(
                                                   decoration: BoxDecoration(
-                                                      shape: BoxShape.circle,
-                                                      gradient: LinearGradient(
-                                                          colors: [
-                                                            Colors.purple,
-                                                            Colors.teal
-                                                          ])),
+                                                    shape: BoxShape.circle,
+                                                    gradient: LinearGradient(
+                                                      colors: [
+                                                        Colors.purple,
+                                                        Colors.teal
+                                                      ],
+                                                    ),
+                                                  ),
                                                 ),
                                               ),
                                             ),
@@ -990,14 +1019,14 @@ class _ActivityDiscoverState extends ActivityStateBase<ActivityDiscover> {
                                                       await Navigator.push(
                                                         context,
                                                         MaterialPageRoute(
-                                                            builder: (context) =>
-                                                                ActivityProfile(
-                                                                  userId: userList
-                                                                      .elementAt(
-                                                                          index -
-                                                                              2)
-                                                                      .userId,
-                                                                )),
+                                                          builder: (context) =>
+                                                              ActivityProfile(
+                                                            userId: userList
+                                                                .elementAt(
+                                                                    index - 2)
+                                                                .userId,
+                                                          ),
+                                                        ),
                                                       );
                                                       fetchMore = true;
                                                       hasRemovedSelf = false;
@@ -1117,54 +1146,57 @@ class _ActivityDiscoverState extends ActivityStateBase<ActivityDiscover> {
                                 Visibility(
                                   visible: index - 2 != userList.length,
                                   child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 12.0),
-                                      child: Divider(
-                                        color: Constants.COLOR_PRIMARY_GREY,
-                                        thickness: 2.5,
-                                      )),
-                                )
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 12.0),
+                                    child: Divider(
+                                      color: Constants.COLOR_PRIMARY_GREY,
+                                      thickness: 2.5,
+                                    ),
+                                  ),
+                                ),
                               ],
                             ),
                           ),
                         );
                       }),
-                )
+                ),
               ],
             ),
           ),
           Visibility(
-              visible: isSearchBtnClicked ? true : false,
-              child: Container(
-                padding: EdgeInsets.only(top: 20.0, left: 20.0, right: 20.0),
-                height: MediaQuery.of(context).size.height,
-                width: MediaQuery.of(context).size.width,
-                decoration: BoxDecoration(
-                  color: Colors.black,
-                ),
-                child: Column(
-                  children: <Widget>[
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.only(top: 8.0),
-                          child: InkWell(
-                            onTap: () {
-                              setState(() {
+            visible: isSearchBtnClicked ? true : false,
+            child: Container(
+              padding: EdgeInsets.only(top: 20.0, left: 20.0, right: 20.0),
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
+              decoration: BoxDecoration(
+                color: Colors.black,
+              ),
+              child: Column(
+                children: <Widget>[
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.only(top: 8.0),
+                        child: InkWell(
+                          onTap: () {
+                            setState(
+                              () {
                                 isSearchBtnClicked = false;
                                 searchController.text = "";
                                 serachUsers = List();
-                              });
-                            },
-                            child: AlMajlisTextViewBold(
-                              "CANCEL",
-                              size: 16.0,
-                            ),
+                              },
+                            );
+                          },
+                          child: AlMajlisTextViewBold(
+                            "CANCEL",
+                            size: 16.0,
                           ),
                         ),
-                        Expanded(
-                            child: Container(
+                      ),
+                      Expanded(
+                        child: Container(
                           height: 32.0,
                           margin: EdgeInsets.only(left: 10.0),
                           padding: EdgeInsets.only(top: 8.0),
@@ -1184,15 +1216,16 @@ class _ActivityDiscoverState extends ActivityStateBase<ActivityDiscover> {
                               ),
                               fillColor: Constants.COLOR_DARK_GREY,
                               prefixIcon: Padding(
+                                padding: const EdgeInsets.only(bottom: 8.0),
+                                child: Padding(
                                   padding: const EdgeInsets.only(bottom: 8.0),
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(bottom: 8.0),
-                                    child: Icon(
-                                      Icons.search,
-                                      color: Colors.white30,
-                                      size: 20,
-                                    ),
-                                  )),
+                                  child: Icon(
+                                    Icons.search,
+                                    color: Colors.white30,
+                                    size: 20,
+                                  ),
+                                ),
+                              ),
                               hintText: 'Search',
                               hintStyle: TextStyle(
                                   fontSize: 12,
@@ -1201,172 +1234,173 @@ class _ActivityDiscoverState extends ActivityStateBase<ActivityDiscover> {
                                   fontWeight: FontWeight.normal),
                             ),
                           ),
-                        ))
-                      ],
-                    ),
-                    Expanded(
-                      child: ListView.builder(
-                          itemCount: serachUsers.length,
-                          itemBuilder: (BuildContext contex, int index) {
-                            return Padding(
-                              padding: const EdgeInsets.only(
-                                  top: 16.0, left: 10, right: 20),
-                              child: Container(
-                                child: Column(
+                        ),
+                      )
+                    ],
+                  ),
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: serachUsers.length,
+                      itemBuilder: (BuildContext contex, int index) {
+                        return Padding(
+                          padding: const EdgeInsets.only(
+                              top: 16.0, left: 10, right: 20),
+                          child: Container(
+                            child: Column(
+                              children: <Widget>[
+                                Row(
                                   children: <Widget>[
-                                    Row(
-                                      children: <Widget>[
-                                        null !=
+                                    null !=
+                                                serachUsers
+                                                    .elementAt(index)
+                                                    .thumbUrl &&
+                                            !serachUsers
+                                                .elementAt(index)
+                                                .thumbUrl
+                                                .isNotEmpty
+                                        ? GestureDetector(
+                                            onTap: () async {
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      ActivityProfile(
+                                                    userId: serachUsers
+                                                        .elementAt(index)
+                                                        .userId,
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                            child:
+                                                AlMajlisProfileImageWithStatus(
                                                     serachUsers
                                                         .elementAt(index)
-                                                        .thumbUrl &&
-                                                !serachUsers
-                                                    .elementAt(index)
-                                                    .thumbUrl
-                                                    .isEmpty
-                                            ? GestureDetector(
-                                                onTap: () async {
-                                                  Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            ActivityProfile(
-                                                              userId: serachUsers
-                                                                  .elementAt(
-                                                                      index)
-                                                                  .userId,
-                                                            )),
-                                                  );
-                                                },
-                                                child:
-                                                    AlMajlisProfileImageWithStatus(
-                                                        serachUsers
-                                                            .elementAt(index)
-                                                            .thumbUrl,
-                                                        50.0,
-                                                        isPro: null !=
-                                                                serachUsers
-                                                                    .elementAt(
-                                                                        index)
-                                                                    .isPro
-                                                            ? serachUsers
+                                                        .thumbUrl,
+                                                    50.0,
+                                                    isPro: null !=
+                                                            serachUsers
                                                                 .elementAt(
                                                                     index)
                                                                 .isPro
-                                                            : false),
-                                              )
-                                            : GestureDetector(
-                                                onTap: () async {
-                                                  Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            ActivityProfile(
-                                                              userId: serachUsers
-                                                                  .elementAt(
-                                                                      index)
-                                                                  .userId,
-                                                            )),
-                                                  );
-                                                },
+                                                        ? serachUsers
+                                                            .elementAt(index)
+                                                            .isPro
+                                                        : false),
+                                          )
+                                        : GestureDetector(
+                                            onTap: () async {
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      ActivityProfile(
+                                                    userId: serachUsers
+                                                        .elementAt(index)
+                                                        .userId,
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                            child: Container(
+                                              height: 50,
+                                              width: 50,
+                                              decoration: BoxDecoration(
+                                                  shape: BoxShape.circle,
+                                                  color: serachUsers
+                                                          .elementAt(index)
+                                                          .isPro
+                                                      ? Constants
+                                                          .COLOR_PRIMARY_TEAL
+                                                      : Colors.white),
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(2.0),
                                                 child: Container(
-                                                  height: 50,
-                                                  width: 50,
                                                   decoration: BoxDecoration(
-                                                      shape: BoxShape.circle,
-                                                      color: serachUsers
-                                                              .elementAt(index)
-                                                              .isPro
-                                                          ? Constants
-                                                              .COLOR_PRIMARY_TEAL
-                                                          : Colors.white),
-                                                  child: Padding(
-                                                    padding:
-                                                        const EdgeInsets.all(
-                                                            2.0),
-                                                    child: Container(
-                                                      decoration: BoxDecoration(
-                                                          shape:
-                                                              BoxShape.circle,
-                                                          gradient:
-                                                              LinearGradient(
-                                                                  colors: [
-                                                                Colors.purple,
-                                                                Colors.teal
-                                                              ])),
+                                                    shape: BoxShape.circle,
+                                                    gradient: LinearGradient(
+                                                      colors: [
+                                                        Colors.purple,
+                                                        Colors.teal
+                                                      ],
                                                     ),
                                                   ),
                                                 ),
                                               ),
-                                        Expanded(
-                                          child: Padding(
-                                            padding: const EdgeInsets.only(
-                                                left: 8.0),
-                                            child: Container(
-                                              child: Column(
-                                                children: <Widget>[
-                                                  GestureDetector(
-                                                    onTap: () async {
-                                                      Navigator.push(
-                                                        context,
-                                                        MaterialPageRoute(
-                                                            builder: (context) =>
-                                                                ActivityProfile(
-                                                                  userId: serachUsers
-                                                                      .elementAt(
-                                                                          index)
-                                                                      .userId,
-                                                                )),
-                                                      );
-                                                    },
-                                                    child:
-                                                        AlMajlisTextViewWithVerified(
-                                                      serachUsers
-                                                              .elementAt(index)
-                                                              .firstName +
-                                                          " " +
-                                                          serachUsers
-                                                              .elementAt(index)
-                                                              .lastName,
-                                                      isVerified: false,
-                                                      size: 16,
+                                            ),
+                                          ),
+                                    Expanded(
+                                      child: Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 8.0),
+                                        child: Container(
+                                          child: Column(
+                                            children: <Widget>[
+                                              GestureDetector(
+                                                onTap: () async {
+                                                  Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          ActivityProfile(
+                                                        userId: serachUsers
+                                                            .elementAt(index)
+                                                            .userId,
+                                                      ),
                                                     ),
-                                                  ),
-                                                  Row(
-                                                    children: <Widget>[
-                                                      AlMajlisTextViewMedium(
-                                                        serachUsers
-                                                            .elementAt(index)
-                                                            .occupation,
-                                                      ),
-                                                    ],
-                                                  ),
-                                                  Row(
-                                                    children: <Widget>[
-                                                      AlMajlisTextViewMedium(
-                                                        serachUsers
-                                                            .elementAt(index)
-                                                            .country,
-                                                        color: Colors.grey,
-                                                      ),
-                                                    ],
+                                                  );
+                                                },
+                                                child:
+                                                    AlMajlisTextViewWithVerified(
+                                                  serachUsers
+                                                          .elementAt(index)
+                                                          .firstName +
+                                                      " " +
+                                                      serachUsers
+                                                          .elementAt(index)
+                                                          .lastName,
+                                                  isVerified: false,
+                                                  size: 16,
+                                                ),
+                                              ),
+                                              Row(
+                                                children: <Widget>[
+                                                  AlMajlisTextViewMedium(
+                                                    serachUsers
+                                                        .elementAt(index)
+                                                        .occupation,
                                                   ),
                                                 ],
                                               ),
-                                            ),
+                                              Row(
+                                                children: <Widget>[
+                                                  AlMajlisTextViewMedium(
+                                                    serachUsers
+                                                        .elementAt(index)
+                                                        .country,
+                                                    color: Colors.grey,
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
                                           ),
                                         ),
-                                      ],
-                                    )
+                                      ),
+                                    ),
                                   ],
-                                ),
-                              ),
-                            );
-                          }),
-                    )
-                  ],
-                ),
-              )),
+                                )
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
         ],
       ),
       hasBottomNaviagation: true,
@@ -1382,9 +1416,14 @@ class _ActivityDiscoverState extends ActivityStateBase<ActivityDiscover> {
     if (searchOnStoppedTyping != null) {
       setState(() => searchOnStoppedTyping.cancel()); // clear timer
     }
-    setState(() => searchOnStoppedTyping = new Timer(duration, () {
+    setState(
+      () => searchOnStoppedTyping = new Timer(
+        duration,
+        () {
           if (value.length > 2) {}
-        }));
+        },
+      ),
+    );
   }
 
   Expanded showTotalCards(String imageName, String totalNumbers, String name) {
@@ -1393,8 +1432,9 @@ class _ActivityDiscoverState extends ActivityStateBase<ActivityDiscover> {
         padding: const EdgeInsets.symmetric(horizontal: 8.0),
         child: Container(
           decoration: BoxDecoration(
-              color: Constants.COLOR_DARK_GREY,
-              borderRadius: BorderRadius.circular(8.0)),
+            color: Constants.COLOR_DARK_GREY,
+            borderRadius: BorderRadius.circular(8.0),
+          ),
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 20.0),
             child: Row(
@@ -1424,9 +1464,9 @@ class _ActivityDiscoverState extends ActivityStateBase<ActivityDiscover> {
                           AlMajlisTextViewBold(name),
                         ],
                       ),
-                    )
+                    ),
                   ],
-                )
+                ),
               ],
             ),
           ),
@@ -1461,36 +1501,39 @@ class _ActivityDiscoverState extends ActivityStateBase<ActivityDiscover> {
       print(e);
       core.stopLoading(_context);
       showDialog(
-          context: _context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: AlMajlisTextViewBold(
-                  "Unable To Connect To Server, Please try again"),
-              actions: <Widget>[
-                new FlatButton(
-                  onPressed: () {
-                    getUtils();
-                    Navigator.of(context).pop();
-                  },
-                  child: new Text("Try Again"),
-                  color: Colors.teal,
-                ),
-              ],
-            );
-          });
+        context: _context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: AlMajlisTextViewBold(
+                "Unable To Connect To Server, Please try again"),
+            actions: <Widget>[
+              new FlatButton(
+                onPressed: () {
+                  getUtils();
+                  Navigator.of(context).pop();
+                },
+                child: new Text("Try Again"),
+                color: Colors.teal,
+              ),
+            ],
+          );
+        },
+      );
     }
 
     core.stopLoading(_context);
     if (!core.systemCanHandel(response)) {
       if (response.status.statusCode == 0) {
-        setState(() {
-          if (null != response.payload.postCount) {
-            totalPosts = response.payload.postCount;
-          }
-          if (null != response.payload.userCount) {
-            totalUsers = response.payload.userCount;
-          }
-        });
+        setState(
+          () {
+            if (null != response.payload.postCount) {
+              totalPosts = response.payload.postCount;
+            }
+            if (null != response.payload.userCount) {
+              totalUsers = response.payload.userCount;
+            }
+          },
+        );
       }
     }
   }
@@ -1822,6 +1865,7 @@ class _ActivityDiscoverState extends ActivityStateBase<ActivityDiscover> {
 
 class AlMajlisRoundIconButton extends StatelessWidget {
   var icon;
+
   AlMajlisRoundIconButton(
     this.icon, {
     Key key,

@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:almajlis/activities/ActivityBase.dart';
-import 'package:almajlis/activities/ActivityProfile.dart';
+
 import 'package:almajlis/activities/index.dart';
 import 'package:almajlis/core/server/wrappers/ResponseBooking.dart';
 import 'package:almajlis/core/server/wrappers/ResponseOk.dart';

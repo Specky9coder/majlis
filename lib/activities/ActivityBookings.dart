@@ -5,7 +5,6 @@ import 'package:almajlis/activities/ActivityProfile.dart';
 import 'package:almajlis/activities/ActivityUserChat.dart';
 import 'package:almajlis/activities/index.dart';
 import 'package:almajlis/core/server/wrappers/ResponseBookings.dart';
-import 'package:almajlis/core/wrappers/AlMajlisBooking.dart';
 import 'package:almajlis/core/wrappers/Booking.dart';
 import 'package:almajlis/utils/Constants.dart';
 import 'package:almajlis/views/components/AlMajlisBackButton.dart';
@@ -58,26 +57,27 @@ class _ActivityBookingsState extends ActivityStateBase<ActivityBookings> {
                           child: Padding(
                             padding: const EdgeInsets.only(left: 8.0),
                             child: TextField(
-                                controller: searchController,
-                                maxLines: 1,
-                                style: TextStyle(
+                              controller: searchController,
+                              maxLines: 1,
+                              style: TextStyle(
+                                  fontFamily: 'ProximaNovaSemiMedium',
+                                  color: Colors.white),
+                              onSubmitted: (term) {},
+                              textInputAction: TextInputAction.done,
+                              decoration: new InputDecoration(
+                                hintText: "Search Bookings",
+                                border: InputBorder.none,
+                                focusedBorder: InputBorder.none,
+                                enabledBorder: InputBorder.none,
+                                errorBorder: InputBorder.none,
+                                disabledBorder: InputBorder.none,
+                                hintStyle: TextStyle(
                                     fontFamily: 'ProximaNovaSemiMedium',
-                                    color: Colors.white),
-                                onSubmitted: (term) {},
-                                textInputAction: TextInputAction.done,
-                                decoration: new InputDecoration(
-                                  hintText: "Search Bookings",
-                                  border: InputBorder.none,
-                                  focusedBorder: InputBorder.none,
-                                  enabledBorder: InputBorder.none,
-                                  errorBorder: InputBorder.none,
-                                  disabledBorder: InputBorder.none,
-                                  hintStyle: TextStyle(
-                                      fontFamily: 'ProximaNovaSemiMedium',
-                                      color: Constants.COLOR_PRIMARY_GREY),
-                                )),
+                                    color: Constants.COLOR_PRIMARY_GREY),
+                              ),
+                            ),
                           ),
-                        )
+                        ),
                       ],
                     ),
                   ),
@@ -93,7 +93,7 @@ class _ActivityBookingsState extends ActivityStateBase<ActivityBookings> {
                         return bookingListItem(index);
                       }),
                 ),
-              )
+              ),
             ],
           ),
         ),
@@ -140,8 +140,6 @@ class _ActivityBookingsState extends ActivityStateBase<ActivityBookings> {
     String date =
         dateFormat.format(booking.meetingTime) + " " + hour + ":" + min;
 
-
-
     return Padding(
       padding: const EdgeInsets.only(top: 8.0, left: 20, right: 20),
       child: Container(
@@ -156,9 +154,10 @@ class _ActivityBookingsState extends ActivityStateBase<ActivityBookings> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => ActivityProfile(
-                                      userId: booking.bookedFor.userId,
-                                    )),
+                              builder: (context) => ActivityProfile(
+                                userId: booking.bookedFor.userId,
+                              ),
+                            ),
                           );
                         },
                         child: AlMajlisProfileImageWithStatus(
@@ -172,9 +171,10 @@ class _ActivityBookingsState extends ActivityStateBase<ActivityBookings> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => ActivityProfile(
-                                      userId: booking.bookedFor.userId,
-                                    )),
+                              builder: (context) => ActivityProfile(
+                                userId: booking.bookedFor.userId,
+                              ),
+                            ),
                           );
                         },
                         child: Container(
@@ -189,9 +189,11 @@ class _ActivityBookingsState extends ActivityStateBase<ActivityBookings> {
                             padding: const EdgeInsets.all(4.0),
                             child: Container(
                               decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  gradient: LinearGradient(
-                                      colors: [Colors.purple, Colors.teal])),
+                                shape: BoxShape.circle,
+                                gradient: LinearGradient(
+                                  colors: [Colors.purple, Colors.teal],
+                                ),
+                              ),
                             ),
                           ),
                         ),
@@ -221,7 +223,7 @@ class _ActivityBookingsState extends ActivityStateBase<ActivityBookings> {
                                 color: Colors.grey,
                               ),
                             ],
-                          )
+                          ),
                         ],
                       ),
                     ),
@@ -248,7 +250,7 @@ class _ActivityBookingsState extends ActivityStateBase<ActivityBookings> {
               child: Divider(
                 color: Colors.white,
               ),
-            )
+            ),
           ],
         ),
       ),
@@ -259,10 +261,11 @@ class _ActivityBookingsState extends ActivityStateBase<ActivityBookings> {
     Navigator.push(
       context,
       MaterialPageRoute(
-          builder: (context) => ActivityUserChat(
-                myUserId: core.getCurrentUser().userId,
-                otherPersonUserId: bookings.elementAt(index).bookedFor.userId,
-              )),
+        builder: (context) => ActivityUserChat(
+          myUserId: core.getCurrentUser().userId,
+          otherPersonUserId: bookings.elementAt(index).bookedFor.userId,
+        ),
+      ),
     );
   }
 
@@ -270,7 +273,10 @@ class _ActivityBookingsState extends ActivityStateBase<ActivityBookings> {
     Navigator.push(
       context,
       MaterialPageRoute(
-          builder: (context) => IndexPage(bookings.elementAt(index))),
+        builder: (context) => IndexPage(
+          bookings.elementAt(index),
+        ),
+      ),
     );
   }
 

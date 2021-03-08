@@ -1,8 +1,6 @@
 import 'dart:io';
 
 import 'package:almajlis/activities/ActivityBase.dart';
-import 'package:almajlis/activities/ActivityProfile.dart';
-import 'package:almajlis/activities/ActivityWorkExperience.dart';
 import 'package:almajlis/core/server/Server.dart';
 import 'package:almajlis/core/server/wrappers/ResponseOk.dart';
 import 'package:almajlis/core/server/wrappers/ResponseSignedUrl.dart';
@@ -11,7 +9,6 @@ import 'package:almajlis/core/wrappers/User.dart';
 import 'package:almajlis/utils/Constants.dart';
 import 'package:almajlis/views/bottomsheets/EditprofilePictureMenuBottomSheet.dart';
 import 'package:almajlis/views/components/AlMajlisBackButton.dart';
-import 'package:almajlis/views/components/AlMajlisBackground.dart';
 import 'package:almajlis/views/components/AlmajlisProfileImageWithStatus.dart';
 import 'package:almajlis/views/widgets/AlMajlisDatePicker.dart';
 import 'package:almajlis/views/widgets/AlMajlisTextFiled.dart';

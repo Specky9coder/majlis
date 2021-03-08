@@ -18,7 +18,6 @@ class ActivityPaymentView extends StatefulWidget {
 class _ActivityPaymentView extends State<ActivityPaymentView> {
   final flutterWebviewPlugin = new FlutterWebviewPlugin();
 
-
   @override
   void initState() {
     // TODO: implement initState
@@ -39,15 +38,14 @@ class _ActivityPaymentView extends State<ActivityPaymentView> {
     super.dispose();
     flutterWebviewPlugin.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     return WebviewScaffold(
-
       url: widget._url,
       appBar: AppBar(
-        title: Text("Complete Payment")
+        title: Text("Complete Payment"),
       ),
     );
   }
-
 }

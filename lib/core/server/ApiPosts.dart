@@ -7,7 +7,7 @@ import 'package:almajlis/core/server/wrappers/ResponsePost.dart';
 import 'package:almajlis/core/server/wrappers/ResponsePosts.dart';
 import 'package:almajlis/core/server/wrappers/ResponseSearchPost.dart';
 import 'package:almajlis/core/server/wrappers/ResponseSignedUrl.dart';
-import 'package:almajlis/core/server/wrappers/ResponseUsers.dart';
+
 import 'package:almajlis/core/wrappers/AlMajlisComment.dart';
 import 'package:almajlis/core/wrappers/AlMajlisPost.dart';
 import 'package:jaguar_retrofit/jaguar_retrofit.dart';

@@ -4,11 +4,9 @@ import 'package:almajlis/activities/ActivitySinglePost.dart';
 import 'package:almajlis/activities/ActivityUserChat.dart';
 import 'package:almajlis/core/wrappers/AlMajlisNotification.dart';
 import 'package:almajlis/utils/Constants.dart';
-import 'package:almajlis/views/components/AlMajlisImageIcons.dart';
 import 'package:almajlis/views/components/AlmajlisProfileImageWithStatus.dart';
 import 'package:almajlis/views/widgets/AlMajlisTextViewBold.dart';
 import 'package:almajlis/views/widgets/AlMajlisTextViewMedium.dart';
-import 'package:almajlis/views/widgets/AlMajlisTextViewWithVerified.dart';
 import 'package:flutter/material.dart';
 import 'package:timeago/timeago.dart' as timeago;
 

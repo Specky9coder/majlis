@@ -1,5 +1,5 @@
 import 'package:almajlis/core/wrappers/AlMajlisUtils.dart';
-import 'package:almajlis/core/wrappers/User.dart';
+
 import 'package:jaguar_serializer/jaguar_serializer.dart';
 import 'ServerStatus.dart';
 

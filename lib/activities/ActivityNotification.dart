@@ -4,28 +4,26 @@ import 'dart:ui';
 
 import 'package:almajlis/activities/ActivityBase.dart';
 import 'package:almajlis/activities/ActivityBookings.dart';
-import 'package:almajlis/activities/ActivityProfile.dart';
+
 import 'package:almajlis/activities/ActivitySearch.dart';
-import 'package:almajlis/activities/ActivityUserChat.dart';
+
 import 'package:almajlis/activities/index.dart';
 import 'package:almajlis/core/server/wrappers/ResponseBookings.dart';
 import 'package:almajlis/core/server/wrappers/ResponseNotifications.dart';
-import 'package:almajlis/core/server/wrappers/ResponseUsers.dart';
+
 import 'package:almajlis/core/wrappers/AlMajlisNotification.dart';
 import 'package:almajlis/core/wrappers/Booking.dart';
 import 'package:almajlis/core/wrappers/User.dart';
 import 'package:almajlis/utils/Constants.dart';
 import 'package:almajlis/views/bottomsheets/MyMeetingsBottomSheet.dart';
-import 'package:almajlis/views/components/AlMajlisButton.dart';
-import 'package:almajlis/views/components/AlMajlisNavigationBar.dart';
+
 import 'package:almajlis/views/components/AlMajlisNotificationTile.dart';
-import 'package:almajlis/views/components/AlmajlisProfileImageWithStatus.dart';
+
 import 'package:almajlis/views/widgets/AlMajlisTextViewBold.dart';
-import 'package:almajlis/views/widgets/AlMajlisTextViewMedium.dart';
+
 import 'package:almajlis/views/widgets/AlMajlisTextViewSemiBold.dart';
-import 'package:almajlis/views/widgets/AlMajlisTextViewWithVerified.dart';
 import 'package:flutter/material.dart';
-import 'package:almajlis/utils/Constants.dart';
+
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
@@ -63,6 +61,7 @@ class _ActivityNotificatonState extends ActivityStateBase<ActivityNotificaton> {
   bool isVideoCallDone = false;
   bool fetchMore = true;
   bool loading = true;
+
   @override
   void initState() {
     super.initState();
@@ -139,143 +138,156 @@ class _ActivityNotificatonState extends ActivityStateBase<ActivityNotificaton> {
                           getNotifications(DateTime.now(),
                               isPulltorefresh: true);
                         },
-                        child: loading == true ? Center(
-                          child:CircularProgressIndicator(
-                            backgroundColor : Constants.COLOR_PRIMARY_TEAL_OPACITY
-                          )
-                        ): ListView.builder(
-                            shrinkWrap: true,
-                            scrollDirection: Axis.vertical,
-                            itemCount: notificationLength,
-                            itemBuilder: (BuildContext context, int index) {
-                              if (meetings.length > 0 && index == 0) {
-                                return Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 20.0, right: 20.0, bottom: 12),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: <Widget>[
-                                      Text.rich(
-                                        TextSpan(
-                                          style: TextStyle(
-                                            fontSize: 16,
-                                          ),
-                                          children: [
-                                            TextSpan(
-                                                text: 'My Meetings',
-                                                style: TextStyle(
-                                                    fontSize: 28,
-                                                    color: Colors.white,
-                                                    fontFamily:
-                                                        "ProximaNovaBold",
-                                                    fontWeight:
-                                                        FontWeight.bold)),
-                                            WidgetSpan(
-                                              child: Padding(
-                                                padding: const EdgeInsets.only(
-                                                    left: 8.0),
-                                                child: CircleAvatar(
-                                                  radius: 12.0,
-                                                  child:
-                                                      AlMajlisTextViewSemiBold(
-                                                    meetings.length.toString(),
-                                                    size: 16,
-                                                  ),
-                                                  backgroundColor:
-                                                      Constants.COLOR_DARK_TEAL,
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      InkWell(
-                                          onTap: () {
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      ActivityBookings()),
-                                            );
-                                          },
-                                          child:
-                                              AlMajlisTextViewBold("SEE ALL"))
-                                    ],
-                                  ),
-                                );
-                              }
-                              if (null !=
-                                      notifications
-                                          .elementAt(index - actualLength)
-                                          .dateType &&
-                                  notifications
-                                          .elementAt(index - actualLength)
-                                          .dateType ==
-                                      1) {
-                                return Padding(
-                                  padding: notifications
-                                              .elementAt(index - actualLength)
-                                              .datstring ==
-                                          "TODAY"
-                                      ? const EdgeInsets.only(top: 8.0)
-                                      : const EdgeInsets.only(top: 0.0),
-                                  child: Container(
-                                    width: double.infinity,
-                                    color: Constants.COLOR_DARK_GREY,
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 8.0, horizontal: 16),
+                        child: loading == true
+                            ? Center(
+                                child: CircularProgressIndicator(
+                                    backgroundColor:
+                                        Constants.COLOR_PRIMARY_TEAL_OPACITY),
+                              )
+                            : ListView.builder(
+                                shrinkWrap: true,
+                                scrollDirection: Axis.vertical,
+                                itemCount: notificationLength,
+                                itemBuilder: (BuildContext context, int index) {
+                                  if (meetings.length > 0 && index == 0) {
+                                    return Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 20.0, right: 20.0, bottom: 12),
                                       child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
                                         children: <Widget>[
-                                          AlMajlisTextViewBold(
-                                            notifications
-                                                .elementAt(index - actualLength)
-                                                .datstring,
-                                            size: 12,
+                                          Text.rich(
+                                            TextSpan(
+                                              style: TextStyle(
+                                                fontSize: 16,
+                                              ),
+                                              children: [
+                                                TextSpan(
+                                                  text: 'My Meetings',
+                                                  style: TextStyle(
+                                                      fontSize: 28,
+                                                      color: Colors.white,
+                                                      fontFamily:
+                                                          "ProximaNovaBold",
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                                WidgetSpan(
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 8.0),
+                                                    child: CircleAvatar(
+                                                      radius: 12.0,
+                                                      child:
+                                                          AlMajlisTextViewSemiBold(
+                                                        meetings.length
+                                                            .toString(),
+                                                        size: 16,
+                                                      ),
+                                                      backgroundColor: Constants
+                                                          .COLOR_DARK_TEAL,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          InkWell(
+                                            onTap: () {
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      ActivityBookings(),
+                                                ),
+                                              );
+                                            },
+                                            child:
+                                                AlMajlisTextViewBold("SEE ALL"),
                                           )
                                         ],
                                       ),
-                                    ),
-                                  ),
-                                );
-                              }
-                              bool hasDivider = true;
-                              if (index - actualLength + 1 <
-                                      notifications.length &&
-                                  null !=
+                                    );
+                                  }
+                                  if (null !=
+                                          notifications
+                                              .elementAt(index - actualLength)
+                                              .dateType &&
                                       notifications
-                                          .elementAt(index - actualLength + 1)
-                                          .dateType &&
-                                  notifications
-                                          .elementAt(index - actualLength + 1)
-                                          .dateType ==
-                                      1) {
-                                hasDivider = false;
-                              }
+                                              .elementAt(index - actualLength)
+                                              .dateType ==
+                                          1) {
+                                    return Padding(
+                                      padding: notifications
+                                                  .elementAt(
+                                                      index - actualLength)
+                                                  .datstring ==
+                                              "TODAY"
+                                          ? const EdgeInsets.only(top: 8.0)
+                                          : const EdgeInsets.only(top: 0.0),
+                                      child: Container(
+                                        width: double.infinity,
+                                        color: Constants.COLOR_DARK_GREY,
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 8.0, horizontal: 16),
+                                          child: Row(
+                                            children: <Widget>[
+                                              AlMajlisTextViewBold(
+                                                notifications
+                                                    .elementAt(
+                                                        index - actualLength)
+                                                    .datstring,
+                                                size: 12,
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  }
+                                  bool hasDivider = true;
+                                  if (index - actualLength + 1 <
+                                          notifications.length &&
+                                      null !=
+                                          notifications
+                                              .elementAt(
+                                                  index - actualLength + 1)
+                                              .dateType &&
+                                      notifications
+                                              .elementAt(
+                                                  index - actualLength + 1)
+                                              .dateType ==
+                                          1) {
+                                    hasDivider = false;
+                                  }
 
-                              if (index == notificationLength - 4) {
-                                if (fetchMore) {
-                                  Future.delayed(Duration(seconds: 1), () {
-                                    getNotifications(
-                                        notifications
-                                            .elementAt(notifications.length - 1)
-                                            .createdAt,
-                                        isNonPaginationCall: false);
-                                  });
-                                }
-                              }
-                              return Padding(
-                                padding: EdgeInsets.only(
-                                    bottom: index == notificationLength - 1
-                                        ? 100
-                                        : 0),
-                                child: AlMajlisNotificationTile(
-                                  notifications.elementAt(index - actualLength ),
-                                  hasDivider: hasDivider,
-                                ),
-                              );
-                            }),
+                                  if (index == notificationLength - 4) {
+                                    if (fetchMore) {
+                                      Future.delayed(Duration(seconds: 1), () {
+                                        getNotifications(
+                                            notifications
+                                                .elementAt(
+                                                    notifications.length - 1)
+                                                .createdAt,
+                                            isNonPaginationCall: false);
+                                      });
+                                    }
+                                  }
+                                  return Padding(
+                                    padding: EdgeInsets.only(
+                                        bottom: index == notificationLength - 1
+                                            ? 100
+                                            : 0),
+                                    child: AlMajlisNotificationTile(
+                                      notifications
+                                          .elementAt(index - actualLength),
+                                      hasDivider: hasDivider,
+                                    ),
+                                  );
+                                }),
                       ),
                     ),
                   ],
@@ -296,6 +308,7 @@ class _ActivityNotificatonState extends ActivityStateBase<ActivityNotificaton> {
           ),
           onWillPop: () {
             if (isMenuOpen) closeMenu();
+            // return;
           },
         ), //
       ),
@@ -306,12 +319,17 @@ class _ActivityNotificatonState extends ActivityStateBase<ActivityNotificaton> {
     Navigator.push(
       context,
       MaterialPageRoute(
-          builder: (context) => IndexPage(meetings.elementAt(index))),
+        builder: (context) => IndexPage(
+          meetings.elementAt(index),
+        ),
+      ),
     );
   }
 
   refreshFunction() {
-    getNotifications(new DateTime.now());
+    getNotifications(
+      new DateTime.now(),
+    );
     getMeetings();
   }
 
@@ -322,14 +340,17 @@ class _ActivityNotificatonState extends ActivityStateBase<ActivityNotificaton> {
     if (searchOnStoppedTyping != null) {
       setState(() => searchOnStoppedTyping.cancel()); // clear timer
     }
-    setState(() => searchOnStoppedTyping = new Timer(duration, () {
-          if (value.length > 2) {}
-        }));
+    setState(
+      () => searchOnStoppedTyping = new Timer(duration, () {
+        if (value.length > 2) {}
+      }),
+    );
   }
 
   void clickMenu(index) {
-    scaffoldState.currentState
-        .showBottomSheet((context) => MyMeetingsBottomSheet());
+    scaffoldState.currentState.showBottomSheet(
+      (context) => MyMeetingsBottomSheet(),
+    );
   }
 
   findButton() {
@@ -377,32 +398,33 @@ class _ActivityNotificatonState extends ActivityStateBase<ActivityNotificaton> {
                       dropdownOptions.length,
                       (index) {
                         return GestureDetector(
-                            onTap: () {
-                              onListItemChanged(index);
-                              String s = dropdownOptions[index];
-                              dropDownString = s;
-                              closeMenu();
-                            },
-                            child: Container(
-                              margin: EdgeInsets.only(top: 5.0),
-                              child: Column(
-                                children: <Widget>[
-                                  Padding(
-                                    padding: const EdgeInsets.all(10.0),
-                                    child: Text(
-                                      dropdownOptions[index],
-                                      style: TextStyle(color: Colors.white),
-                                    ),
+                          onTap: () {
+                            onListItemChanged(index);
+                            String s = dropdownOptions[index];
+                            dropDownString = s;
+                            closeMenu();
+                          },
+                          child: Container(
+                            margin: EdgeInsets.only(top: 5.0),
+                            child: Column(
+                              children: <Widget>[
+                                Padding(
+                                  padding: const EdgeInsets.all(10.0),
+                                  child: Text(
+                                    dropdownOptions[index],
+                                    style: TextStyle(color: Colors.white),
                                   ),
-                                  (index == dropdownOptions.length - 1)
-                                      ? Container()
-                                      : Divider(
-                                          color: Constants.COLOR_PRIMARY_GREY,
-                                          thickness: 2.5,
-                                        ),
-                                ],
-                              ),
-                            ));
+                                ),
+                                (index == dropdownOptions.length - 1)
+                                    ? Container()
+                                    : Divider(
+                                        color: Constants.COLOR_PRIMARY_GREY,
+                                        thickness: 2.5,
+                                      ),
+                              ],
+                            ),
+                          ),
+                        );
                       },
                     ),
                   ),
@@ -425,7 +447,9 @@ class _ActivityNotificatonState extends ActivityStateBase<ActivityNotificaton> {
       {bool isPulltorefresh = false, bool isNonPaginationCall = true}) async {
     if (!isPulltorefresh) {
       // core.startLoading(_context);
-      setState((){ loading = true;});
+      setState(() {
+        loading = true;
+      });
     }
     ResponseNotifications response;
     try {
@@ -438,16 +462,18 @@ class _ActivityNotificatonState extends ActivityStateBase<ActivityNotificaton> {
           timeInSecForIosWeb: 2);
       if (!isPulltorefresh) {
         // core.stopLoading(_context);
-      setState((){ loading = false;});
-
+        setState(() {
+          loading = false;
+        });
       } else {
         _refreshController.refreshCompleted();
       }
     } catch (_) {
       if (!isPulltorefresh) {
         // core.stopLoading(_context);
-      setState((){ loading = false;});
-
+        setState(() {
+          loading = false;
+        });
       } else {
         _refreshController.refreshCompleted();
       }
@@ -473,8 +499,9 @@ class _ActivityNotificatonState extends ActivityStateBase<ActivityNotificaton> {
 
     if (!isPulltorefresh) {
       // core.stopLoading(_context);
-      setState((){ loading = false;});
-
+      setState(() {
+        loading = false;
+      });
     } else {
       _refreshController.refreshCompleted();
     }
@@ -536,7 +563,7 @@ class _ActivityNotificatonState extends ActivityStateBase<ActivityNotificaton> {
 
   void getMeetings() async {
     // core.startLoading(_context);
-    setState((){
+    setState(() {
       loading = true;
     });
     ResponseBookings response;
@@ -549,14 +576,14 @@ class _ActivityNotificatonState extends ActivityStateBase<ActivityNotificaton> {
           gravity: ToastGravity.CENTER,
           timeInSecForIosWeb: 2);
       // core.stopLoading(_context);
-       setState((){
-      loading = false;
-    });
+      setState(() {
+        loading = false;
+      });
     } catch (_) {
       // core.stopLoading(_context);
-       setState((){
-      loading = false;
-    });
+      setState(() {
+        loading = false;
+      });
       showDialog(
           context: _context,
           builder: (BuildContext context) {
@@ -578,7 +605,7 @@ class _ActivityNotificatonState extends ActivityStateBase<ActivityNotificaton> {
     }
 
     // core.stopLoading(_context);
-     setState((){
+    setState(() {
       loading = false;
     });
     if (!core.systemCanHandel(response)) {
@@ -605,6 +632,7 @@ class _ActivityNotificatonState extends ActivityStateBase<ActivityNotificaton> {
 
 class AlMajlisRoundIconButton extends StatelessWidget {
   var icon;
+
   AlMajlisRoundIconButton(
     this.icon, {
     Key key,

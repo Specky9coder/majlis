@@ -1,5 +1,4 @@
 import 'package:almajlis/activities/ActivityBase.dart';
-import 'package:almajlis/core/server/wrappers/ResponseOk.dart';
 import 'package:almajlis/utils/Constants.dart';
 import 'package:almajlis/views/widgets/AlMajlisTextViewBold.dart';
 import 'package:flutter/material.dart';

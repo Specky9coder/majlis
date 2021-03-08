@@ -7,7 +7,6 @@ import 'package:almajlis/core/server/wrappers/ResponseUsers.dart';
 import 'package:almajlis/core/wrappers/User.dart';
 import 'package:almajlis/utils/Constants.dart';
 import 'package:almajlis/views/components/AlMajlisImageIcons.dart';
-import 'package:almajlis/views/components/AlMajlisRadioButton.dart';
 import 'package:almajlis/views/components/AlmajlisProfileImageWithStatus.dart';
 import 'package:almajlis/views/widgets/AlMajlisTextViewBold.dart';
 import 'package:almajlis/views/widgets/AlMajlisTextViewMedium.dart';

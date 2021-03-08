@@ -33,6 +33,7 @@ class _MyAppState extends ActivityStateBase<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'AlMajlis',
       theme: ThemeData(
         hintColor: Colors.grey,
@@ -52,7 +53,8 @@ class _MyAppState extends ActivityStateBase<MyApp> {
         switch (routeSettings.name) {
           case 'navigation':
             return MaterialPageRoute(
-                builder: (context) => ActivityNotificaton());
+              builder: (context) => ActivityNotificaton(),
+            );
           default:
             return null;
         }

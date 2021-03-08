@@ -21,39 +21,40 @@ class _HomeState extends State<Home> {
     ActivityNotificaton(),
     ActivityProfile()
   ];
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child:Scaffold(
+      child: Scaffold(
         backgroundColor: Colors.transparent,
         body: _children[_currentIndex],
-    
-    floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-
-    floatingActionButton: Container(
-        margin: EdgeInsets.only(left: 20.0, right: 20.0),
-        alignment: Alignment.center,
-        height: 70,
-        decoration: BoxDecoration(
-          color: Constants.COLOR_DARK_GREY,
-          borderRadius: BorderRadius.circular(22),
-          
-        ),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(22),
-          child: BottomNavigationBar(
-            showSelectedLabels: false,
-            showUnselectedLabels: false,
-            backgroundColor: Constants.COLOR_DARK_GREY,
-            selectedItemColor: Colors.black,
-            unselectedItemColor: Colors.white,
-            type: BottomNavigationBarType.fixed,
-            onTap: onTabTapped,
-            currentIndex: _currentIndex,
-            items: [
-              BottomNavigationBarItem(
-                  icon: new Container(
-                        height: 40,
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        floatingActionButton: Container(
+          margin: EdgeInsets.only(left: 20.0, right: 20.0),
+          alignment: Alignment.center,
+          height: 70,
+          decoration: BoxDecoration(
+            color: Constants.COLOR_DARK_GREY,
+            borderRadius: BorderRadius.circular(22),
+          ),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(22),
+            child: Wrap(
+              children: [
+                BottomNavigationBar(
+                  elevation: 0,
+                  showSelectedLabels: false,
+                  showUnselectedLabels: false,
+                  backgroundColor: Constants.COLOR_DARK_GREY,
+                  selectedItemColor: Colors.black,
+                  unselectedItemColor: Colors.white,
+                  type: BottomNavigationBarType.fixed,
+                  onTap: onTabTapped,
+                  currentIndex: _currentIndex,
+                  items: [
+                    BottomNavigationBarItem(
+                        icon: new Container(
+                          height: 40,
                           width: 40,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(12),
@@ -61,20 +62,19 @@ class _HomeState extends State<Home> {
                                 ? Constants.COLOR_PRIMARY_TEAL_OPACITY
                                 : Constants.COLOR_DARK_GREY,
                           ),
-                        child: Center(
-                          child:Image.asset(
-                        _currentIndex == 0
-                            ? 'drawables/home-blue.png'
-                            : 'drawables/home.png',
-                        height: 20,
-                      ),
-                    )
-                  ),
-                  label: ''),
-              BottomNavigationBarItem(
-                  
-                  icon: new Container(
-                        height: 40,
+                          child: Center(
+                            child: Image.asset(
+                              _currentIndex == 0
+                                  ? 'drawables/home-blue.png'
+                                  : 'drawables/home.png',
+                              height: 25,
+                            ),
+                          ),
+                        ),
+                        label: ''),
+                    BottomNavigationBarItem(
+                        icon: new Container(
+                          height: 40,
                           width: 40,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(12),
@@ -82,20 +82,19 @@ class _HomeState extends State<Home> {
                                 ? Constants.COLOR_PRIMARY_TEAL_OPACITY
                                 : Constants.COLOR_DARK_GREY,
                           ),
-                        child: Center(
-                          child: new Image.asset(
-                        _currentIndex == 1
-                            ? 'drawables/contact-blue.png'
-                            : 'drawables/contact.png',
-                        height: 20,
-                      ),
-                    )
-                  ),
-                  label: ''),
-              BottomNavigationBarItem(
-                  
-                  icon: new Container(
-                        height: 40,
+                          child: Center(
+                            child: new Image.asset(
+                              _currentIndex == 1
+                                  ? 'drawables/contact-blue.png'
+                                  : 'drawables/contact.png',
+                              height: 20,
+                            ),
+                          ),
+                        ),
+                        label: ''),
+                    BottomNavigationBarItem(
+                        icon: new Container(
+                          height: 40,
                           width: 40,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(12),
@@ -103,20 +102,19 @@ class _HomeState extends State<Home> {
                                 ? Constants.COLOR_PRIMARY_TEAL_OPACITY
                                 : Constants.COLOR_DARK_GREY,
                           ),
-                        child: Center(
-                          child: new Image.asset(
-                            _currentIndex == 2
-                                ? 'drawables/notification-blue.png'
-                                : 'drawables/notification.png',
-                            height: 20,
+                          child: Center(
+                            child: new Image.asset(
+                              _currentIndex == 2
+                                  ? 'drawables/notification-blue.png'
+                                  : 'drawables/notification.png',
+                              height: 20,
+                            ),
                           ),
-                    )
-                  ),
-                  label: ''),
-              BottomNavigationBarItem(
-                  
-                  icon: new Container(
-                        height: 40,
+                        ),
+                        label: ''),
+                    BottomNavigationBarItem(
+                        icon: new Container(
+                          height: 40,
                           width: 40,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(12),
@@ -124,19 +122,24 @@ class _HomeState extends State<Home> {
                                 ? Constants.COLOR_PRIMARY_TEAL_OPACITY
                                 : Constants.COLOR_DARK_GREY,
                           ),
-                        child: Center(
-                          child: new Image.asset(
-                    _currentIndex == 3
-                        ? 'drawables/user-profile-blue.png'
-                        : 'drawables/user-profile.png',
-                    height: 20,
-                  ),
-                    )
-                  ),
-                  label: '')
-            ],
-          ),)
-        )));
+                          child: Center(
+                            child: new Image.asset(
+                              _currentIndex == 3
+                                  ? 'drawables/user-profile-blue.png'
+                                  : 'drawables/user-profile.png',
+                              height: 20,
+                            ),
+                          ),
+                        ),
+                        label: '')
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
   }
 
   void onTabTapped(int index) {

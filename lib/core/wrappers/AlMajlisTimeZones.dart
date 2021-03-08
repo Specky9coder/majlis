@@ -1,4 +1,3 @@
-import 'package:almajlis/core/wrappers/AlMajlisCountry.dart';
 import 'package:almajlis/core/wrappers/AlMajlisTimeZone.dart';
 import 'package:jaguar_serializer/jaguar_serializer.dart';
 

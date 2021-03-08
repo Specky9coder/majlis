@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:almajlis/activities/ActivityNotification.dart';
 import 'package:almajlis/activities/ActivityProfile.dart';
 import 'package:almajlis/activities/ActivitySinglePost.dart';
 import 'package:almajlis/activities/ActivityUserChat.dart';
@@ -8,15 +7,12 @@ import 'package:almajlis/activities/ActivityVideoCallOperationsScreen.dart';
 import 'package:almajlis/activities/call.dart';
 import 'package:almajlis/core/core.dart';
 import 'package:almajlis/core/wrappers/AlMajlisComment.dart';
-import 'package:almajlis/core/wrappers/AlMajlisNotification.dart';
 import 'package:almajlis/core/wrappers/AlMajlisPost.dart';
 import 'package:almajlis/core/wrappers/Booking.dart';
 import 'package:almajlis/core/wrappers/User.dart';
 import 'package:almajlis/services/NavigationService.dart';
 import 'package:almajlis/services/PushRegisterService.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
 
 class PushNotificationService {
   final FirebaseMessaging _fcm = FirebaseMessaging();

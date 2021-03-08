@@ -10,16 +10,13 @@ import 'package:almajlis/core/wrappers/AlMajlisPost.dart';
 import 'package:almajlis/core/wrappers/User.dart';
 import 'package:almajlis/utils/Constants.dart';
 import 'package:almajlis/views/bottomsheets/PostMenuBottomSheet.dart';
-import 'package:almajlis/views/components/AlMajlisBackground.dart';
-import 'package:almajlis/views/components/AlMajlisButton.dart';
+
 import 'package:almajlis/views/components/AlMajlisImageIcons.dart';
 import 'package:almajlis/views/components/AlMajlisShortPostCard.dart';
 import 'package:almajlis/views/components/AlmajlisProfileImageWithStatus.dart';
 import 'package:almajlis/views/widgets/AlMajlisTextViewBold.dart';
-import 'package:almajlis/views/widgets/AlMajlisTextViewMedium.dart';
 import 'package:almajlis/views/widgets/AlMajlisTextViewRegular.dart';
 import 'package:almajlis/views/widgets/AlMajlisTextViewSemiBold.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -32,6 +29,7 @@ import 'package:path_provider/path_provider.dart' as path_provider;
 class ActivityReplyToPost extends StatefulWidget {
   AlMajlisPost post;
   var image;
+
   ActivityReplyToPost({Key key, this.post, this.image}) : super(key: key);
 
   @override
@@ -117,128 +115,128 @@ class _ActivityReplyToPostState extends ActivityStateBase<ActivityReplyToPost> {
                 ],
               ),
               Expanded(
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.only(top: 16.0),
-                        child: AlMajlisShortPostCard(
-                          widget.post.postUser.thumbUrl,
-                          null != widget.post.postUser.firstName
-                              ? widget.post.postUser.firstName +
-                              " " +
-                              widget.post.postUser.lastName
-                              : "" + " " + null != widget.post.postUser.lastName
-                              ? widget.post.postUser.lastName
-                              : "",
-                          timeago
-                              .format(widget.post.createdAt, locale: 'en_short')
-                              .toUpperCase(),
-                          widget.post.text,
-                          isSinglePost: false,
-                          id: widget.post.postUser.userId,
-                        ),
+                  child: SingleChildScrollView(
+                child: Column(
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.only(top: 16.0),
+                      child: AlMajlisShortPostCard(
+                        widget.post.postUser.thumbUrl,
+                        null != widget.post.postUser.firstName
+                            ? widget.post.postUser.firstName +
+                                " " +
+                                widget.post.postUser.lastName
+                            : "" + " " + null != widget.post.postUser.lastName
+                                ? widget.post.postUser.lastName
+                                : "",
+                        timeago
+                            .format(widget.post.createdAt, locale: 'en_short')
+                            .toUpperCase(),
+                        widget.post.text,
+                        isSinglePost: false,
+                        id: widget.post.postUser.userId,
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 15.0),
-                        child: Row(
-                          children: <Widget>[
-                            null != imageUrl && !imageUrl.isEmpty
-                                ? GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => ActivityProfile(
-                                        userId: userId,
-                                      )),
-                                );
-                              },
-                              child: AlMajlisProfileImageWithStatus(
-                                imageUrl,
-                                50.0,
-                                isPro: isPro,
-                              ),
-                            )
-                                : GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => ActivityProfile(
-                                        userId: userId,
-                                      )),
-                                );
-                              },
-                              child: Container(
-                                height: 50,
-                                width: 50,
-                                decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: isPro
-                                        ? Constants.COLOR_PRIMARY_TEAL
-                                        : Colors.white),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(4.0),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 15.0),
+                      child: Row(
+                        children: <Widget>[
+                          null != imageUrl && !imageUrl.isEmpty
+                              ? GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => ActivityProfile(
+                                                userId: userId,
+                                              )),
+                                    );
+                                  },
+                                  child: AlMajlisProfileImageWithStatus(
+                                    imageUrl,
+                                    50.0,
+                                    isPro: isPro,
+                                  ),
+                                )
+                              : GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => ActivityProfile(
+                                                userId: userId,
+                                              )),
+                                    );
+                                  },
                                   child: Container(
+                                    height: 50,
+                                    width: 50,
                                     decoration: BoxDecoration(
                                         shape: BoxShape.circle,
-                                        gradient: LinearGradient(colors: [
-                                          Colors.purple,
-                                          Colors.teal
-                                        ])),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Expanded(
-                              child: Padding(
-                                padding: const EdgeInsets.only(left: 12.0),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Row(
-                                      children: <Widget>[
-                                        AlMajlisTextViewRegular(
-                                          "Replying to ",
-                                          size: 16,
-                                        ),
-                                        Expanded(
-                                          child: AlMajlisTextViewSemiBold(
-                                            widget.post.postUser.firstName + " " + widget.post.postUser.lastName,
-                                            color: Constants.COLOR_DARK_TEAL,
-                                            size: 16,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(
-                                          top: 0.0, bottom: 8.0, right: 8.0),
-                                      child: TextField(
-                                        controller: replyController,
-                                        autofocus: true,
-                                        style: TextStyle(color: Colors.white),
-                                        maxLines: 4,
-                                        decoration: new InputDecoration(
-                                            border: OutlineInputBorder(
-                                              borderSide: BorderSide.none,
-                                            ),
-                                            hintText: " Reply to post... "
-                                        ),
+                                        color: isPro
+                                            ? Constants.COLOR_PRIMARY_TEAL
+                                            : Colors.white),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(4.0),
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            gradient: LinearGradient(colors: [
+                                              Colors.purple,
+                                              Colors.teal
+                                            ])),
                                       ),
                                     ),
-                                  ],
+                                  ),
                                 ),
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 12.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Row(
+                                    children: <Widget>[
+                                      AlMajlisTextViewRegular(
+                                        "Replying to ",
+                                        size: 16,
+                                      ),
+                                      Expanded(
+                                        child: AlMajlisTextViewSemiBold(
+                                          widget.post.postUser.firstName +
+                                              " " +
+                                              widget.post.postUser.lastName,
+                                          color: Constants.COLOR_DARK_TEAL,
+                                          size: 16,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        top: 0.0, bottom: 8.0, right: 8.0),
+                                    child: TextField(
+                                      controller: replyController,
+                                      autofocus: true,
+                                      style: TextStyle(color: Colors.white),
+                                      maxLines: 4,
+                                      decoration: new InputDecoration(
+                                          border: OutlineInputBorder(
+                                            borderSide: BorderSide.none,
+                                          ),
+                                          hintText: " Reply to post... "),
+                                    ),
+                                  ),
+                                ],
                               ),
-                            )
-                          ],
-                        ),
+                            ),
+                          )
+                        ],
                       ),
-                    ],
-                  ),
-                )
-              ),
+                    ),
+                  ],
+                ),
+              )),
               Visibility(
                 visible: _pickedImage != null ? true : false,
                 child: Row(

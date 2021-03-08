@@ -1,13 +1,12 @@
 import 'package:almajlis/activities/ActivityBase.dart';
 import 'package:almajlis/activities/ActivityEditProfile.dart';
-import 'package:almajlis/activities/ActivityProfile.dart';
-import 'package:almajlis/activities/ActivityTermsAndConditions.dart';
+
 import 'package:almajlis/core/server/wrappers/ResponseLogin.dart';
 import 'package:almajlis/utils/Constants.dart';
 import 'package:almajlis/views/components/AlMajlisBackButton.dart';
 import 'package:almajlis/views/components/AlMajlisBackground.dart';
 import 'package:almajlis/views/components/AlMajlisButton.dart';
-import 'package:almajlis/views/components/AlMajlisOtpTextField.dart';
+
 import 'package:almajlis/views/widgets/AlMajlisTextFiled.dart';
 import 'package:almajlis/views/widgets/AlMajlisTextViewBold.dart';
 import 'package:almajlis/views/widgets/AlMajlisTextViewMedium.dart';
@@ -19,13 +18,9 @@ import 'package:flutter/rendering.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:loading/indicator/ball_pulse_indicator.dart';
 import 'package:loading/loading.dart';
-import 'package:otp_text_field/otp_field.dart';
-import 'package:otp_text_field/style.dart';
-import 'package:pin_code_fields/pin_code_fields.dart';
+
 import 'package:sms_autofill/sms_autofill.dart';
 import 'package:url_launcher/url_launcher.dart';
-
-import 'ActivityHomeScreens.dart';
 
 class ActivityLogin extends StatefulWidget {
   @override
@@ -61,6 +56,7 @@ class _ActivityLoginState extends ActivityStateBase<ActivityLogin> {
   FirebaseAuth _auth = FirebaseAuth.instance;
   FirebaseUser firebaseUser;
   String errorText;
+
   @override
   void initState() {
     super.initState();
@@ -76,94 +72,98 @@ class _ActivityLoginState extends ActivityStateBase<ActivityLogin> {
   Widget build(BuildContext context) {
     print(_countryCode);
     print(_countryInitial);
-    return AlMajlisBackground(Padding(
-      padding: const EdgeInsets.all(20.0),
-      child: otpScreen
-          ? Column(
-              children: <Widget>[
-                Row(
-                  children: <Widget>[
-                    Expanded(
-                      child: GestureDetector(
+    return AlMajlisBackground(
+      Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: otpScreen
+            ? Column(
+                children: <Widget>[
+                  Row(
+                    children: <Widget>[
+                      Expanded(
+                        child: GestureDetector(
                           onTap: () {
                             setState(() {
                               otpScreen = !otpScreen;
                             });
                           },
-                          child: AlMajlisTextViewBold("CANCEL", size: 12)),
-                    )
-                  ],
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 16.0),
-                  child: Row(
+                          child: AlMajlisTextViewBold("CANCEL", size: 12),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 16.0),
+                    child: Row(
+                      children: <Widget>[
+                        AlMajlisTextViewBold("Verify your",
+                            size: 34,
+                            color: Colors.white,
+                            weight: FontWeight.bold),
+                      ],
+                    ),
+                  ),
+                  Row(
                     children: <Widget>[
-                      AlMajlisTextViewBold("Verify your",
+                      AlMajlisTextViewBold("phone number",
                           size: 34,
                           color: Colors.white,
                           weight: FontWeight.bold),
                     ],
                   ),
-                ),
-                Row(
-                  children: <Widget>[
-                    AlMajlisTextViewBold("phone number",
-                        size: 34, color: Colors.white, weight: FontWeight.bold),
-                  ],
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 20.0),
-                  child: Row(
-                    children: <Widget>[
-                      Expanded(
-                        child: AlMajlisTextViewBold(
-                          "To complete your sign up, please enter the verification code sent to " +
-                              _mobileNumber,
-                          maxLines: 3,
-                          size: 16,
-                          color: Colors.grey,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Expanded(
-                  child: isLoading
-                      ? Container(
-                          child: Center(
-                            child: Loading(
-                                indicator: BallPulseIndicator(),
-                                size: 30.0,
-                                color: Constants.COLOR_PRIMARY_TEAL),
-                          ),
-                        )
-                      : Center(
-                          child: otpWidget(),
-                        ),
-                ),
-                Column(
-                  children: <Widget>[
-                    Row(
+                  Padding(
+                    padding: const EdgeInsets.only(top: 20.0),
+                    child: Row(
                       children: <Widget>[
                         Expanded(
-                          child: AlMajlisButton(
-                              "Verify", Constants.TEAL, completeVerification),
-                        )
+                          child: AlMajlisTextViewBold(
+                            "To complete your sign up, please enter the verification code sent to " +
+                                _mobileNumber,
+                            maxLines: 3,
+                            size: 16,
+                            color: Colors.grey,
+                          ),
+                        ),
                       ],
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 8.0),
-                      child: GestureDetector(
-                        onTap: () {
-                          Fluttertoast.showToast(
-                              msg: "OTP Sent again",
-                              toastLength: Toast.LENGTH_SHORT,
-                              gravity: ToastGravity.CENTER,
-                              timeInSecForIosWeb: 2);
-                          _sigInWithPhoneAuth();
-                        },
-                        child: RichText(
-                          text: TextSpan(
+                  ),
+                  Expanded(
+                    child: isLoading
+                        ? Container(
+                            child: Center(
+                              child: Loading(
+                                  indicator: BallPulseIndicator(),
+                                  size: 30.0,
+                                  color: Constants.COLOR_PRIMARY_TEAL),
+                            ),
+                          )
+                        : Center(
+                            child: otpWidget(),
+                          ),
+                  ),
+                  Column(
+                    children: <Widget>[
+                      Row(
+                        children: <Widget>[
+                          Expanded(
+                            child: AlMajlisButton(
+                                "Verify", Constants.TEAL, completeVerification),
+                          ),
+                        ],
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 8.0),
+                        child: GestureDetector(
+                          onTap: () {
+                            Fluttertoast.showToast(
+                                msg: "OTP Sent again",
+                                toastLength: Toast.LENGTH_SHORT,
+                                gravity: ToastGravity.CENTER,
+                                timeInSecForIosWeb: 2);
+                            _sigInWithPhoneAuth();
+                          },
+                          child: RichText(
+                            text: TextSpan(
                               text: "Didn’t receive an SMS code yet?",
                               style: TextStyle(
                                   fontFamily: 'ProximaNovaMedium',
@@ -177,144 +177,147 @@ class _ActivityLoginState extends ActivityStateBase<ActivityLogin> {
                                       color: Colors.teal,
                                       fontWeight: FontWeight.bold),
                                 ),
-                              ]),
+                              ],
+                            ),
+                          ),
                         ),
                       ),
-                    )
-                  ],
-                ),
-              ],
-            )
-          : Column(
-              children: <Widget>[
-                Row(
-                  children: <Widget>[
-                    AlMajlisBackButton(
-                      onClick: () {
-                        Navigator.pop(context);
-                      },
-                    )
-                  ],
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 16.0),
-                  child: Column(
+                    ],
+                  ),
+                ],
+              )
+            : Column(
+                children: <Widget>[
+                  Row(
                     children: <Widget>[
-                      Row(
-                        children: <Widget>[
-                          AlMajlisTextViewBold("Verify your",
-                              size: 34,
-                              color: Colors.white,
-                              weight: FontWeight.bold),
-                        ],
-                      ),
-                      Row(
-                        children: <Widget>[
-                          AlMajlisTextViewBold("phone number",
-                              size: 34,
-                              color: Colors.white,
-                              weight: FontWeight.bold),
-                        ],
+                      AlMajlisBackButton(
+                        onClick: () {
+                          Navigator.pop(context);
+                        },
                       ),
                     ],
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 20.0),
-                  child: Row(
-                    children: <Widget>[
-                      Expanded(
-                        child: AlMajlisTextViewMedium(
-                            "You will receive an SMS code for verification. Message and data rates may apply.",
-                            maxLines: 3,
-                            size: 16,
-                            color: Colors.grey),
-                      ),
-                    ],
-                  ),
-                ),
-                Expanded(
-                  child: isLoading
-                      ? Container(
-                          child: Center(
-                            child: Loading(
-                                indicator: BallPulseIndicator(),
-                                size: 30.0,
-                                color: Constants.COLOR_PRIMARY_TEAL),
-                          ),
-                        )
-                      : Row(
+                  Padding(
+                    padding: const EdgeInsets.only(top: 16.0),
+                    child: Column(
+                      children: <Widget>[
+                        Row(
                           children: <Widget>[
-                            Container(
-                              decoration: BoxDecoration(
-                                border: new Border.all(
-                                    color: Constants.COLOR_PRIMARY_GREY,
-                                    width: 1,
-                                    style: BorderStyle.solid),
-                                borderRadius: BorderRadius.all(
-                                    const Radius.circular(10.0)),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.all(4.0),
-                                child: CountryCodePicker(
-                                  initialSelection: _countryInitial,
-                                  onChanged: _onCountryChanged,
-                                  textStyle: TextStyle(color: Colors.white),
-                                  dialogTextStyle:
-                                      TextStyle(color: Colors.teal),
-                                ),
-                              ),
-                            ),
-                            Expanded(
-                                child: Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 8.0),
-                              child: AlMajlisTextField(
-                                "Phone Number",
-                                phoneNoController,
-                                keyboardType: TextInputType.number,
-                                errorText: errorText,
-                              ),
-                            ))
+                            AlMajlisTextViewBold("Verify your",
+                                size: 34,
+                                color: Colors.white,
+                                weight: FontWeight.bold),
                           ],
                         ),
-                ),
-                Column(
-                  children: <Widget>[
-                    Row(
-                      children: <Widget>[
-                        Expanded(
-                          child: AlMajlisButton("SEND ME AN SMS",
-                              Constants.TEAL, _sigInWithPhoneAuth),
-                        )
+                        Row(
+                          children: <Widget>[
+                            AlMajlisTextViewBold("phone number",
+                                size: 34,
+                                color: Colors.white,
+                                weight: FontWeight.bold),
+                          ],
+                        ),
                       ],
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 8.0),
-                      child: Text(
-                        "By signing up, you agree to Majlis",
-                        style: TextStyle(
-                            fontFamily: 'ProximaNovaMedium',
-                            color: Colors.white),
-                      ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 20.0),
+                    child: Row(
+                      children: <Widget>[
+                        Expanded(
+                          child: AlMajlisTextViewMedium(
+                              "You will receive an SMS code for verification. Message and data rates may apply.",
+                              maxLines: 3,
+                              size: 16,
+                              color: Colors.grey),
+                        ),
+                      ],
                     ),
-                    InkWell(
-                      onTap: () async {
-                        if (await canLaunch(
-                            "https://majlis.mystaginghub.com/termsandprivacy.html")) {
-                          await launch(
-                              "https://majlis.mystaginghub.com/termsandprivacy.html");
-                        } else {
-                          Fluttertoast.showToast(
-                              msg:
-                                  "Could not launch https://majlis.mystaginghub.com/termsandprivacy.html",
-                              toastLength: Toast.LENGTH_SHORT,
-                              gravity: ToastGravity.CENTER,
-                              timeInSecForIosWeb: 2);
-                        }
-                      },
-                      child: RichText(
-                        text: TextSpan(
+                  ),
+                  Expanded(
+                    child: isLoading
+                        ? Container(
+                            child: Center(
+                              child: Loading(
+                                  indicator: BallPulseIndicator(),
+                                  size: 30.0,
+                                  color: Constants.COLOR_PRIMARY_TEAL),
+                            ),
+                          )
+                        : Row(
+                            children: <Widget>[
+                              Container(
+                                decoration: BoxDecoration(
+                                  border: new Border.all(
+                                      color: Constants.COLOR_PRIMARY_GREY,
+                                      width: 1,
+                                      style: BorderStyle.solid),
+                                  borderRadius: BorderRadius.all(
+                                    const Radius.circular(10.0),
+                                  ),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(4.0),
+                                  child: CountryCodePicker(
+                                    initialSelection: _countryInitial,
+                                    onChanged: _onCountryChanged,
+                                    textStyle: TextStyle(color: Colors.white),
+                                    dialogTextStyle:
+                                        TextStyle(color: Colors.teal),
+                                  ),
+                                ),
+                              ),
+                              Expanded(
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 8.0),
+                                  child: AlMajlisTextField(
+                                    "Phone Number",
+                                    phoneNoController,
+                                    keyboardType: TextInputType.number,
+                                    errorText: errorText,
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                  ),
+                  Column(
+                    children: <Widget>[
+                      Row(
+                        children: <Widget>[
+                          Expanded(
+                            child: AlMajlisButton("SEND ME AN SMS",
+                                Constants.TEAL, _sigInWithPhoneAuth),
+                          ),
+                        ],
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 8.0),
+                        child: Text(
+                          "By signing up, you agree to Majlis",
+                          style: TextStyle(
+                              fontFamily: 'ProximaNovaMedium',
+                              color: Colors.white),
+                        ),
+                      ),
+                      InkWell(
+                        onTap: () async {
+                          if (await canLaunch(
+                              "https://majlis.mystaginghub.com/termsandprivacy.html")) {
+                            await launch(
+                                "https://majlis.mystaginghub.com/termsandprivacy.html");
+                          } else {
+                            Fluttertoast.showToast(
+                                msg:
+                                    "Could not launch https://majlis.mystaginghub.com/termsandprivacy.html",
+                                toastLength: Toast.LENGTH_SHORT,
+                                gravity: ToastGravity.CENTER,
+                                timeInSecForIosWeb: 2);
+                          }
+                        },
+                        child: RichText(
+                          text: TextSpan(
                             text: "Terms & Conditions",
                             style: TextStyle(
                                 fontFamily: 'ProximaNovaBold',
@@ -334,14 +337,16 @@ class _ActivityLoginState extends ActivityStateBase<ActivityLogin> {
                                     color: Colors.teal,
                                     fontWeight: FontWeight.bold),
                               )
-                            ]),
+                            ],
+                          ),
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-    ));
+                    ],
+                  ),
+                ],
+              ),
+      ),
+    );
   }
 
   void _onCountryChanged(CountryCode selectedCountry) {
@@ -510,17 +515,19 @@ class _ActivityLoginState extends ActivityStateBase<ActivityLogin> {
               // ),
               enabled: true,
               enabledBorder: new OutlineInputBorder(
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(10.0),
-                  ),
-                  borderSide: BorderSide(
-                      width: 1, color: Constants.COLOR_PRIMARY_GREY)),
+                borderRadius: BorderRadius.all(
+                  Radius.circular(10.0),
+                ),
+                borderSide:
+                    BorderSide(width: 1, color: Constants.COLOR_PRIMARY_GREY),
+              ),
               border: new OutlineInputBorder(
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(10.0),
-                  ),
-                  borderSide: BorderSide(
-                      width: 5, color: Constants.COLOR_PRIMARY_GREY)),
+                borderRadius: BorderRadius.all(
+                  Radius.circular(10.0),
+                ),
+                borderSide:
+                    BorderSide(width: 5, color: Constants.COLOR_PRIMARY_GREY),
+              ),
             ),
             currentCode: smsOTP,
             style: TextStyle(
@@ -534,7 +541,9 @@ class _ActivityLoginState extends ActivityStateBase<ActivityLogin> {
             onCodeChanged: (value) {
               print("value $value");
               if (value.length == 6) {
-                FocusScope.of(context).requestFocus(FocusNode());
+                FocusScope.of(context).requestFocus(
+                  FocusNode(),
+                );
               }
               smsOTP = value;
             },

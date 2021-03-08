@@ -1,13 +1,13 @@
 import 'dart:io';
 
 import 'package:almajlis/activities/ActivityBase.dart';
-import 'package:almajlis/activities/ActivityUserChatList.dart';
+
 import 'package:almajlis/core/server/wrappers/ResponseOk.dart';
 import 'package:almajlis/core/server/wrappers/ResponseUser.dart';
 import 'package:almajlis/core/wrappers/User.dart';
 import 'package:almajlis/utils/Constants.dart';
 import 'package:almajlis/views/components/AlMajlisBackButton.dart';
-import 'package:almajlis/views/components/AlMajlisBackground.dart';
+
 import 'package:almajlis/views/components/AlmajlisProfileImageWithStatus.dart';
 import 'package:almajlis/views/widgets/AlMajlisTextViewBold.dart';
 import 'package:almajlis/views/widgets/AlMajlisTextViewMedium.dart';
@@ -64,7 +64,10 @@ class ChatRoom {
 class ActivityUserChat extends StatefulWidget {
   String myUserId;
   String otherPersonUserId;
-  ActivityUserChat({Key key, this.myUserId, this.otherPersonUserId}) : super(key: key);
+
+  ActivityUserChat({Key key, this.myUserId, this.otherPersonUserId})
+      : super(key: key);
+
   @override
   _ChatState createState() => _ChatState();
 }
@@ -80,29 +83,30 @@ class _ChatState extends ActivityStateBase<ActivityUserChat> {
   TextEditingController messageEditingController = new TextEditingController();
   String thumbUrl = "";
   String name = "";
-  String occupation ="";
-  String country ="";
+  String occupation = "";
+  String country = "";
   bool isPro = false;
   String myName = "";
   FocusNode messageFocusNode = FocusNode();
   bool sendinginProcess = false;
+
   Widget chatMessages() {
     return StreamBuilder(
       stream: chatRooms,
       builder: (context, snapshot) {
         return snapshot.hasData
             ? ListView.builder(
-            scrollDirection: Axis.vertical,
-            itemCount: snapshot.data.documents.length,
-            itemBuilder: (context, index) {
-              final listOfUsers = snapshot.data.documents.toList();
-              Messages message = Messages.fromData(listOfUsers[index]);
+                scrollDirection: Axis.vertical,
+                itemCount: snapshot.data.documents.length,
+                itemBuilder: (context, index) {
+                  final listOfUsers = snapshot.data.documents.toList();
+                  Messages message = Messages.fromData(listOfUsers[index]);
 
-              return MessageTile(
-                message: message.text,
-                sendByMe: myName == message.sender_name,
-              );
-            })
+                  return MessageTile(
+                    message: message.text,
+                    sendByMe: myName == message.sender_name,
+                  );
+                })
             : Container();
       },
     );
@@ -116,15 +120,15 @@ class _ChatState extends ActivityStateBase<ActivityUserChat> {
   //We can also add sender id here.
   Future<void> postMessage() async {
     myName = "";
-    if(null != myself.firstName) {
+    if (null != myself.firstName) {
       myName = myself.firstName + " ";
     }
-    if(null != myself.lastName) {
+    if (null != myself.lastName) {
       myName += myself.lastName;
     }
-    if(messageEditingController.text.length > 0) {
+    if (messageEditingController.text.length > 0) {
       Map<String, dynamic> userDataMap = {
-        "sender_user_id" : widget.myUserId,
+        "sender_user_id": widget.myUserId,
         "sender_name": myName,
         "text": messageEditingController.text,
         'time': DateTime.now().millisecondsSinceEpoch
@@ -134,22 +138,21 @@ class _ChatState extends ActivityStateBase<ActivityUserChat> {
           .collection("messages")
           .add(userDataMap)
           .then((value) {
-            messageEditingController.text = "";
-            sendinginProcess = false;
+        messageEditingController.text = "";
+        sendinginProcess = false;
 //            FocusScope.of(context).requestFocus(FocusNode());
-            newMessage();
-            getUserInfogetChats();
-          })
-          .catchError((e) {
-            print(e.toString());
-          });
+        newMessage();
+        getUserInfogetChats();
+      }).catchError((e) {
+        print(e.toString());
+      });
 
 // Update Time for self document
       var user = await _usersInstance
           .where('myUserId', isEqualTo: widget.myUserId)
           .getDocuments();
 
-      if(user.documents.length > 0) {
+      if (user.documents.length > 0) {
         var convoList = _usersInstance
             .document(user.documents.first.documentID)
             .collection("conversations");
@@ -159,17 +162,19 @@ class _ChatState extends ActivityStateBase<ActivityUserChat> {
             .getDocuments();
 
         String otherUserName = "";
-        if(null != otherUser.firstName) {
+        if (null != otherUser.firstName) {
           otherUserName = otherUser.firstName + " ";
         }
-        if(null != otherUser.lastName) {
+        if (null != otherUser.lastName) {
           otherUserName += otherUser.lastName;
         }
-        if(receipentUser.documents.length > 0) {
-          _usersInstance.document(user.documents.first.documentID)
-              .collection("conversations").document(receipentUser.documents.first.documentID).updateData({'time' : DateTime.now().millisecondsSinceEpoch});
-        }
-        else {
+        if (receipentUser.documents.length > 0) {
+          _usersInstance
+              .document(user.documents.first.documentID)
+              .collection("conversations")
+              .document(receipentUser.documents.first.documentID)
+              .updateData({'time': DateTime.now().millisecondsSinceEpoch});
+        } else {
           Map<String, dynamic> userMap = {
             "id": widget.otherPersonUserId,
             "thumb": otherUser.thumbUrl,
@@ -179,13 +184,10 @@ class _ChatState extends ActivityStateBase<ActivityUserChat> {
             'name': otherUserName,
             'isPro': otherUser.isPro
           };
-          convoList
-              .add(userMap)
-              .catchError((e) {
+          convoList.add(userMap).catchError((e) {
             print(e.toString());
           });
         }
-
       }
 
 //// Update Time for reciepent document
@@ -193,7 +195,7 @@ class _ChatState extends ActivityStateBase<ActivityUserChat> {
           .where('myUserId', isEqualTo: widget.otherPersonUserId)
           .getDocuments();
 
-      if(user.documents.length > 0) {
+      if (user.documents.length > 0) {
         var convoList = _usersInstance
             .document(user.documents.first.documentID)
             .collection("conversations");
@@ -202,12 +204,13 @@ class _ChatState extends ActivityStateBase<ActivityUserChat> {
             .where('id', isEqualTo: widget.myUserId)
             .getDocuments();
 
-
-        if(receipentUser.documents.length > 0) {
-          _usersInstance.document(user.documents.first.documentID)
-              .collection("conversations").document(receipentUser.documents.first.documentID).updateData({'time' : DateTime.now().millisecondsSinceEpoch});
-        }
-        else {
+        if (receipentUser.documents.length > 0) {
+          _usersInstance
+              .document(user.documents.first.documentID)
+              .collection("conversations")
+              .document(receipentUser.documents.first.documentID)
+              .updateData({'time': DateTime.now().millisecondsSinceEpoch});
+        } else {
           Map<String, dynamic> userMap = {
             "id": widget.myUserId,
             "thumb": myself.thumbUrl,
@@ -217,13 +220,10 @@ class _ChatState extends ActivityStateBase<ActivityUserChat> {
             'name': myself.firstName + " " + myself.lastName,
             'isPro': myself.isPro
           };
-          convoList
-              .add(userMap)
-              .catchError((e) {
+          convoList.add(userMap).catchError((e) {
             print(e.toString());
           });
         }
-
       }
     }
   }
@@ -266,19 +266,16 @@ class _ChatState extends ActivityStateBase<ActivityUserChat> {
       print(e.toString());
     });
 
-
     var user = await _usersInstance
         .where('myUserId', isEqualTo: widget.myUserId)
         .getDocuments();
 
-    if(user.documents.length <= 0) {
+    if (user.documents.length <= 0) {
       Map<String, String> userMap = {
         "myUserId": widget.myUserId,
       };
 
-      _usersInstance
-          .add(userMap)
-          .catchError((e) {
+      _usersInstance.add(userMap).catchError((e) {
         print(e.toString());
       });
     }
@@ -287,19 +284,15 @@ class _ChatState extends ActivityStateBase<ActivityUserChat> {
         .where('myUserId', isEqualTo: widget.otherPersonUserId)
         .getDocuments();
 
-    if(user.documents.length <= 0) {
+    if (user.documents.length <= 0) {
       Map<String, String> userMap = {
         "myUserId": widget.otherPersonUserId,
       };
 
-      _usersInstance
-          .add(userMap)
-          .catchError((e) {
+      _usersInstance.add(userMap).catchError((e) {
         print(e.toString());
       });
     }
-
-
   }
 
   getUserInfogetChats() async {
@@ -325,7 +318,7 @@ class _ChatState extends ActivityStateBase<ActivityUserChat> {
     return Scaffold(
       appBar: AppBar(
         leading: Padding(
-          padding: const EdgeInsets.symmetric(horizontal:12.0),
+          padding: const EdgeInsets.symmetric(horizontal: 12.0),
           child: AlMajlisBackButton(
             onClick: () {
               Navigator.pop(context);
@@ -341,38 +334,38 @@ class _ChatState extends ActivityStateBase<ActivityUserChat> {
             Column(
               children: <Widget>[
                 Padding(
-                  padding: const EdgeInsets.only(left:8.0, top:8),
+                  padding: const EdgeInsets.only(left: 8.0, top: 8),
                   child: Row(
                     children: <Widget>[
-                      null != thumbUrl && !thumbUrl.isEmpty ?
-                      AlMajlisProfileImageWithStatus(
-                        thumbUrl,
-                        70.0,
-                        isPro:isPro,
-                      ) :
-                      Container(
-                        height: 70,
-                        width: 70,
-                        decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: isPro ? Constants.COLOR_PRIMARY_TEAL : Colors.white),
-                        child: Padding(
-                          padding:
-                          const EdgeInsets.all(4.0),
-                          child: Container(
-                            decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                gradient: LinearGradient(
-                                    colors: [
-                                      Colors.purple,
-                                      Colors.teal
-                                    ])),
-                          ),
-                        ),
-                      ),
+                      null != thumbUrl && !thumbUrl.isEmpty
+                          ? AlMajlisProfileImageWithStatus(
+                              thumbUrl,
+                              70.0,
+                              isPro: isPro,
+                            )
+                          : Container(
+                              height: 70,
+                              width: 70,
+                              decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: isPro
+                                      ? Constants.COLOR_PRIMARY_TEAL
+                                      : Colors.white),
+                              child: Padding(
+                                padding: const EdgeInsets.all(4.0),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      gradient: LinearGradient(colors: [
+                                        Colors.purple,
+                                        Colors.teal
+                                      ])),
+                                ),
+                              ),
+                            ),
                       Expanded(
                         child: Padding(
-                          padding: const EdgeInsets.only(left:8.0),
+                          padding: const EdgeInsets.only(left: 8.0),
                           child: Column(
                             children: <Widget>[
                               Row(
@@ -389,9 +382,7 @@ class _ChatState extends ActivityStateBase<ActivityUserChat> {
                                 children: <Widget>[
                                   Expanded(
                                     child: AlMajlisTextViewMedium(
-                                      null != occupation
-                                          ? occupation
-                                          : "",
+                                      null != occupation ? occupation : "",
                                       size: 12,
                                     ),
                                   ),
@@ -401,9 +392,7 @@ class _ChatState extends ActivityStateBase<ActivityUserChat> {
                                 children: <Widget>[
                                   Expanded(
                                     child: AlMajlisTextViewMedium(
-                                      null != country
-                                          ? country
-                                          : "",
+                                      null != country ? country : "",
                                       size: 12,
                                     ),
                                   ),
@@ -423,47 +412,41 @@ class _ChatState extends ActivityStateBase<ActivityUserChat> {
             ),
             Expanded(child: chatMessages()),
             Padding(
-              padding: EdgeInsets.symmetric(vertical:16, horizontal: 16),
+              padding: EdgeInsets.symmetric(vertical: 16, horizontal: 16),
               child: Container(
                 alignment: Alignment.bottomCenter,
                 width: MediaQuery.of(context).size.width,
                 child: Container(
                   padding: EdgeInsets.symmetric(horizontal: 8),
                   decoration: BoxDecoration(
-                      border: Border.all(
-                          width: 1.0,
-                          color: Colors.white
-                      ),
-                      borderRadius: BorderRadius.all(
-                          Radius.circular(20.0)
-                      ),
+                    border: Border.all(width: 1.0, color: Colors.white),
+                    borderRadius: BorderRadius.all(Radius.circular(20.0)),
                   ),
                   child: Row(
                     children: [
                       Expanded(
                           child: TextField(
-                            controller: messageEditingController,
-                            style: TextStyle(color: Colors.white, fontSize: 16),
-                            autofocus: true,
-                            decoration: InputDecoration(
-                                hintText: "Message ...",
-                                hintStyle: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 16,
-                                ),
-                                border: InputBorder.none),
-                            textInputAction: TextInputAction.done,
-                            onSubmitted: (term) {
-                              addMessage();
-                            },
-                          )),
+                        controller: messageEditingController,
+                        style: TextStyle(color: Colors.white, fontSize: 16),
+                        autofocus: true,
+                        decoration: InputDecoration(
+                            hintText: "Message ...",
+                            hintStyle: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                            ),
+                            border: InputBorder.none),
+                        textInputAction: TextInputAction.done,
+                        onSubmitted: (term) {
+                          addMessage();
+                        },
+                      )),
                       SizedBox(
                         width: 16,
                       ),
                       GestureDetector(
                         onTap: () {
-                          if(!sendinginProcess)
-                          addMessage();
+                          if (!sendinginProcess) addMessage();
                         },
                         child: Container(
                             height: 40,
@@ -472,8 +455,7 @@ class _ChatState extends ActivityStateBase<ActivityUserChat> {
                               Icons.send,
                               color: Colors.white,
                               size: 28,
-                            )
-                        ),
+                            )),
                       ),
                     ],
                   ),
@@ -486,48 +468,38 @@ class _ChatState extends ActivityStateBase<ActivityUserChat> {
     );
   }
 
-
   void getUser(bool selfUser) async {
     core.startLoading(_context);
     ResponseUser response;
     User user;
-    try{
-      response = await core.getUser(id:selfUser ? widget.myUserId : widget.otherPersonUserId);
-    }
-    on SocketException
-    catch(_) {
-      Fluttertoast.showToast(msg: "Please Check Your Connectivity",
+    try {
+      response = await core.getUser(
+          id: selfUser ? widget.myUserId : widget.otherPersonUserId);
+    } on SocketException catch (_) {
+      Fluttertoast.showToast(
+          msg: "Please Check Your Connectivity",
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.CENTER,
           timeInSecForIosWeb: 2);
       core.stopLoading(_context);
     }
 
-    if(!core.systemCanHandel(response)) {
-      if(response.status.statusCode == 0) {
+    if (!core.systemCanHandel(response)) {
+      if (response.status.statusCode == 0) {
         user = response.payload;
         setState(() {
-          if(selfUser) {
+          if (selfUser) {
             myself = user;
-            if(null != myself.firstName)
-              myName = myself.firstName + " ";
-            if(null != myself.lastName)
-              myName += myself.lastName;
-          }
-          else {
+            if (null != myself.firstName) myName = myself.firstName + " ";
+            if (null != myself.lastName) myName += myself.lastName;
+          } else {
             otherUser = user;
-            if(null != otherUser.thumbUrl)
-            thumbUrl = otherUser.thumbUrl;
-            if(null != otherUser.firstName)
-            name = otherUser.firstName + " ";
-            if(null != otherUser.lastName)
-              name += otherUser.lastName;
-            if(null != otherUser.occupation)
-            occupation = otherUser.occupation;
-            if(null != otherUser.country)
-            country = otherUser.country;
-            if(null != otherUser.isPro)
-              isPro = otherUser.isPro;
+            if (null != otherUser.thumbUrl) thumbUrl = otherUser.thumbUrl;
+            if (null != otherUser.firstName) name = otherUser.firstName + " ";
+            if (null != otherUser.lastName) name += otherUser.lastName;
+            if (null != otherUser.occupation) occupation = otherUser.occupation;
+            if (null != otherUser.country) country = otherUser.country;
+            if (null != otherUser.isPro) isPro = otherUser.isPro;
           }
         });
       }
@@ -538,12 +510,11 @@ class _ChatState extends ActivityStateBase<ActivityUserChat> {
   void newMessage() async {
     ResponseOk response;
     User user;
-    try{
+    try {
       response = await core.newMessage(widget.otherPersonUserId);
-    }
-    on SocketException
-    catch(_) {
-      Fluttertoast.showToast(msg: "Please Check Your Connectivity",
+    } on SocketException catch (_) {
+      Fluttertoast.showToast(
+          msg: "Please Check Your Connectivity",
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.CENTER,
           timeInSecForIosWeb: 2);
@@ -553,9 +524,8 @@ class _ChatState extends ActivityStateBase<ActivityUserChat> {
   @override
   onWidgetInitialized() {
     // TODO: implement onWidgetInitialized
-   getUser(true);
-   getUser(false);
-
+    getUser(true);
+    getUser(false);
   }
 }
 
@@ -573,19 +543,22 @@ class MessageTile extends StatelessWidget {
       alignment: sendByMe ? Alignment.centerRight : Alignment.centerLeft,
       child: Container(
         margin:
-        sendByMe ? EdgeInsets.only(left: 30) : EdgeInsets.only(right: 30),
+            sendByMe ? EdgeInsets.only(left: 30) : EdgeInsets.only(right: 30),
         padding: EdgeInsets.only(top: 17, bottom: 17, left: 20, right: 20),
         decoration: BoxDecoration(
-            borderRadius: sendByMe
-                ? BorderRadius.only(
-                topLeft: Radius.circular(23),
-                topRight: Radius.circular(23),
-                bottomLeft: Radius.circular(23))
-                : BorderRadius.only(
-                topLeft: Radius.circular(23),
-                topRight: Radius.circular(23),
-                bottomRight: Radius.circular(23)),
-            color: sendByMe ? Constants.COLOR_PRIMARY_TEAL : Constants.COLOR_PRIMARY_TEAL_OPACITY,),
+          borderRadius: sendByMe
+              ? BorderRadius.only(
+                  topLeft: Radius.circular(23),
+                  topRight: Radius.circular(23),
+                  bottomLeft: Radius.circular(23))
+              : BorderRadius.only(
+                  topLeft: Radius.circular(23),
+                  topRight: Radius.circular(23),
+                  bottomRight: Radius.circular(23)),
+          color: sendByMe
+              ? Constants.COLOR_PRIMARY_TEAL
+              : Constants.COLOR_PRIMARY_TEAL_OPACITY,
+        ),
         child: Linkify(
             text: message,
             onOpen: (link) async {

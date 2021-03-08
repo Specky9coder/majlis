@@ -1,7 +1,6 @@
 import 'dart:core';
 import 'package:almajlis/core/wrappers/AlMajlisLocation.dart';
 import 'package:almajlis/core/wrappers/AlMajlisPostUser.dart';
-import 'package:almajlis/core/wrappers/User.dart';
 import 'package:jaguar_serializer/jaguar_serializer.dart';
 
 part 'AlMajlisPost.jser.dart';

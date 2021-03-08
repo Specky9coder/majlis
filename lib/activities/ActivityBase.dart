@@ -1,5 +1,4 @@
 import 'package:almajlis/core/core.dart';
-import 'package:almajlis/core/server/wrappers/ResponseLogin.dart';
 import 'package:almajlis/services/PushRegisterService.dart';
 import 'package:flutter/material.dart';
 

@@ -3,7 +3,7 @@ import 'dart:ui';
 
 import 'package:almajlis/activities/ActivityAddNewPost.dart';
 import 'package:almajlis/activities/ActivityBase.dart';
-import 'package:almajlis/activities/ActivityBookings.dart';
+
 import 'package:almajlis/activities/ActivityContact.dart';
 import 'package:almajlis/activities/ActivityCreditCardPayment.dart';
 import 'package:almajlis/activities/ActivityEditProfile.dart';
@@ -35,7 +35,7 @@ import 'package:almajlis/views/components/AlMajlisDateCard.dart';
 import 'package:almajlis/views/components/AlMajlisExperienceCard.dart';
 import 'package:almajlis/views/components/AlMajlisImageIcons.dart';
 import 'package:almajlis/views/components/AlMajlisLinkText.dart';
-import 'package:almajlis/views/components/AlMajlisNavigationBar.dart';
+
 import 'package:almajlis/views/components/AlMajlisRadioButton.dart';
 import 'package:almajlis/views/components/AlMajlisShortPostCard.dart';
 import 'package:almajlis/views/components/AlmajlisProfileImageWithStatus.dart';
@@ -62,7 +62,9 @@ import 'package:timeago/timeago.dart' as timeago;
 
 class ActivityProfile extends StatefulWidget {
   String userId;
+
   ActivityProfile({this.userId});
+
   @override
   _ActivityProfileState createState() => _ActivityProfileState();
 }
@@ -132,10 +134,13 @@ class _ActivityProfileState extends ActivityStateBase<ActivityProfile> {
   DateTime bookingDate;
   bool showSkils = false;
   var videoThumb;
+
   @override
   void initState() {
     // TODO: implement initState
-    radioBtnData.add(new RadioModel(true, 'Credit/Debit/AMEX'));
+    radioBtnData.add(
+      new RadioModel(true, 'Credit/Debit/AMEX'),
+    );
   }
 
   @override
@@ -172,12 +177,16 @@ class _ActivityProfileState extends ActivityStateBase<ActivityProfile> {
         ..paymentMethod = 0
         ..userId = user.userId;
 
-      var data = await Navigator.of(_context).push(MaterialPageRoute(
-          builder: (context) => ActivityCreditCardPayment(
+      var data = await Navigator.of(_context).push(
+        MaterialPageRoute(
+          builder: (context) =>
+              ActivityCreditCardPayment(
                 totalCharges,
                 isBooking: true,
                 booking: booking,
-              )));
+              ),
+        ),
+      );
 
       print(data);
       if (data != null) {
@@ -202,10 +211,11 @@ class _ActivityProfileState extends ActivityStateBase<ActivityProfile> {
 
   void showForwardBottomSheet() {
     scaffoldState.currentState
-        .showBottomSheet((context) => PostShareBottomSheet(
-              sahreToUsers: shareToUsers,
-              showCopyAndShare: false,
-            ));
+        .showBottomSheet((context) =>
+        PostShareBottomSheet(
+          sahreToUsers: shareToUsers,
+          showCopyAndShare: false,
+        ),);
     newForward(widget.userId);
   }
 
@@ -232,48 +242,52 @@ class _ActivityProfileState extends ActivityStateBase<ActivityProfile> {
                     GestureDetector(
                       child: Container(
                         width: double.infinity,
-                        height: MediaQuery.of(context).size.height * 0.85,
+                        height: MediaQuery
+                            .of(context)
+                            .size
+                            .height * 0.85,
                         child:
-                            null != _controller && _controller.value.initialized
-                                ? AspectRatio(
-                                    aspectRatio: _controller.value.aspectRatio,
-                                    child: VideoPlayer(_controller),
-                                  )
-                                : null != videoThumb && !videoThumb.isEmpty
-                                    ? Container(
-                                        child: CachedNetworkImage(
-                                          imageUrl: videoThumb,
-                                          imageBuilder: (context, provider) {
-                                            return Image(
-                                              width: double.infinity,
-                                              height: MediaQuery.of(context)
-                                                      .size
-                                                      .height *
-                                                  0.85,
-                                              fit: BoxFit.cover,
-                                              image: provider,
-                                            );
-                                          },
-                                          errorWidget: (context, url, error) {
-                                            return Container();
-                                          },
-                                          placeholder: (context, url) =>
-                                              Container(),
-                                        ),
-                                      )
-                                    : Container(
-                                        decoration: BoxDecoration(
-                                            gradient: LinearGradient(colors: [
-                                          Colors.purple,
-                                          Colors.teal
-                                        ])),
-                                        child: Center(
-                                          child: AlMajlisTextViewBold(
-                                            "No Short Video Uploaded",
-                                            size: 16,
-                                          ),
-                                        ),
-                                      ),
+                        null != _controller && _controller.value.initialized
+                            ? AspectRatio(
+                          aspectRatio: _controller.value.aspectRatio,
+                          child: VideoPlayer(_controller),
+                        )
+                            : null != videoThumb && !videoThumb.isEmpty
+                            ? Container(
+                          child: CachedNetworkImage(
+                            imageUrl: videoThumb,
+                            imageBuilder: (context, provider) {
+                              return Image(
+                                width: double.infinity,
+                                height: MediaQuery
+                                    .of(context)
+                                    .size
+                                    .height *
+                                    0.85,
+                                fit: BoxFit.cover,
+                                image: provider,
+                              );
+                            },
+                            errorWidget: (context, url, error) {
+                              return Container();
+                            },
+                            placeholder: (context, url) =>
+                                Container(),
+                          ),
+                        )
+                            : Container(
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(colors: [
+                              Colors.purple,
+                              Colors.teal
+                            ],),),
+                          child: Center(
+                            child: AlMajlisTextViewBold(
+                              "No Short Video Uploaded",
+                              size: 16,
+                            ),
+                          ),
+                        ),
                       ),
                       onTap: () {
                         setState(() {
@@ -289,154 +303,157 @@ class _ActivityProfileState extends ActivityStateBase<ActivityProfile> {
                       children: <Widget>[
                         selfProfile
                             ? Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    vertical: 20.0, horizontal: 20),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    GestureDetector(
-                                      child: Image.asset(
-                                        "drawables/Settings btn.png",
-                                        height: 32,
-                                      ),
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 20.0, horizontal: 20),
+                          child: Row(
+                            mainAxisAlignment:
+                            MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              GestureDetector(
+                                child: Image.asset(
+                                  "drawables/Settings btn.png",
+                                  height: 32,
+                                ),
+                                onTap: () {
+                                  if (null != _controller &&
+                                      _controller.value.initialized) {
+                                    try {
+                                      _controller.pause();
+                                    } catch (e) {
+                                      print(e);
+                                    }
+                                  }
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          ActivitySettings(),),);
+                                },
+                              ),
+                              GestureDetector(
+                                child: Image.asset(
+                                  "drawables/Edit profile.png",
+                                  height: 32,
+                                ),
+                                onTap: navigateToEditProfile,
+                              ),
+                            ],
+                          ),
+                        )
+                            : Padding(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 20.0, horizontal: 20),
+                          child: Row(
+                            mainAxisAlignment:
+                            MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              AlMajlisBackButton(
+                                onClick: () {
+                                  Navigator.pop(context);
+                                },
+                              ),
+                              !isAdded
+                                  ? Container(
+                                width: 100,
+                                child: AlMajlisButton(
+                                  "ADD",
+                                  Constants.TEAL,
+                                      () {
+                                    addConnection();
+                                  },
+                                  icon: Image.asset(
+                                    "drawables/add contacts.png",
+                                    height: 20,
+                                  ),
+                                ),
+                              )
+                                  : Container(
+                                margin: EdgeInsets.only(top: 8.0),
+                                width: 100,
+                                child: AlMajlisButton(
+                                  "ADDED",
+                                  4,
+                                      () {
+                                    removeConnection();
+                                  },
+                                  icon: Image.asset(
+                                    "drawables/action-01.png",
+                                    height: 18,
+                                  ),
+                                  isFromProfile: true,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(
+                              top: MediaQuery
+                                  .of(context)
+                                  .size
+                                  .height * 0.5),
+                          child: Column(
+                            children: <Widget>[
+                              null != _controller &&
+                                  _controller.value.initialized &&
+                                  image
+                                  ? Row(
+                                mainAxisAlignment:
+                                MainAxisAlignment.center,
+                                children: <Widget>[
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: GestureDetector(
                                       onTap: () {
                                         if (null != _controller &&
-                                            _controller.value.initialized) {
+                                            _controller
+                                                .value.initialized) {
+                                          try {
+                                            _controller.play();
+                                          } catch (e) {
+                                            print(e);
+                                          }
+                                        }
+                                      },
+                                      child: Image.asset(
+                                          "drawables/ic_play_circle_outline_white_36dp.png"),),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        if (null != _controller &&
+                                            _controller
+                                                .value.initialized) {
                                           try {
                                             _controller.pause();
                                           } catch (e) {
                                             print(e);
                                           }
                                         }
-                                        Navigator.of(context).push(
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    ActivitySettings()));
                                       },
-                                    ),
-                                    GestureDetector(
                                       child: Image.asset(
-                                        "drawables/Edit profile.png",
-                                        height: 32,
-                                      ),
-                                      onTap: navigateToEditProfile,
-                                    )
-                                  ],
-                                ),
-                              )
-                            : Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    vertical: 20.0, horizontal: 20),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    AlMajlisBackButton(
-                                      onClick: () {
-                                        Navigator.pop(context);
+                                          "drawables/ic_pause_circle_outline_white_36dp.png"),),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        if (null != _controller &&
+                                            _controller
+                                                .value.initialized) {
+                                          setState(() {
+                                            isMute = !isMute;
+                                          });
+                                          _controller.setVolume(
+                                              isMute ? 0.0 : 1.0);
+                                        }
                                       },
-                                    ),
-                                    !isAdded
-                                        ? Container(
-                                            width: 100,
-                                            child: AlMajlisButton(
-                                              "ADD",
-                                              Constants.TEAL,
-                                              () {
-                                                addConnection();
-                                              },
-                                              icon: Image.asset(
-                                                "drawables/add contacts.png",
-                                                height: 20,
-                                              ),
-                                            ),
-                                          )
-                                        : Container(
-                                            margin: EdgeInsets.only(top: 8.0),
-                                            width: 100,
-                                            child: AlMajlisButton(
-                                              "ADDED",
-                                              4,
-                                              () {
-                                                removeConnection();
-                                              },
-                                              icon: Image.asset(
-                                                "drawables/action-01.png",
-                                                height: 18,
-                                              ),
-                                              isFromProfile: true,
-                                            ),
-                                          )
-                                  ],
-                                ),
-                              ),
-                        Padding(
-                          padding: EdgeInsets.only(
-                              top: MediaQuery.of(context).size.height * 0.5),
-                          child: Column(
-                            children: <Widget>[
-                              null != _controller &&
-                                      _controller.value.initialized &&
-                                      image
-                                  ? Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: <Widget>[
-                                        Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: GestureDetector(
-                                              onTap: () {
-                                                if (null != _controller &&
-                                                    _controller
-                                                        .value.initialized) {
-                                                  try {
-                                                    _controller.play();
-                                                  } catch (e) {
-                                                    print(e);
-                                                  }
-                                                }
-                                              },
-                                              child: Image.asset(
-                                                  "drawables/ic_play_circle_outline_white_36dp.png")),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: GestureDetector(
-                                              onTap: () {
-                                                if (null != _controller &&
-                                                    _controller
-                                                        .value.initialized) {
-                                                  try {
-                                                    _controller.pause();
-                                                  } catch (e) {
-                                                    print(e);
-                                                  }
-                                                }
-                                              },
-                                              child: Image.asset(
-                                                  "drawables/ic_pause_circle_outline_white_36dp.png")),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: GestureDetector(
-                                              onTap: () {
-                                                if (null != _controller &&
-                                                    _controller
-                                                        .value.initialized) {
-                                                  setState(() {
-                                                    isMute = !isMute;
-                                                  });
-                                                  _controller.setVolume(
-                                                      isMute ? 0.0 : 1.0);
-                                                }
-                                              },
-                                              child: Image.asset(isMute
-                                                  ? "drawables/ic_volume_variant_off_white_36dp.png"
-                                                  : "drawables/ic_volume_high_white_36dp.png")),
-                                        ),
-                                      ],
-                                    )
+                                      child: Image.asset(isMute
+                                          ? "drawables/ic_volume_variant_off_white_36dp.png"
+                                          : "drawables/ic_volume_high_white_36dp.png"),),
+                                  ),
+                                ],
+                              )
                                   : Container(),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -463,371 +480,372 @@ class _ActivityProfileState extends ActivityStateBase<ActivityProfile> {
                             children: <Widget>[
                               Expanded(
                                 child: Center(
-                                    child: RichText(
-                                  text: TextSpan(
-                                    children: [
-                                      WidgetSpan(
-                                        child: Padding(
-                                          padding:
-                                              const EdgeInsets.only(right: 4.0),
-                                          child: Image.asset(
-                                            "drawables/work.png",
-                                            height: 16,
+                                  child: RichText(
+                                    text: TextSpan(
+                                      children: [
+                                        WidgetSpan(
+                                          child: Padding(
+                                            padding:
+                                            const EdgeInsets.only(right: 4.0),
+                                            child: Image.asset(
+                                              "drawables/work.png",
+                                              height: 16,
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                      TextSpan(
-                                        text: occupation,
-                                        style: TextStyle(
-                                          fontFamily: 'ProximaNovaMedium',
-                                          fontSize: 12,
-                                          color: Colors.white,
+                                        TextSpan(
+                                          text: occupation,
+                                          style: TextStyle(
+                                            fontFamily: 'ProximaNovaMedium',
+                                            fontSize: 12,
+                                            color: Colors.white,
+                                          ),
                                         ),
-                                      ),
-                                    ],
-                                  ),
-                                )),
+                                      ],
+                                    ),
+                                  ),),
                               ),
                               Expanded(
                                 child: Center(
-                                    child: RichText(
-                                  text: TextSpan(
-                                    children: [
-                                      WidgetSpan(
-                                        child: Padding(
-                                          padding:
-                                              const EdgeInsets.only(right: 4.0),
-                                          child: Image.asset(
-                                            "drawables/Add_location.png",
-                                            height: 16,
+                                  child: RichText(
+                                    text: TextSpan(
+                                      children: [
+                                        WidgetSpan(
+                                          child: Padding(
+                                            padding:
+                                            const EdgeInsets.only(right: 4.0),
+                                            child: Image.asset(
+                                              "drawables/Add_location.png",
+                                              height: 16,
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                      TextSpan(
-                                        text: country,
-                                        style: TextStyle(
-                                          fontFamily: 'ProximaNovaMedium',
-                                          fontSize: 12,
-                                          color: Colors.white,
+                                        TextSpan(
+                                          text: country,
+                                          style: TextStyle(
+                                            fontFamily: 'ProximaNovaMedium',
+                                            fontSize: 12,
+                                            color: Colors.white,
+                                          ),
                                         ),
-                                      ),
-                                    ],
-                                  ),
-                                )),
+                                      ],
+                                    ),
+                                  ),),
                               ),
                             ],
                           ),
                         ),
                         selfProfile
                             ? Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 20.0),
-                                child: Row(
-                                  children: <Widget>[
-                                    Expanded(
-                                      child: AlMajlisButton(
-                                        "NEW POST",
-                                        Constants.TRANS,
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 20.0),
+                          child: Row(
+                            children: <Widget>[
+                              Expanded(
+                                child: AlMajlisButton(
+                                  "NEW POST",
+                                  Constants.TRANS,
+                                      () {
+                                    if (null != _controller &&
+                                        _controller.value.initialized) {
+                                      try {
+                                        _controller.pause();
+                                      } catch (e) {
+                                        print(e);
+                                      }
+                                    }
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            ActivityAddNewPost(),),);
+                                  },
+                                  icon: Icon(
+                                    Icons.add_circle_outline,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                              hasPro
+                                  ? Expanded(
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 16.0),
+                                  child: AlMajlisButton(
+                                    "MY BOOKINGS",
+                                    Constants.TEAL,
                                         () {
-                                          if (null != _controller &&
-                                              _controller.value.initialized) {
-                                            try {
-                                              _controller.pause();
-                                            } catch (e) {
-                                              print(e);
-                                            }
-                                          }
-                                          Navigator.of(context).push(
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      ActivityAddNewPost()));
-                                        },
-                                        icon: Icon(
-                                          Icons.add_circle_outline,
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                    ),
-                                    hasPro
-                                        ? Expanded(
-                                            child: Padding(
-                                              padding: const EdgeInsets.only(
-                                                  left: 16.0),
-                                              child: AlMajlisButton(
-                                                "MY BOOKINGS",
-                                                Constants.TEAL,
-                                                () {
-                                                  Navigator.of(context).push(
-                                                      MaterialPageRoute(
-                                                          builder: (context) =>
-                                                              ActivityMyMeetings()));
+                                      Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              ActivityMyMeetings(),),);
 //                                                showDialog(
 //                                                    context: _context,
 //                                                    builder: (BuildContext context) {
 //                                                      return DialogSuccessFailure(true);
 //                                                    });
-                                                },
-                                                icon: AlMajlisImageIcons(
-                                                  "drawables/go_pro.png",
-                                                  iconHeight: 24,
-                                                ),
-                                              ),
-                                            ),
-                                          )
-                                        : Expanded(
-                                            child: Padding(
-                                              padding: const EdgeInsets.only(
-                                                  left: 16.0),
-                                              child: AlMajlisButton(
-                                                "GO PRO",
-                                                Constants.TEAL,
-                                                () async {
-                                                  if (null != _controller &&
-                                                      _controller
-                                                          .value.initialized) {
-                                                    try {
-                                                      _controller.pause();
-                                                    } catch (e) {}
-                                                  }
-                                                  var data = await Navigator.of(
-                                                          context)
-                                                      .push(MaterialPageRoute(
-                                                          builder: (context) =>
-                                                              ActivityGoPro(
-                                                                  user)));
+                                    },
+                                    icon: AlMajlisImageIcons(
+                                      "drawables/go_pro.png",
+                                      iconHeight: 24,
+                                    ),
+                                  ),
+                                ),
+                              )
+                                  : Expanded(
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 16.0),
+                                  child: AlMajlisButton(
+                                    "GO PRO",
+                                    Constants.TEAL,
+                                        () async {
+                                      if (null != _controller &&
+                                          _controller
+                                              .value.initialized) {
+                                        try {
+                                          _controller.pause();
+                                        } catch (e) {}
+                                      }
+                                      var data = await Navigator.of(
+                                          context)
+                                          .push(MaterialPageRoute(
+                                        builder: (context) =>
+                                            ActivityGoPro(
+                                              user,),),);
 
-                                                  print(
-                                                      "data+++++++++++++++++++++" +
-                                                          data.toString());
-                                                  if (data != null) {
-                                                    if (data) {
-                                                      getUser();
-                                                    }
-                                                    Fluttertoast.showToast(
-                                                        msg: data
-                                                            ? "Payment Success"
-                                                            : "Payment Failure",
-                                                        toastLength:
-                                                            Toast.LENGTH_SHORT,
-                                                        gravity:
-                                                            ToastGravity.CENTER,
-                                                        timeInSecForIosWeb: 2);
+                                      print(
+                                          "data+++++++++++++++++++++" +
+                                              data.toString());
+                                      if (data != null) {
+                                        if (data) {
+                                          getUser();
+                                        }
+                                        Fluttertoast.showToast(
+                                            msg: data
+                                                ? "Payment Success"
+                                                : "Payment Failure",
+                                            toastLength:
+                                            Toast.LENGTH_SHORT,
+                                            gravity:
+                                            ToastGravity.CENTER,
+                                            timeInSecForIosWeb: 2);
 //                                                    showDialog(
 //                                                        context: _context,
 //                                                        builder: (BuildContext context) {
 //                                                          return DialogSuccessFailure(data ? "Payment Success" : "Payment Failure");
 //                                                        });
-                                                  }
-                                                },
-                                                icon: Icon(
-                                                  Icons.add_circle_outline,
-                                                  color: Colors.white,
-                                                ),
-                                              ),
-                                            ),
-                                          )
-                                  ],
+                                      }
+                                    },
+                                    icon: Icon(
+                                      Icons.add_circle_outline,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
+                            : Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 20.0),
+                          child: Row(
+                            children: <Widget>[
+                              !hasPro
+                                  ? isPublic
+                                  ? Expanded(
+                                child: Padding(
+                                  padding:
+                                  const EdgeInsets.only(
+                                      right: 16.0),
+                                  child: AlMajlisButton(
+                                    "CALL",
+                                    Constants.TRANS,
+                                        () {
+                                      launch(
+                                          "tel:" + phoneNumber);
+                                      newCall(widget.userId);
+                                    },
+                                    icon: Icon(
+                                      Icons.call,
+                                      color: Colors.white,
+                                    ),
+                                  ),
                                 ),
                               )
-                            : Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 20.0),
-                                child: Row(
-                                  children: <Widget>[
-                                    !hasPro
-                                        ? isPublic
-                                            ? Expanded(
-                                                child: Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          right: 16.0),
-                                                  child: AlMajlisButton(
-                                                    "CALL",
-                                                    Constants.TRANS,
-                                                    () {
-                                                      launch(
-                                                          "tel:" + phoneNumber);
-                                                      newCall(widget.userId);
-                                                    },
-                                                    icon: Icon(
-                                                      Icons.call,
-                                                      color: Colors.white,
-                                                    ),
-                                                  ),
-                                                ),
-                                              )
-                                            : Container()
-                                        : Expanded(
-                                            child: Padding(
-                                              padding: const EdgeInsets.only(
-                                                  right: 16.0),
-                                              child: AlMajlisButton(
-                                                "BOOK " +
-                                                    meetingCharges.toString() +
-                                                    " BD",
-                                                Constants.TEAL,
-                                                () {
-                                                  if (null != user.availabilityDays &&
-                                                      null !=
-                                                          user
-                                                              .availabilityStart &&
-                                                      user.availabilityStart >
-                                                          0 &&
-                                                      null !=
-                                                          user
-                                                              .availabilityEnd &&
-                                                      user.availabilityEnd >
-                                                          0) {
-                                                    setState(() {
-                                                      openBookingSheet = true;
-                                                    });
-                                                  } else {
-                                                    Fluttertoast.showToast(
-                                                        msg: userName +
-                                                            " has not yet given availability",
-                                                        toastLength:
-                                                            Toast.LENGTH_SHORT,
-                                                        gravity:
-                                                            ToastGravity.CENTER,
-                                                        timeInSecForIosWeb: 2);
+                                  : Container()
+                                  : Expanded(
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                      right: 16.0),
+                                  child: AlMajlisButton(
+                                    "BOOK " +
+                                        meetingCharges.toString() +
+                                        " BD",
+                                    Constants.TEAL,
+                                        () {
+                                      if (null != user.availabilityDays &&
+                                          null !=
+                                              user
+                                                  .availabilityStart &&
+                                          user.availabilityStart >
+                                              0 &&
+                                          null !=
+                                              user
+                                                  .availabilityEnd &&
+                                          user.availabilityEnd >
+                                              0) {
+                                        setState(() {
+                                          openBookingSheet = true;
+                                        });
+                                      } else {
+                                        Fluttertoast.showToast(
+                                            msg: userName +
+                                                " has not yet given availability",
+                                            toastLength:
+                                            Toast.LENGTH_SHORT,
+                                            gravity:
+                                            ToastGravity.CENTER,
+                                            timeInSecForIosWeb: 2);
 //                                                    showDialog(
 //                                                        context: _context,
 //                                                        builder: (BuildContext context) {
 //                                                          return DialogSuccessFailure("No Slots Available");
 //                                                        });
-                                                  }
-                                                },
-                                                icon: Image.asset(
-                                                    "drawables/updates.png",
-                                                    height: 24),
-                                              ),
-                                            ),
-                                          ),
-                                    Expanded(
-                                      child: Padding(
-                                        padding:
-                                            const EdgeInsets.only(right: 16.0),
-                                        child: AlMajlisButton(
-                                          "MESSAGE",
-                                          Constants.TRANS,
-                                          () {
-                                            Navigator.of(context).push(
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        ActivityUserChat(
-                                                          myUserId: core
-                                                              .getCurrentUser()
-                                                              .userId,
-                                                          otherPersonUserId:
-                                                              widget.userId,
-                                                        )));
-                                          },
-                                          icon: Icon(
-                                            Icons.message,
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    AlMajlisButton(
-                                      null,
-                                      Constants.TRANS,
-                                      () {
-                                        scaffoldState.currentState
-                                            .showBottomSheet(
-                                                (context) => BottomSheetProfile(
-                                                      reportUser: reportClicked,
-                                                      shareProfile: copyLink,
-                                                      forwardProfile:
-                                                          showForwardBottomSheet,
-                                                    ));
-                                      },
-                                      icon: Icon(
-                                        Icons.menu,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                  ],
+                                      }
+                                    },
+                                    icon: Image.asset(
+                                        "drawables/updates.png",
+                                        height: 24),
+                                  ),
                                 ),
                               ),
+                              Expanded(
+                                child: Padding(
+                                  padding:
+                                  const EdgeInsets.only(right: 16.0),
+                                  child: AlMajlisButton(
+                                    "MESSAGE",
+                                    Constants.TRANS,
+                                        () {
+                                      Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              ActivityUserChat(
+                                                myUserId: core
+                                                    .getCurrentUser()
+                                                    .userId,
+                                                otherPersonUserId:
+                                                widget.userId,
+                                              ),),);
+                                    },
+                                    icon: Icon(
+                                      Icons.message,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              AlMajlisButton(
+                                null,
+                                Constants.TRANS,
+                                    () {
+                                  scaffoldState.currentState
+                                      .showBottomSheet(
+                                        (context) =>
+                                        BottomSheetProfile(
+                                          reportUser: reportClicked,
+                                          shareProfile: copyLink,
+                                          forwardProfile:
+                                          showForwardBottomSheet,
+                                        ),);
+                                },
+                                icon: Icon(
+                                  Icons.menu,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                         Padding(
                           padding: const EdgeInsets.only(top: 16.0),
                           child: Container(
                             width: double.infinity,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.all(Radius.circular(
-                                      20.0) //         <--- border radius here
-                                  ),
+                                  20.0), //         <--- border radius here
+                              ),
                               color: Constants.COLOR_DARK_GREY,
                             ),
                             child: Padding(
                               padding: const EdgeInsets.symmetric(
-                                  vertical: 16.0, horizontal: 20),
+                                vertical: 16.0, horizontal: 20,),
                               child: Column(
                                 children: <Widget>[
                                   Row(
                                     children: <Widget>[
                                       null != imageLink && !imageLink.isEmpty
                                           ? AlMajlisProfileImageWithStatus(
-                                              imageLink,
-                                              50.0,
-                                              isPro: hasPro,
-                                            )
+                                        imageLink,
+                                        50.0,
+                                        isPro: hasPro,
+                                      )
                                           : Container(
-                                              height: 50,
-                                              width: 50,
-                                              decoration: BoxDecoration(
-                                                  shape: BoxShape.circle,
-                                                  color: hasPro
-                                                      ? Constants
-                                                          .COLOR_PRIMARY_TEAL
-                                                      : Colors.white),
-                                              child: Padding(
-                                                padding:
-                                                    const EdgeInsets.all(4.0),
-                                                child: Container(
-                                                  decoration: BoxDecoration(
-                                                      shape: BoxShape.circle,
-                                                      gradient: LinearGradient(
-                                                          colors: [
-                                                            Colors.purple,
-                                                            Colors.teal
-                                                          ])),
-                                                ),
-                                              ),
-                                            ),
+                                        height: 50,
+                                        width: 50,
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: hasPro
+                                              ? Constants
+                                              .COLOR_PRIMARY_TEAL
+                                              : Colors.white,),
+                                        child: Padding(
+                                          padding:
+                                          const EdgeInsets.all(4.0),
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              gradient: LinearGradient(
+                                                colors: [
+                                                  Colors.purple,
+                                                  Colors.teal
+                                                ],),),
+                                          ),
+                                        ),
+                                      ),
                                       Expanded(
                                         child: Column(
                                           children: <Widget>[
                                             RichText(
                                               text: TextSpan(
-                                                  text: bookingLeft.toString(),
-                                                  style: TextStyle(
-                                                      fontFamily:
-                                                          'ProximaNovaBold',
-                                                      color: Colors.white,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontSize: 24),
-                                                  children: <TextSpan>[
-                                                    TextSpan(
-                                                      text: ' / ' +
-                                                          bookingRight
-                                                              .toString(),
-                                                      style: TextStyle(
-                                                          fontFamily:
-                                                              'ProximaNovaMedium',
-                                                          color: Colors.white,
-                                                          fontSize: 16),
-                                                    ),
-                                                  ]),
+                                                text: bookingLeft.toString(),
+                                                style: TextStyle(
+                                                  fontFamily:
+                                                  'ProximaNovaBold',
+                                                  color: Colors.white,
+                                                  fontWeight:
+                                                  FontWeight.bold,
+                                                  fontSize: 24,),
+                                                children: <TextSpan>[
+                                                  TextSpan(
+                                                    text: ' / ' +
+                                                        bookingRight
+                                                            .toString(),
+                                                    style: TextStyle(
+                                                        fontFamily:
+                                                        'ProximaNovaMedium',
+                                                        color: Colors.white,
+                                                        fontSize: 16),
+                                                  ),
+                                                ],),
                                             ),
                                             Padding(
                                               padding: const EdgeInsets.only(
                                                   top: 8.0),
                                               child: AlMajlisTextViewSemiBold(
                                                   "MEETINGS"),
-                                            )
+                                            ),
                                           ],
                                         ),
                                       ),
@@ -843,7 +861,7 @@ class _ActivityProfileState extends ActivityStateBase<ActivityProfile> {
                                                   top: 8.0),
                                               child: AlMajlisTextViewSemiBold(
                                                   "VIEWS"),
-                                            )
+                                            ),
                                           ],
                                         ),
                                       ),
@@ -860,31 +878,31 @@ class _ActivityProfileState extends ActivityStateBase<ActivityProfile> {
                                             maxLines: 6,
                                             color: Colors.grey,
                                           ),
-                                        )
+                                        ),
                                       ],
                                     ),
                                   ),
                                   null != link && !link.isEmpty
                                       ? Padding(
-                                          padding:
-                                              const EdgeInsets.only(top: 8.0),
-                                          child: Row(
-                                            children: <Widget>[
-                                              Icon(
-                                                Icons.link,
-                                                color: Colors.teal,
-                                              ),
-                                              Expanded(
-                                                child: Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          left: 8.0),
-                                                  child: AlMajlisLinkText(link),
-                                                ),
-                                              )
-                                            ],
+                                    padding:
+                                    const EdgeInsets.only(top: 8.0),
+                                    child: Row(
+                                      children: <Widget>[
+                                        Icon(
+                                          Icons.link,
+                                          color: Colors.teal,
+                                        ),
+                                        Expanded(
+                                          child: Padding(
+                                            padding:
+                                            const EdgeInsets.only(
+                                                left: 8.0),
+                                            child: AlMajlisLinkText(link),
                                           ),
-                                        )
+                                        ),
+                                      ],
+                                    ),
+                                  )
                                       : Container()
                                 ],
                               ),
@@ -900,7 +918,7 @@ class _ActivityProfileState extends ActivityStateBase<ActivityProfile> {
                               children: <Widget>[
                                 Row(
                                   mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                  MainAxisAlignment.spaceBetween,
                                   children: <Widget>[
                                     AlMajlisTextViewBold(
                                       "Profile Completion",
@@ -909,7 +927,7 @@ class _ActivityProfileState extends ActivityStateBase<ActivityProfile> {
                                     AlMajlisTextViewBold(
                                       (progress * 10).toString() + "%",
                                       size: 12,
-                                    )
+                                    ),
                                   ],
                                 ),
                                 Padding(
@@ -917,17 +935,17 @@ class _ActivityProfileState extends ActivityStateBase<ActivityProfile> {
                                   child: Container(
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.all(
-                                          Radius.circular(
-                                              5.0) //         <--- border radius here
-                                          ),
+                                        Radius.circular(
+                                            5.0), //         <--- border radius here
+                                      ),
                                     ),
                                     child: GradientProgressIndicator(
                                       gradient: LinearGradient(
-                                          colors: [Colors.purple, Colors.teal]),
+                                        colors: [Colors.purple, Colors.teal],),
                                       value: progress / 10,
                                     ),
                                   ),
-                                )
+                                ),
                               ],
                             ),
                           ),
@@ -943,293 +961,293 @@ class _ActivityProfileState extends ActivityStateBase<ActivityProfile> {
                               ),
                               activityClosed
                                   ? GestureDetector(
-                                      child: Icon(
-                                        Icons.keyboard_arrow_up,
-                                        color: Colors.white,
-                                      ),
-                                      onTap: () {
-                                        setState(() {
-                                          activityClosed = !activityClosed;
-                                        });
-                                      },
-                                    )
+                                child: Icon(
+                                  Icons.keyboard_arrow_up,
+                                  color: Colors.white,
+                                ),
+                                onTap: () {
+                                  setState(() {
+                                    activityClosed = !activityClosed;
+                                  });
+                                },
+                              )
                                   : GestureDetector(
-                                      child: Icon(
-                                        Icons.keyboard_arrow_down,
-                                        color: Colors.white,
-                                      ),
-                                      onTap: () {
-                                        setState(() {
-                                          activityClosed = !activityClosed;
-                                        });
-                                      },
-                                    )
+                                child: Icon(
+                                  Icons.keyboard_arrow_down,
+                                  color: Colors.white,
+                                ),
+                                onTap: () {
+                                  setState(() {
+                                    activityClosed = !activityClosed;
+                                  });
+                                },
+                              ),
                             ],
                           ),
                         ),
                         activityClosed
                             ? Padding(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 20,
-                                ),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 20,
+                          ),
+                          child: Row(
+                            children: <Widget>[
+                              AlMajlisCountCard(
+                                "drawables/post.png",
+                                "Posts",
+                                postCount.toString(),
+                                rightPadding: 6,
+                                onTap: () {
+                                  if (selfProfile)
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            ActivityViewTotalPost(core
+                                                .getCurrentUser()
+                                                .userId),),
+                                    );
+                                },
+                              ),
+                              AlMajlisCountCard(
+                                "drawables/contact.png",
+                                "Contacts",
+                                contactCount.toString(),
+                                rightPadding: 6,
+                                leftPadding: 6,
+                                onTap: () {
+                                  if (selfProfile)
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            ActivityContact(
+                                              isContact: true,
+                                            ),
+                                      ),);
+                                },
+                              ),
+                              AlMajlisCountCard(
+                                "drawables/message_white-01.png",
+                                "Messages",
+                                messageCount.toString(),
+                                leftPadding: 6,
+                                onTap: () {
+                                  if (selfProfile)
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            ActivityUserChatList(),),
+                                    );
+                                },
+                              ),
+                            ],
+                          ),
+                        )
+                            : Padding(
+                          padding:
+                          const EdgeInsets.symmetric(horizontal: 20),
+                          child: Column(
+                            children: <Widget>[
+                              Row(
+                                children: <Widget>[
+                                  AlMajlisCountCard(
+                                    "drawables/post.png",
+                                    "Posts",
+                                    postCount.toString(),
+                                    rightPadding: 6,
+                                    onTap: () {
+                                      if (selfProfile)
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                ActivityViewTotalPost(
+                                                  core
+                                                      .getCurrentUser()
+                                                      .userId,),),
+                                        );
+                                    },
+                                  ),
+                                  AlMajlisCountCard(
+                                    "drawables/contact.png",
+                                    "Contacts",
+                                    contactCount.toString(),
+                                    rightPadding: 6,
+                                    leftPadding: 6,
+                                    onTap: () {
+                                      if (selfProfile)
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                ActivityContact(
+                                                  isContact: true,
+                                                ),
+                                          ),);
+                                    },
+                                  ),
+                                  AlMajlisCountCard(
+                                    "drawables/message_white-01.png",
+                                    "Messages",
+                                    messageCount.toString(),
+                                    leftPadding: 6,
+                                    onTap: () {
+                                      if (selfProfile)
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                ActivityUserChatList(),),
+                                        );
+                                    },
+                                  ),
+                                ],
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 12.0),
                                 child: Row(
                                   children: <Widget>[
                                     AlMajlisCountCard(
-                                      "drawables/post.png",
-                                      "Posts",
-                                      postCount.toString(),
+                                      "drawables/comment_white-01.png",
+                                      "Replies",
+                                      replyCount.toString(),
                                       rightPadding: 6,
-                                      onTap: () {
-                                        if (selfProfile)
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    ActivityViewTotalPost(core
-                                                        .getCurrentUser()
-                                                        .userId)),
-                                          );
-                                      },
                                     ),
                                     AlMajlisCountCard(
-                                      "drawables/contact.png",
-                                      "Contacts",
-                                      contactCount.toString(),
+                                      "drawables/ic_heart_outline_white_18dp.png",
+                                      "Likes",
+                                      likeCount.toString(),
                                       rightPadding: 6,
                                       leftPadding: 6,
-                                      onTap: () {
-                                        if (selfProfile)
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (context) =>
-                                                    ActivityContact(
-                                                  isContact: true,
-                                                ),
-                                              ));
-                                      },
                                     ),
                                     AlMajlisCountCard(
-                                      "drawables/message_white-01.png",
-                                      "Messages",
-                                      messageCount.toString(),
+                                      "drawables/invites.png",
+                                      "Invites",
+                                      inviteCount.toString(),
+                                      rightPadding: 6,
                                       leftPadding: 6,
                                       onTap: () {
                                         if (selfProfile)
                                           Navigator.push(
                                             context,
                                             MaterialPageRoute(
-                                                builder: (context) =>
-                                                    ActivityUserChatList()),
-                                          );
+                                              builder: (context) =>
+                                                  ActivityContact(),
+                                            ),);
                                       },
                                     ),
-                                  ],
-                                ),
-                              )
-                            : Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 20),
-                                child: Column(
-                                  children: <Widget>[
-                                    Row(
-                                      children: <Widget>[
-                                        AlMajlisCountCard(
-                                          "drawables/post.png",
-                                          "Posts",
-                                          postCount.toString(),
-                                          rightPadding: 6,
-                                          onTap: () {
-                                            if (selfProfile)
-                                              Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        ActivityViewTotalPost(
-                                                            core
-                                                                .getCurrentUser()
-                                                                .userId)),
-                                              );
-                                          },
-                                        ),
-                                        AlMajlisCountCard(
-                                          "drawables/contact.png",
-                                          "Contacts",
-                                          contactCount.toString(),
-                                          rightPadding: 6,
-                                          leftPadding: 6,
-                                          onTap: () {
-                                            if (selfProfile)
-                                              Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        ActivityContact(
-                                                      isContact: true,
-                                                    ),
-                                                  ));
-                                          },
-                                        ),
-                                        AlMajlisCountCard(
-                                          "drawables/message_white-01.png",
-                                          "Messages",
-                                          messageCount.toString(),
-                                          leftPadding: 6,
-                                          onTap: () {
-                                            if (selfProfile)
-                                              Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        ActivityUserChatList()),
-                                              );
-                                          },
-                                        ),
-                                      ],
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(top: 12.0),
-                                      child: Row(
-                                        children: <Widget>[
-                                          AlMajlisCountCard(
-                                            "drawables/comment_white-01.png",
-                                            "Replies",
-                                            replyCount.toString(),
-                                            rightPadding: 6,
-                                          ),
-                                          AlMajlisCountCard(
-                                            "drawables/ic_heart_outline_white_18dp.png",
-                                            "Likes",
-                                            likeCount.toString(),
-                                            rightPadding: 6,
-                                            leftPadding: 6,
-                                          ),
-                                          AlMajlisCountCard(
-                                            "drawables/invites.png",
-                                            "Invites",
-                                            inviteCount.toString(),
-                                            rightPadding: 6,
-                                            leftPadding: 6,
-                                            onTap: () {
-                                              if (selfProfile)
-                                                Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          ActivityContact(),
-                                                    ));
-                                            },
-                                          ),
-                                          // AlMajlisCountCard(
-                                          //   "drawables/update-01.png",
-                                          //   "Forwards",
-                                          //   forwardCount.toString(),
-                                          //   leftPadding: 6,
-                                          // ),
-                                        ],
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(top: 12.0),
-                                      child: Row(
-                                        children: <Widget>[
-                                          Padding(
-                                            padding: EdgeInsets.only(
-                                                right: 0 * 1.0, left: 0 * 1.0),
-                                            child: GestureDetector(
-                                              onTap: () {
-                                                //  if (null != onTap) onTap();
-                                              },
-                                              child: Container(
-                                                width: 100,
-                                                decoration: BoxDecoration(
-                                                  borderRadius: BorderRadius.all(
-                                                      Radius.circular(
-                                                          10.0) //         <--- border radius here
-                                                      ),
-                                                  color:
-                                                      Constants.COLOR_DARK_GREY,
-                                                ),
-                                                child: Padding(
-                                                  padding: const EdgeInsets.all(
-                                                      16.0),
-                                                  child: Column(
-                                                    children: <Widget>[
-                                                      Row(
-                                                        children: <Widget>[
-                                                          Image.asset(
-                                                            "drawables/calls.png",
-                                                            height: 20,
-                                                          ),
-                                                        ],
-                                                      ),
-                                                      Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                    .only(
-                                                                top: 16.0),
-                                                        child: Row(
-                                                          children: <Widget>[
-                                                            AlMajlisTextViewBold(
-                                                              "Calls",
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                      Row(
-                                                        children: <Widget>[
-                                                          AlMajlisTextViewMedium(
-                                                            callCount
-                                                                .toString(),
-                                                            size: 16,
-                                                            color: Colors.grey,
-                                                          ),
-                                                        ],
-                                                      )
-                                                    ],
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-
-                                          // AlMajlisCountCard(
-                                          //   "drawables/share.png",
-                                          //   "Shares",
-                                          //   shareCount.toString(),
-                                          //   rightPadding: 6,
-                                          // ),
-                                          // AlMajlisCountCard(
-                                          //   "drawables/invites.png",
-                                          //   "Invites",
-                                          //   inviteCount.toString(),
-                                          //   rightPadding: 6,
-                                          //   leftPadding: 6,
-                                          //   onTap: () {
-                                          //     if (selfProfile)
-                                          //       Navigator.push(
-                                          //           context,
-                                          //           MaterialPageRoute(
-                                          //             builder: (context) =>
-                                          //                 ActivityContact(),
-                                          //           ));
-                                          //   },
-                                          // ),
-                                          // AlMajlisCountCard(
-                                          //   "drawables/calls.png",
-                                          //   "Calls",
-                                          //   callCount.toString(),
-                                          //   leftPadding: 6,
-                                          // ),
-                                        ],
-                                      ),
-                                    ),
+                                    // AlMajlisCountCard(
+                                    //   "drawables/update-01.png",
+                                    //   "Forwards",
+                                    //   forwardCount.toString(),
+                                    //   leftPadding: 6,
+                                    // ),
                                   ],
                                 ),
                               ),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 12.0),
+                                child: Row(
+                                  children: <Widget>[
+                                    Padding(
+                                      padding: EdgeInsets.only(
+                                          right: 0 * 1.0, left: 0 * 1.0),
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          //  if (null != onTap) onTap();
+                                        },
+                                        child: Container(
+                                          width: 100,
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.all(
+                                              Radius.circular(
+                                                  10.0), //         <--- border radius here
+                                            ),
+                                            color:
+                                            Constants.COLOR_DARK_GREY,
+                                          ),
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(
+                                                16.0),
+                                            child: Column(
+                                              children: <Widget>[
+                                                Row(
+                                                  children: <Widget>[
+                                                    Image.asset(
+                                                      "drawables/calls.png",
+                                                      height: 20,
+                                                    ),
+                                                  ],
+                                                ),
+                                                Padding(
+                                                  padding:
+                                                  const EdgeInsets
+                                                      .only(
+                                                      top: 16.0),
+                                                  child: Row(
+                                                    children: <Widget>[
+                                                      AlMajlisTextViewBold(
+                                                        "Calls",
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                                Row(
+                                                  children: <Widget>[
+                                                    AlMajlisTextViewMedium(
+                                                      callCount
+                                                          .toString(),
+                                                      size: 16,
+                                                      color: Colors.grey,
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+
+                                    // AlMajlisCountCard(
+                                    //   "drawables/share.png",
+                                    //   "Shares",
+                                    //   shareCount.toString(),
+                                    //   rightPadding: 6,
+                                    // ),
+                                    // AlMajlisCountCard(
+                                    //   "drawables/invites.png",
+                                    //   "Invites",
+                                    //   inviteCount.toString(),
+                                    //   rightPadding: 6,
+                                    //   leftPadding: 6,
+                                    //   onTap: () {
+                                    //     if (selfProfile)
+                                    //       Navigator.push(
+                                    //           context,
+                                    //           MaterialPageRoute(
+                                    //             builder: (context) =>
+                                    //                 ActivityContact(),
+                                    //           ));
+                                    //   },
+                                    // ),
+                                    // AlMajlisCountCard(
+                                    //   "drawables/calls.png",
+                                    //   "Calls",
+                                    //   callCount.toString(),
+                                    //   leftPadding: 6,
+                                    // ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                         Padding(
                           padding: const EdgeInsets.symmetric(
-                              vertical: 16, horizontal: 20),
+                            vertical: 16, horizontal: 20,),
                           child: Row(
                             children: <Widget>[
                               AlMajlisDateCard(
@@ -1239,8 +1257,8 @@ class _ActivityProfileState extends ActivityStateBase<ActivityProfile> {
                                 rightPadding: 6,
                               ),
                               AlMajlisDateCard("drawables/user_since.png",
-                                  "User Since", userSince,
-                                  leftPadding: 6),
+                                "User Since", userSince,
+                                leftPadding: 6,),
                             ],
                           ),
                         ),
@@ -1250,10 +1268,10 @@ class _ActivityProfileState extends ActivityStateBase<ActivityProfile> {
                             children: <Widget>[
                               Padding(
                                 padding:
-                                    const EdgeInsets.symmetric(horizontal: 20),
+                                const EdgeInsets.symmetric(horizontal: 20),
                                 child: Row(
                                   mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                  MainAxisAlignment.spaceBetween,
                                   children: <Widget>[
                                     AlMajlisTextViewBold(
                                       "Recent Posts",
@@ -1264,9 +1282,9 @@ class _ActivityProfileState extends ActivityStateBase<ActivityProfile> {
                                         Navigator.push(
                                           context,
                                           MaterialPageRoute(
-                                              builder: (context) =>
-                                                  ActivityViewTotalPost(
-                                                      widget.userId)),
+                                            builder: (context) =>
+                                                ActivityViewTotalPost(
+                                                    widget.userId),),
                                         );
                                       },
                                       child: AlMajlisTextViewBold(
@@ -1279,504 +1297,510 @@ class _ActivityProfileState extends ActivityStateBase<ActivityProfile> {
                               ),
                               posts.length > 0
                                   ? Padding(
-                                      padding: const EdgeInsets.only(
-                                          top: 16.0,
-                                          left: 20,
-                                          right: 20,
-                                          bottom: 16),
-                                      child: Column(
-                                        children: <Widget>[
-                                          GestureDetector(
-                                            onTap: () {
-                                              Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        ActivitySinglePost(
-                                                            id: posts
-                                                                .elementAt(0)
-                                                                .postId)),
-                                              );
-                                            },
-                                            child: AlMajlisShortPostCard(
+                                padding: const EdgeInsets.only(
+                                  top: 16.0,
+                                  left: 20,
+                                  right: 20,
+                                  bottom: 16,),
+                                child: Column(
+                                  children: <Widget>[
+                                    GestureDetector(
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                ActivitySinglePost(
+                                                    id: posts
+                                                        .elementAt(0)
+                                                        .postId),),
+                                        );
+                                      },
+                                      child: AlMajlisShortPostCard(
+                                        posts
+                                            .elementAt(0)
+                                            .postUser
+                                            .thumbUrl,
+                                        posts
+                                            .elementAt(0)
+                                            .postUser
+                                            .firstName +
+                                            " " +
+                                            posts
+                                                .elementAt(0)
+                                                .postUser
+                                                .lastName,
+                                        timeago
+                                            .format(
+                                            posts
+                                                .elementAt(0)
+                                                .createdAt,
+                                            locale: 'en_short')
+                                            .toUpperCase(),
+                                        posts
+                                            .elementAt(0)
+                                            .text,
+                                        id: posts
+                                            .elementAt(0)
+                                            .postUser
+                                            .userId,
+                                        isPro: hasPro,
+                                      ),
+                                    ),
+                                    posts.length > 1
+                                        ? Padding(
+                                      padding:
+                                      const EdgeInsets.only(
+                                          top: 8.0),
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    ActivitySinglePost(
+                                                        id: posts
+                                                            .elementAt(
+                                                            1)
+                                                            .postId)),
+                                          );
+                                        },
+                                        child:
+                                        AlMajlisShortPostCard(
+                                          posts
+                                              .elementAt(1)
+                                              .postUser
+                                              .thumbUrl,
+                                          posts
+                                              .elementAt(1)
+                                              .postUser
+                                              .firstName +
+                                              " " +
                                               posts
-                                                  .elementAt(0)
+                                                  .elementAt(1)
                                                   .postUser
-                                                  .thumbUrl,
+                                                  .lastName,
+                                          timeago
+                                              .format(
                                               posts
-                                                      .elementAt(0)
-                                                      .postUser
-                                                      .firstName +
-                                                  " " +
-                                                  posts
-                                                      .elementAt(0)
-                                                      .postUser
-                                                      .lastName,
-                                              timeago
-                                                  .format(
-                                                      posts
-                                                          .elementAt(0)
-                                                          .createdAt,
-                                                      locale: 'en_short')
-                                                  .toUpperCase(),
-                                              posts.elementAt(0).text,
-                                              id: posts
-                                                  .elementAt(0)
-                                                  .postUser
-                                                  .userId,
-                                              isPro: hasPro,
-                                            ),
-                                          ),
-                                          posts.length > 1
-                                              ? Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          top: 8.0),
-                                                  child: GestureDetector(
-                                                    onTap: () {
-                                                      Navigator.push(
-                                                        context,
-                                                        MaterialPageRoute(
-                                                            builder: (context) =>
-                                                                ActivitySinglePost(
-                                                                    id: posts
-                                                                        .elementAt(
-                                                                            1)
-                                                                        .postId)),
-                                                      );
-                                                    },
-                                                    child:
-                                                        AlMajlisShortPostCard(
-                                                      posts
-                                                          .elementAt(1)
-                                                          .postUser
-                                                          .thumbUrl,
-                                                      posts
-                                                              .elementAt(1)
-                                                              .postUser
-                                                              .firstName +
-                                                          " " +
-                                                          posts
-                                                              .elementAt(1)
-                                                              .postUser
-                                                              .lastName,
-                                                      timeago
-                                                          .format(
-                                                              posts
-                                                                  .elementAt(1)
-                                                                  .createdAt,
-                                                              locale:
-                                                                  'en_short')
-                                                          .toUpperCase(),
-                                                      posts.elementAt(1).text,
-                                                      id: posts
-                                                          .elementAt(1)
-                                                          .postUser
-                                                          .userId,
-                                                      isPro: hasPro,
-                                                    ),
-                                                  ),
-                                                )
-                                              : Container(),
-                                          if (posts.length > 2)
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                  top: 8.0),
-                                              child: GestureDetector(
-                                                onTap: () {
-                                                  Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            ActivitySinglePost(
-                                                                id: posts
-                                                                    .elementAt(
-                                                                        2)
-                                                                    .postId)),
-                                                  );
-                                                },
-                                                child: AlMajlisShortPostCard(
-                                                  posts
-                                                      .elementAt(2)
-                                                      .postUser
-                                                      .thumbUrl,
-                                                  posts
-                                                          .elementAt(2)
-                                                          .postUser
-                                                          .firstName +
-                                                      " " +
-                                                      posts
-                                                          .elementAt(2)
-                                                          .postUser
-                                                          .lastName,
-                                                  timeago
-                                                      .format(
-                                                          posts
-                                                              .elementAt(2)
-                                                              .createdAt,
-                                                          locale: 'en_short')
-                                                      .toUpperCase(),
-                                                  posts.elementAt(2).text,
-                                                  id: posts
-                                                      .elementAt(2)
-                                                      .postUser
-                                                      .userId,
-                                                  isPro: hasPro,
-                                                ),
-                                              ),
-                                            )
-                                          else
-                                            Container(),
-                                        ],
+                                                  .elementAt(1)
+                                                  .createdAt,
+                                              locale:
+                                              'en_short')
+                                              .toUpperCase(),
+                                          posts
+                                              .elementAt(1)
+                                              .text,
+                                          id: posts
+                                              .elementAt(1)
+                                              .postUser
+                                              .userId,
+                                          isPro: hasPro,
+                                        ),
                                       ),
                                     )
+                                        : Container(),
+                                    if (posts.length > 2)
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            top: 8.0),
+                                        child: GestureDetector(
+                                          onTap: () {
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    ActivitySinglePost(
+                                                        id: posts
+                                                            .elementAt(
+                                                            2)
+                                                            .postId),),
+                                            );
+                                          },
+                                          child: AlMajlisShortPostCard(
+                                            posts
+                                                .elementAt(2)
+                                                .postUser
+                                                .thumbUrl,
+                                            posts
+                                                .elementAt(2)
+                                                .postUser
+                                                .firstName +
+                                                " " +
+                                                posts
+                                                    .elementAt(2)
+                                                    .postUser
+                                                    .lastName,
+                                            timeago
+                                                .format(
+                                                posts
+                                                    .elementAt(2)
+                                                    .createdAt,
+                                                locale: 'en_short')
+                                                .toUpperCase(),
+                                            posts
+                                                .elementAt(2)
+                                                .text,
+                                            id: posts
+                                                .elementAt(2)
+                                                .postUser
+                                                .userId,
+                                            isPro: hasPro,
+                                          ),
+                                        ),
+                                      )
+                                    else
+                                      Container(),
+                                  ],
+                                ),
+                              )
                                   : Container(),
                             ],
                           ),
                         ),
                         null != companyName && !companyName.isEmpty
                             ? Column(
+                          children: <Widget>[
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 20),
+                              child: Row(
+                                mainAxisAlignment:
+                                MainAxisAlignment.spaceBetween,
                                 children: <Widget>[
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 20),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: <Widget>[
-                                        AlMajlisTextViewBold(
-                                          "Experience",
-                                          size: 24,
-                                        ),
-                                        Visibility(
-                                            visible: selfProfile,
-                                            child: InkWell(
-                                              child: Image.asset(
-                                                "drawables/edit.png",
-                                                height: 20,
-                                              ),
-                                              onTap: () {
-                                                setState(() {
-                                                  showDelete = true;
-                                                });
-                                              },
-                                            ))
-                                      ],
-                                    ),
+                                  AlMajlisTextViewBold(
+                                    "Experience",
+                                    size: 24,
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                        top: 16.0,
-                                        left: 20,
-                                        right: 20,
-                                        bottom: 16),
-                                    child: Column(
-                                      children: <Widget>[
-                                        GestureDetector(
-                                          onTap: () async {
-                                            if (showDelete && selfProfile) {
-                                              if (null != _controller &&
-                                                  _controller
-                                                      .value.initialized) {
-                                                try {
-                                                  _controller.pause();
-                                                } catch (e) {}
-                                              }
-                                              await Navigator.of(context).push(
-                                                  MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          ActivityWorkExperience(
-                                                            fromProfile: true,
-                                                          )));
-                                              getUser();
-                                            }
-                                          },
-                                          child: AlMajlisExperienceCard(
-                                            null != user.companyThumb &&
-                                                    !user.companyThumb.isEmpty
-                                                ? user.companyThumb
-                                                : "https://www.completeuniversityinfo.com/images/university_placeholder.png",
-                                            occupation,
-                                            companyName,
-                                            workPeriod,
-                                            deleteExperience: deleteCompany,
-                                            showDelete:
-                                                showDelete && selfProfile,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
+                                  Visibility(
+                                    visible: selfProfile,
+                                    child: InkWell(
+                                      child: Image.asset(
+                                        "drawables/edit.png",
+                                        height: 20,
+                                      ),
+                                      onTap: () {
+                                        setState(() {
+                                          showDelete = true;
+                                        });
+                                      },
+                                    ),),
                                 ],
-                              )
-                            : Visibility(
-                                visible: selfProfile,
-                                child: Column(
-                                  children: <Widget>[
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 20),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: <Widget>[
-                                          AlMajlisTextViewBold(
-                                            "Experience",
-                                            size: 24,
-                                          ),
-                                          Visibility(
-                                              visible: selfProfile,
-                                              child: GestureDetector(
-                                                child: Image.asset(
-                                                  "drawables/edit.png",
-                                                  height: 15,
-                                                ),
-                                                onTap: () {
-                                                  setState(() {
-                                                    showDelete = true;
-                                                  });
-                                                },
-                                              ))
-                                        ],
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(
-                                          top: 16.0,
-                                          left: 20,
-                                          right: 20,
-                                          bottom: 16),
-                                      child: GestureDetector(
-                                        onTap: () async {
-                                          if (null != _controller &&
-                                              _controller.value.initialized) {
-                                            try {
-                                              _controller.pause();
-                                            } catch (e) {}
-                                          }
-                                          await Navigator.of(context).push(
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      ActivityWorkExperience(
-                                                        fromProfile: true,
-                                                      )));
-                                          getUser();
-                                        },
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(
-                                                    10.0) //         <--- border radius here
-                                                ),
-                                            color: Constants.COLOR_DARK_GREY,
-                                          ),
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(16.0),
-                                            child: Row(
-                                              children: <Widget>[
-                                                Icon(
-                                                  Icons.add_circle_outline,
-                                                  size: 55,
-                                                  color: Constants
-                                                      .COLOR_PRIMARY_GREY,
-                                                ),
-                                                Expanded(
-                                                  child: Padding(
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                            left: 8.0),
-                                                    child: AlMajlisTextViewBold(
-                                                      "ADD WORK EXPERIENCE",
-                                                      size: 16,
-                                                      color: Constants
-                                                          .COLOR_PRIMARY_GREY,
-                                                    ),
-                                                  ),
-                                                )
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
                               ),
-                        null != education
-                            ? Column(
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  top: 16.0,
+                                  left: 20,
+                                  right: 20,
+                                  bottom: 16),
+                              child: Column(
                                 children: <Widget>[
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 20),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: <Widget>[
-                                        AlMajlisTextViewBold(
-                                          "Education",
-                                          size: 24,
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                        top: 16.0,
-                                        left: 20,
-                                        right: 20,
-                                        bottom: 16.0),
-                                    child: GestureDetector(
-                                      onTap: () async {
+                                  GestureDetector(
+                                    onTap: () async {
+                                      if (showDelete && selfProfile) {
                                         if (null != _controller &&
-                                            _controller.value.initialized) {
+                                            _controller
+                                                .value.initialized) {
                                           try {
                                             _controller.pause();
                                           } catch (e) {}
                                         }
-                                        if (selfProfile && showDelete) {
-                                          await Navigator.of(context).push(
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      ActivityEducation(
-                                                        fromProfile: true,
-                                                      )));
-                                          getUser();
-                                        }
-                                      },
-                                      child: Column(
+                                        await Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  ActivityWorkExperience(
+                                                    fromProfile: true,
+                                                  ),),);
+                                        getUser();
+                                      }
+                                    },
+                                    child: AlMajlisExperienceCard(
+                                      null != user.companyThumb &&
+                                          !user.companyThumb.isEmpty
+                                          ? user.companyThumb
+                                          : "https://www.completeuniversityinfo.com/images/university_placeholder.png",
+                                      occupation,
+                                      companyName,
+                                      workPeriod,
+                                      deleteExperience: deleteCompany,
+                                      showDelete:
+                                      showDelete && selfProfile,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        )
+                            : Visibility(
+                          visible: selfProfile,
+                          child: Column(
+                            children: <Widget>[
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 20),
+                                child: Row(
+                                  mainAxisAlignment:
+                                  MainAxisAlignment.spaceBetween,
+                                  children: <Widget>[
+                                    AlMajlisTextViewBold(
+                                      "Experience",
+                                      size: 24,
+                                    ),
+                                    Visibility(
+                                      visible: selfProfile,
+                                      child: GestureDetector(
+                                        child: Image.asset(
+                                          "drawables/edit.png",
+                                          height: 15,
+                                        ),
+                                        onTap: () {
+                                          setState(() {
+                                            showDelete = true;
+                                          });
+                                        },
+                                      ),),
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    top: 16.0,
+                                    left: 20,
+                                    right: 20,
+                                    bottom: 16),
+                                child: GestureDetector(
+                                  onTap: () async {
+                                    if (null != _controller &&
+                                        _controller.value.initialized) {
+                                      try {
+                                        _controller.pause();
+                                      } catch (e) {}
+                                    }
+                                    await Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            ActivityWorkExperience(
+                                              fromProfile: true,
+                                            ),),);
+                                    getUser();
+                                  },
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(
+                                            10.0), //         <--- border radius here
+                                      ),
+                                      color: Constants.COLOR_DARK_GREY,
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(16.0),
+                                      child: Row(
                                         children: <Widget>[
-                                          AlMajlisExperienceCard(
-                                            null != education.educationThumb &&
-                                                    !education
-                                                        .educationThumb.isEmpty
-                                                ? education.educationThumb
-                                                : "https://www.completeuniversityinfo.com/images/university_placeholder.png",
-                                            education.degree,
-                                            education.university,
-                                            educationPeriod,
-                                            deleteExperience: deleteEducation,
-                                            showDelete:
-                                                showDelete && selfProfile,
-                                          )
+                                          Icon(
+                                            Icons.add_circle_outline,
+                                            size: 55,
+                                            color: Constants
+                                                .COLOR_PRIMARY_GREY,
+                                          ),
+                                          Expanded(
+                                            child: Padding(
+                                              padding:
+                                              const EdgeInsets.only(
+                                                  left: 8.0),
+                                              child: AlMajlisTextViewBold(
+                                                "ADD WORK EXPERIENCE",
+                                                size: 16,
+                                                color: Constants
+                                                    .COLOR_PRIMARY_GREY,
+                                              ),
+                                            ),
+                                          ),
                                         ],
                                       ),
                                     ),
                                   ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        null != education
+                            ? Column(
+                          children: <Widget>[
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 20),
+                              child: Row(
+                                mainAxisAlignment:
+                                MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  AlMajlisTextViewBold(
+                                    "Education",
+                                    size: 24,
+                                  ),
                                 ],
-                              )
-                            : Visibility(
-                                visible: selfProfile,
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  top: 16.0,
+                                  left: 20,
+                                  right: 20,
+                                  bottom: 16.0),
+                              child: GestureDetector(
+                                onTap: () async {
+                                  if (null != _controller &&
+                                      _controller.value.initialized) {
+                                    try {
+                                      _controller.pause();
+                                    } catch (e) {}
+                                  }
+                                  if (selfProfile && showDelete) {
+                                    await Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            ActivityEducation(
+                                              fromProfile: true,
+                                            ),),);
+                                    getUser();
+                                  }
+                                },
                                 child: Column(
                                   children: <Widget>[
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 20),
-                                      child: Row(
-                                        children: <Widget>[
-                                          AlMajlisTextViewBold(
-                                            "Education",
-                                            size: 24,
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(
-                                          top: 16.0,
-                                          left: 20,
-                                          right: 20,
-                                          bottom: 16),
-                                      child: GestureDetector(
-                                        onTap: () async {
-                                          if (null != _controller &&
-                                              _controller.value.initialized) {
-                                            try {
-                                              _controller.pause();
-                                            } catch (e) {}
-                                          }
-                                          await Navigator.of(context).push(
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      ActivityEducation(
-                                                        fromProfile: true,
-                                                      )));
-                                          getUser();
-                                        },
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(
-                                                    10.0) //         <--- border radius here
-                                                ),
-                                            color: Constants.COLOR_DARK_GREY,
-                                          ),
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(16.0),
-                                            child: Row(
-                                              children: <Widget>[
-                                                Icon(
-                                                  Icons.add_circle_outline,
-                                                  size: 55,
-                                                  color: Constants
-                                                      .COLOR_PRIMARY_GREY,
-                                                ),
-                                                Expanded(
-                                                  child: Padding(
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                            left: 8.0),
-                                                    child: AlMajlisTextViewBold(
-                                                      "ADD EDUCATION",
-                                                      size: 16,
-                                                      color: Constants
-                                                          .COLOR_PRIMARY_GREY,
-                                                    ),
-                                                  ),
-                                                )
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      ),
+                                    AlMajlisExperienceCard(
+                                      null != education.educationThumb &&
+                                          !education
+                                              .educationThumb.isNotEmpty
+                                          ? education.educationThumb
+                                          : "https://www.completeuniversityinfo.com/images/university_placeholder.png",
+                                      education.degree,
+                                      education.university,
+                                      educationPeriod,
+                                      deleteExperience: deleteEducation,
+                                      showDelete:
+                                      showDelete && selfProfile,
                                     ),
                                   ],
                                 ),
                               ),
-                        selfProfile
-                            ? Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 20),
+                            ),
+                          ],
+                        )
+                            : Visibility(
+                          visible: selfProfile,
+                          child: Column(
+                            children: <Widget>[
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 20),
                                 child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
                                   children: <Widget>[
                                     AlMajlisTextViewBold(
-                                      "Skills & Interests",
+                                      "Education",
                                       size: 24,
-                                    )
+                                    ),
                                   ],
                                 ),
-                              )
-                            : null != skillsAndExperiences &&
-                                    skillsAndExperiences.length > 0
-                                ? Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 20),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: <Widget>[
-                                        AlMajlisTextViewBold(
-                                          "Skills & Interests",
-                                          size: 24,
-                                        )
-                                      ],
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    top: 16.0,
+                                    left: 20,
+                                    right: 20,
+                                    bottom: 16),
+                                child: GestureDetector(
+                                  onTap: () async {
+                                    if (null != _controller &&
+                                        _controller.value.initialized) {
+                                      try {
+                                        _controller.pause();
+                                      } catch (e) {}
+                                    }
+                                    await Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            ActivityEducation(
+                                              fromProfile: true,
+                                            ),),);
+                                    getUser();
+                                  },
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(
+                                            10.0), //         <--- border radius here
+                                      ),
+                                      color: Constants.COLOR_DARK_GREY,
                                     ),
-                                  )
-                                : Container(),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(16.0),
+                                      child: Row(
+                                        children: <Widget>[
+                                          Icon(
+                                            Icons.add_circle_outline,
+                                            size: 55,
+                                            color: Constants
+                                                .COLOR_PRIMARY_GREY,
+                                          ),
+                                          Expanded(
+                                            child: Padding(
+                                              padding:
+                                              const EdgeInsets.only(
+                                                  left: 8.0),
+                                              child: AlMajlisTextViewBold(
+                                                "ADD EDUCATION",
+                                                size: 16,
+                                                color: Constants
+                                                    .COLOR_PRIMARY_GREY,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        selfProfile
+                            ? Padding(
+                          padding:
+                          const EdgeInsets.symmetric(horizontal: 20),
+                          child: Row(
+                            mainAxisAlignment:
+                            MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              AlMajlisTextViewBold(
+                                "Skills & Interests",
+                                size: 24,
+                              ),
+                            ],
+                          ),
+                        )
+                            : null != skillsAndExperiences &&
+                            skillsAndExperiences.length > 0
+                            ? Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 20,),
+                          child: Row(
+                            mainAxisAlignment:
+                            MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              AlMajlisTextViewBold(
+                                "Skills & Interests",
+                                size: 24,
+                              ),
+                            ],
+                          ),
+                        )
+                            : Container(),
                         Padding(
                           padding: const EdgeInsets.only(
-                              top: 16.0, left: 20, right: 20, bottom: 120.0),
+                            top: 16.0, left: 20, right: 20, bottom: 120.0,),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
@@ -1784,96 +1808,96 @@ class _ActivityProfileState extends ActivityStateBase<ActivityProfile> {
                                 visible: selfProfile,
                                 child: Padding(
                                   padding: const EdgeInsets.only(
-                                      top: 8.0, bottom: 12.0),
+                                    top: 8.0, bottom: 12.0,),
                                   child: GestureDetector(
                                     child: openAddNewSkill
                                         ? Container(
-                                            width: 130,
-                                            decoration: BoxDecoration(
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(
-                                                      10.0) //<--- border radius here
-                                                  ),
-                                              color: Constants.COLOR_DARK_GREY,
+                                      width: 130,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.all(
+                                          Radius.circular(
+                                              10.0), //<--- border radius here
+                                        ),
+                                        color: Constants.COLOR_DARK_GREY,
+                                      ),
+                                      child: Padding(
+                                        padding:
+                                        const EdgeInsets.symmetric(
+                                          vertical: 8.0,
+                                          horizontal: 8.0,),
+                                        child: Row(
+                                          children: <Widget>[
+                                            Expanded(
+                                              child: TextField(
+                                                controller:
+                                                interestController,
+                                                maxLines: 1,
+                                                style: TextStyle(
+                                                    fontFamily:
+                                                    'ProximaNovaSemiMedium',
+                                                    color:
+                                                    Colors.white),
+                                                onSubmitted: (term) {
+                                                  FocusNode()
+                                                      .requestFocus(
+                                                    FocusNode(),);
+                                                  addSkillAndInterest(
+                                                      interestController
+                                                          .text);
+                                                },
+                                                decoration:
+                                                new InputDecoration(
+                                                  hintText:
+                                                  "Skill/Interest",
+                                                  border:
+                                                  InputBorder.none,
+                                                  focusedBorder:
+                                                  InputBorder.none,
+                                                  enabledBorder:
+                                                  InputBorder.none,
+                                                  errorBorder:
+                                                  InputBorder.none,
+                                                  disabledBorder:
+                                                  InputBorder.none,
+                                                  hintStyle: TextStyle(
+                                                    fontFamily:
+                                                    'ProximaNovaSemiMedium',
+                                                    color: Constants
+                                                        .COLOR_PRIMARY_GREY,),
+                                                ),),
                                             ),
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                      vertical: 8.0,
-                                                      horizontal: 8.0),
-                                              child: Row(
-                                                children: <Widget>[
-                                                  Expanded(
-                                                    child: TextField(
-                                                        controller:
-                                                            interestController,
-                                                        maxLines: 1,
-                                                        style: TextStyle(
-                                                            fontFamily:
-                                                                'ProximaNovaSemiMedium',
-                                                            color:
-                                                                Colors.white),
-                                                        onSubmitted: (term) {
-                                                          FocusNode()
-                                                              .requestFocus(
-                                                                  FocusNode());
-                                                          addSkillAndInterest(
-                                                              interestController
-                                                                  .text);
-                                                        },
-                                                        decoration:
-                                                            new InputDecoration(
-                                                          hintText:
-                                                              "Skill/Interest",
-                                                          border:
-                                                              InputBorder.none,
-                                                          focusedBorder:
-                                                              InputBorder.none,
-                                                          enabledBorder:
-                                                              InputBorder.none,
-                                                          errorBorder:
-                                                              InputBorder.none,
-                                                          disabledBorder:
-                                                              InputBorder.none,
-                                                          hintStyle: TextStyle(
-                                                              fontFamily:
-                                                                  'ProximaNovaSemiMedium',
-                                                              color: Constants
-                                                                  .COLOR_PRIMARY_GREY),
-                                                        )),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          )
+                                          ],
+                                        ),
+                                      ),
+                                    )
                                         : Container(
-                                            width: 50,
-                                            decoration: BoxDecoration(
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(
-                                                      10.0) //         <--- border radius here
-                                                  ),
-                                              color: Constants.COLOR_DARK_GREY,
-                                            ),
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                      vertical: 8.0),
-                                              child: Row(
-                                                children: <Widget>[
-                                                  Expanded(
-                                                    child: Center(
-                                                      child: Icon(
-                                                        Icons
-                                                            .add_circle_outline,
-                                                        color: Colors.white,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ],
+                                      width: 50,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.all(
+                                          Radius.circular(
+                                              10.0), //         <--- border radius here
+                                        ),
+                                        color: Constants.COLOR_DARK_GREY,
+                                      ),
+                                      child: Padding(
+                                        padding:
+                                        const EdgeInsets.symmetric(
+                                            vertical: 8.0),
+                                        child: Row(
+                                          children: <Widget>[
+                                            Expanded(
+                                              child: Center(
+                                                child: Icon(
+                                                  Icons
+                                                      .add_circle_outline,
+                                                  color: Colors.white,
+                                                ),
                                               ),
                                             ),
-                                          ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
                                     onTap: () {
                                       setState(() {
                                         openAddNewSkill = !openAddNewSkill;
@@ -1893,7 +1917,7 @@ class _ActivityProfileState extends ActivityStateBase<ActivityProfile> {
                                             scrollDirection: Axis.horizontal,
                                             controller: skillController,
                                             itemCount:
-                                                skillsAndExperiences.length,
+                                            skillsAndExperiences.length,
                                             itemBuilder:
                                                 (BuildContext ctxt, int index) {
                                               return Padding(
@@ -1903,45 +1927,45 @@ class _ActivityProfileState extends ActivityStateBase<ActivityProfile> {
                                                   children: <Widget>[
                                                     Padding(
                                                       padding:
-                                                          const EdgeInsets.all(
-                                                              4.0),
+                                                      const EdgeInsets.all(
+                                                          4.0),
                                                       child: Container(
                                                         height: 50,
                                                         width: skillsAndExperiences[
-                                                                        index]
-                                                                    .length <
-                                                                8
+                                                        index]
+                                                            .length <
+                                                            8
                                                             ? 80.0
                                                             : skillsAndExperiences[
-                                                                            index]
-                                                                        .length >
-                                                                    16
-                                                                ? 210
-                                                                : 140,
+                                                        index]
+                                                            .length >
+                                                            16
+                                                            ? 210
+                                                            : 140,
                                                         decoration:
-                                                            BoxDecoration(
+                                                        BoxDecoration(
                                                           borderRadius:
-                                                              BorderRadius.all(
-                                                                  Radius.circular(
-                                                                      10.0) //         <--- border radius here
-                                                                  ),
+                                                          BorderRadius.all(
+                                                              Radius.circular(
+                                                                  10.0) //         <--- border radius here
+                                                          ),
                                                           color: Constants
                                                               .COLOR_DARK_GREY,
                                                           // color: Colors.red,
                                                         ),
                                                         child: Padding(
                                                           padding:
-                                                              const EdgeInsets
-                                                                      .symmetric(
-                                                                  vertical: 8.0,
-                                                                  horizontal:
-                                                                      16),
+                                                          const EdgeInsets
+                                                              .symmetric(
+                                                              vertical: 8.0,
+                                                              horizontal:
+                                                              16),
                                                           child: Row(
                                                             children: <Widget>[
                                                               Expanded(
                                                                 child: AlMajlisTextViewMedium(
                                                                     skillsAndExperiences[
-                                                                        index],
+                                                                    index],
                                                                     maxLines: 1,
                                                                     align: TextAlign
                                                                         .center),
@@ -1959,7 +1983,7 @@ class _ActivityProfileState extends ActivityStateBase<ActivityProfile> {
                                                         top: 0,
                                                         child: GestureDetector(
                                                           child:
-                                                              AlMajlisImageIcons(
+                                                          AlMajlisImageIcons(
                                                             "drawables/delete-01.png",
                                                             iconHeight: 16,
                                                           ),
@@ -1995,10 +2019,16 @@ class _ActivityProfileState extends ActivityStateBase<ActivityProfile> {
                         filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
                         child: GestureDetector(
                           child: Container(
-                            height: MediaQuery.of(context).size.height,
-                            width: MediaQuery.of(context).size.width,
+                            height: MediaQuery
+                                .of(context)
+                                .size
+                                .height,
+                            width: MediaQuery
+                                .of(context)
+                                .size
+                                .width,
                             decoration: BoxDecoration(
-                                color: Colors.grey.shade200.withOpacity(0.5)),
+                              color: Colors.grey.shade200.withOpacity(0.5),),
                           ),
                           onTap: () {
                             setState(() {
@@ -2011,13 +2041,19 @@ class _ActivityProfileState extends ActivityStateBase<ActivityProfile> {
                     Align(
                       alignment: Alignment.bottomCenter,
                       child: Container(
-                        width: MediaQuery.of(context).size.width,
-                        height: MediaQuery.of(context).size.height / 1.4,
+                        width: MediaQuery
+                            .of(context)
+                            .size
+                            .width,
+                        height: MediaQuery
+                            .of(context)
+                            .size
+                            .height / 1.4,
                         decoration: BoxDecoration(
-                            color: Constants.COLOR_DARK_GREY,
-                            borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(12.0),
-                                topRight: Radius.circular(12.0))),
+                          color: Constants.COLOR_DARK_GREY,
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(12.0),
+                            topRight: Radius.circular(12.0),),),
                         child: SingleChildScrollView(
                           child: Padding(
                             padding: const EdgeInsets.all(20),
@@ -2038,7 +2074,7 @@ class _ActivityProfileState extends ActivityStateBase<ActivityProfile> {
                                         },
                                         child: Padding(
                                           padding:
-                                              const EdgeInsets.only(left: 8.0),
+                                          const EdgeInsets.only(left: 8.0),
                                           child: AlMajlisTextViewBold(
                                             "CANCEL",
                                             size: 12.0,
@@ -2053,7 +2089,7 @@ class _ActivityProfileState extends ActivityStateBase<ActivityProfile> {
                                         "Book a Meeting Call",
                                         size: 14.0,
                                       ),
-                                    )
+                                    ),
                                   ],
                                 ),
                                 Padding(
@@ -2064,41 +2100,41 @@ class _ActivityProfileState extends ActivityStateBase<ActivityProfile> {
                                       Row(
                                         children: <Widget>[
                                           null != imageLink &&
-                                                  !imageLink.isEmpty
+                                              !imageLink.isEmpty
                                               ? AlMajlisProfileImageWithStatus(
-                                                  imageLink,
-                                                  30.0,
-                                                  isPro: hasPro,
-                                                )
+                                            imageLink,
+                                            30.0,
+                                            isPro: hasPro,
+                                          )
                                               : Container(
-                                                  height: 30,
-                                                  width: 30,
-                                                  decoration: BoxDecoration(
-                                                      shape: BoxShape.circle,
-                                                      color: hasPro
-                                                          ? Constants
-                                                              .COLOR_PRIMARY_TEAL
-                                                          : Colors.white),
-                                                  child: Padding(
-                                                    padding:
-                                                        const EdgeInsets.all(
-                                                            4.0),
-                                                    child: Container(
-                                                      decoration: BoxDecoration(
-                                                          shape:
-                                                              BoxShape.circle,
-                                                          gradient:
-                                                              LinearGradient(
-                                                                  colors: [
-                                                                Colors.purple,
-                                                                Colors.teal
-                                                              ])),
-                                                    ),
-                                                  ),
-                                                ),
+                                            height: 30,
+                                            width: 30,
+                                            decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              color: hasPro
+                                                  ? Constants
+                                                  .COLOR_PRIMARY_TEAL
+                                                  : Colors.white,),
+                                            child: Padding(
+                                              padding:
+                                              const EdgeInsets.all(
+                                                  4.0),
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                  shape:
+                                                  BoxShape.circle,
+                                                  gradient:
+                                                  LinearGradient(
+                                                    colors: [
+                                                      Colors.purple,
+                                                      Colors.teal
+                                                    ],),),
+                                              ),
+                                            ),
+                                          ),
                                           Padding(
                                             padding: const EdgeInsets.only(
-                                                left: 8.0),
+                                              left: 8.0,),
                                             child: AlMajlisTextViewRegular(
                                               userName,
                                               size: 16,
@@ -2113,7 +2149,7 @@ class _ActivityProfileState extends ActivityStateBase<ActivityProfile> {
                                       ),
                                       Padding(
                                         padding:
-                                            const EdgeInsets.only(top: 16.0),
+                                        const EdgeInsets.only(top: 16.0),
                                         child: Row(
                                           children: <Widget>[
                                             Icon(
@@ -2134,7 +2170,7 @@ class _ActivityProfileState extends ActivityStateBase<ActivityProfile> {
                                       ),
                                       Padding(
                                         padding:
-                                            const EdgeInsets.only(top: 12.0),
+                                        const EdgeInsets.only(top: 12.0),
                                         child: Row(
                                           children: <Widget>[
                                             Icon(
@@ -2159,14 +2195,16 @@ class _ActivityProfileState extends ActivityStateBase<ActivityProfile> {
                                 ),
                                 Padding(
                                   padding:
-                                      const EdgeInsets.symmetric(vertical: 8.0),
+                                  const EdgeInsets.symmetric(vertical: 8.0),
                                   child: AlMajlisDatePicker(
                                     "Date & time",
                                     bookingDateTimeChanged,
                                     controller: mettingTimeController,
                                     suffixIcon: Icon(Icons.calendar_today),
                                     startDate: DateTime.now(),
-                                    endDate: DateTime(DateTime.now().year + 2),
+                                    endDate: DateTime(DateTime
+                                        .now()
+                                        .year + 2),
                                   ),
                                 ),
                                 Padding(
@@ -2183,7 +2221,7 @@ class _ActivityProfileState extends ActivityStateBase<ActivityProfile> {
                                       ),
                                       Padding(
                                         padding:
-                                            const EdgeInsets.only(top: 8.0),
+                                        const EdgeInsets.only(top: 8.0),
                                         child: InkWell(
                                           splashColor: Colors.blueAccent,
 //                                          onTap: () {
@@ -2208,7 +2246,7 @@ class _ActivityProfileState extends ActivityStateBase<ActivityProfile> {
                                   padding: const EdgeInsets.only(top: 8.0),
                                   child: Row(
                                     mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                    MainAxisAlignment.spaceBetween,
                                     children: <Widget>[
                                       AlMajlisTextViewBold(
                                         "SUBTOTAL",
@@ -2225,7 +2263,7 @@ class _ActivityProfileState extends ActivityStateBase<ActivityProfile> {
                                   padding: const EdgeInsets.only(top: 8.0),
                                   child: Row(
                                     mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                    MainAxisAlignment.spaceBetween,
                                     children: <Widget>[
                                       AlMajlisTextViewBold(
                                         "SERVICE CHARGE",
@@ -2242,7 +2280,7 @@ class _ActivityProfileState extends ActivityStateBase<ActivityProfile> {
                                   padding: const EdgeInsets.only(top: 8.0),
                                   child: Row(
                                     mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                    MainAxisAlignment.spaceBetween,
                                     children: <Widget>[
                                       AlMajlisTextViewBold(
                                         "TOTAL",
@@ -2271,13 +2309,13 @@ class _ActivityProfileState extends ActivityStateBase<ActivityProfile> {
                                       ),
                                     ],
                                   ),
-                                )
+                                ),
                               ],
                             ),
                           ),
                         ),
                       ),
-                    )
+                    ),
                   ],
                 ),
               ),
@@ -2303,7 +2341,9 @@ class _ActivityProfileState extends ActivityStateBase<ActivityProfile> {
     Navigator.pop(_context);
     String idString = 'userId=' + user.userId;
     for (int index = 0; index < users.length; index++) {
-      getChats(user, users.elementAt(index).user, idString);
+      getChats(user, users
+          .elementAt(index)
+          .user, idString);
     }
     Fluttertoast.showToast(
         msg: "Shared to selected Users",
@@ -2312,13 +2352,15 @@ class _ActivityProfileState extends ActivityStateBase<ActivityProfile> {
         timeInSecForIosWeb: 2);
   }
 
-  Future<void> newMessage(
-      User myUser, User otherUser, String chatRoomId, String text) async {
+  Future<void> newMessage(User myUser, User otherUser, String chatRoomId,
+      String text) async {
     Map<String, dynamic> userDataMap = {
       "sender_user_id": myUser.userId,
       "sender_name": myUser.firstName + " " + myUser.lastName,
       "text": text,
-      'time': DateTime.now().millisecondsSinceEpoch
+      'time': DateTime
+          .now()
+          .millisecondsSinceEpoch
     };
     _chatsInstance
         .document(chatRoomId)
@@ -2327,7 +2369,7 @@ class _ActivityProfileState extends ActivityStateBase<ActivityProfile> {
         .then((value) {
       print("value added");
     }).catchError((e) {
-      print(e.toString());
+      print(e.toString(),);
     });
 
 // Update Time for self document
@@ -2349,7 +2391,9 @@ class _ActivityProfileState extends ActivityStateBase<ActivityProfile> {
             .document(user.documents.first.documentID)
             .collection("conversations")
             .document(receipentUser.documents.first.documentID)
-            .updateData({'time': DateTime.now().millisecondsSinceEpoch});
+            .updateData({'time': DateTime
+            .now()
+            .millisecondsSinceEpoch});
       } else {
         Map<String, dynamic> userMap = {
           "id": otherUser.userId,
@@ -2357,7 +2401,9 @@ class _ActivityProfileState extends ActivityStateBase<ActivityProfile> {
           "occupation": otherUser.occupation,
           "country": otherUser.country,
           "city": otherUser.city,
-          'time': DateTime.now().millisecondsSinceEpoch,
+          'time': DateTime
+              .now()
+              .millisecondsSinceEpoch,
           'name': otherUser.firstName + " " + otherUser.lastName,
           'isPro': otherUser.isPro
         };
@@ -2378,14 +2424,16 @@ class _ActivityProfileState extends ActivityStateBase<ActivityProfile> {
           .collection("conversations");
 
       var receipentUser =
-          await convoList.where('id', isEqualTo: myUser.userId).getDocuments();
+      await convoList.where('id', isEqualTo: myUser.userId).getDocuments();
 
       if (receipentUser.documents.length > 0) {
         _usersInstance
             .document(user.documents.first.documentID)
             .collection("conversations")
             .document(receipentUser.documents.first.documentID)
-            .updateData({'time': DateTime.now().millisecondsSinceEpoch});
+            .updateData({'time': DateTime
+            .now()
+            .millisecondsSinceEpoch});
       } else {
         Map<String, dynamic> userMap = {
           "id": myUser.userId,
@@ -2393,12 +2441,14 @@ class _ActivityProfileState extends ActivityStateBase<ActivityProfile> {
           "occupation": myUser.occupation,
           "country": myUser.country,
           "city": myUser.city,
-          'time': DateTime.now().millisecondsSinceEpoch,
+          'time': DateTime
+              .now()
+              .millisecondsSinceEpoch,
           'name': myUser.firstName + " " + myUser.lastName,
           'isPro': myUser.isPro
         };
         convoList.add(userMap).catchError((e) {
-          print(e.toString());
+          print(e.toString(),);
         });
       }
     }
@@ -2465,7 +2515,7 @@ class _ActivityProfileState extends ActivityStateBase<ActivityProfile> {
           _usersInstance
               .add(userMap)
               .then((value) =>
-                  newMessage(myUser, otherUser, chatRoomId, linkText))
+              newMessage(myUser, otherUser, chatRoomId, linkText))
               .catchError((e) {
             print(e.toString());
           });
@@ -2542,8 +2592,12 @@ class _ActivityProfileState extends ActivityStateBase<ActivityProfile> {
           date.year,
           date.month,
           date.day,
-          availableSlots.elementAt(value).hour,
-          availableSlots.elementAt(value).minute);
+          availableSlots
+              .elementAt(value)
+              .hour,
+          availableSlots
+              .elementAt(value)
+              .minute);
       setState(() {
         String timeMeridian = bookingDate.hour > 12 ? " PM" : " AM";
         String hour = bookingDate.hour > 12
@@ -2570,7 +2624,8 @@ class _ActivityProfileState extends ActivityStateBase<ActivityProfile> {
       } catch (e) {}
     }
     await Navigator.of(_context).push(MaterialPageRoute(
-        builder: (context) => ActivityEditProfile(
+        builder: (context) =>
+            ActivityEditProfile(
               fromProfile: true,
             )));
     print("after await");
@@ -2665,7 +2720,9 @@ class _ActivityProfileState extends ActivityStateBase<ActivityProfile> {
           showDelete = false;
           timezoneName = user.timeZoneName;
 
-          if (user.userId == core.getCurrentUser().userId) {
+          if (user.userId == core
+              .getCurrentUser()
+              .userId) {
             selfProfile = true;
           }
           if (null == user.isPro) {
@@ -2717,7 +2774,9 @@ class _ActivityProfileState extends ActivityStateBase<ActivityProfile> {
           if (null != user.workStart) {
             var dateFormat = DateFormat("MMM y");
             startDate = dateFormat
-                .format(user.workStart.add(DateTime.now().timeZoneOffset));
+                .format(user.workStart.add(DateTime
+                .now()
+                .timeZoneOffset));
           } else {
             startDate = null;
           }
@@ -2725,7 +2784,9 @@ class _ActivityProfileState extends ActivityStateBase<ActivityProfile> {
             var dateFormat = DateFormat("MMM y");
             endDate = null != user.workEnd
                 ? dateFormat
-                    .format(user.workEnd.add(DateTime.now().timeZoneOffset))
+                .format(user.workEnd.add(DateTime
+                .now()
+                .timeZoneOffset))
                 : "-present";
           } else {
             endDate = null;
@@ -2741,12 +2802,16 @@ class _ActivityProfileState extends ActivityStateBase<ActivityProfile> {
           if (null != user.createdAt) {
             var dateFormat = DateFormat("MMM d y");
             userSince = dateFormat
-                .format(user.createdAt.add(DateTime.now().timeZoneOffset));
+                .format(user.createdAt.add(DateTime
+                .now()
+                .timeZoneOffset));
           }
           if (null != user.updatedAt) {
             var dateFormat = DateFormat("MMM d ");
             updatedAt = dateFormat
-                .format(user.updatedAt.add(DateTime.now().timeZoneOffset));
+                .format(user.updatedAt.add(DateTime
+                .now()
+                .timeZoneOffset));
 
             String hour = user.updatedAt.hour < 10
                 ? "0" + user.updatedAt.hour.toString()
@@ -2786,10 +2851,14 @@ class _ActivityProfileState extends ActivityStateBase<ActivityProfile> {
             if (null != education.educationStart &&
                 null != education.educationEnd) {
               String educationstartDate = dateFormat.format(
-                  education.educationStart.add(DateTime.now().timeZoneOffset));
+                  education.educationStart.add(DateTime
+                      .now()
+                      .timeZoneOffset));
               String educationendDAte = null != education.educationEnd
                   ? dateFormat.format(
-                      education.educationEnd.add(DateTime.now().timeZoneOffset))
+                  education.educationEnd.add(DateTime
+                      .now()
+                      .timeZoneOffset))
                   : "Present";
               if (education.isCurrent) {
                 educationPeriod = educationstartDate + " - Present";

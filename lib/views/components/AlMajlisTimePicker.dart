@@ -1,6 +1,5 @@
 import 'package:almajlis/views/widgets/AlMajlisTextFiled.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:flutter_cupertino_date_picker/flutter_cupertino_date_picker.dart';
 import 'dart:io' show Platform;
 

@@ -27,8 +27,7 @@ import 'package:almajlis/core/wrappers/AlMajlisComment.dart';
 import 'package:almajlis/core/wrappers/AlMajlisPost.dart';
 import 'package:almajlis/core/wrappers/AlmajlisPurchesProUserRequest.dart';
 import 'package:almajlis/core/wrappers/User.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter_udid/flutter_udid.dart';
+
 import 'package:jaguar_retrofit/jaguar_retrofit.dart';
 import 'package:jaguar_serializer/jaguar_serializer.dart';
 import 'package:http/io_client.dart';

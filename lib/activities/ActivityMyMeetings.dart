@@ -31,6 +31,7 @@ class _ActivityMyMeetingsState extends ActivityStateBase<ActivityMyMeetings> {
   bool isVideoCallDone = false;
 
   BuildContext _context;
+
   @override
   Widget build(BuildContext context) {
     _context = context;
@@ -49,9 +50,10 @@ class _ActivityMyMeetingsState extends ActivityStateBase<ActivityMyMeetings> {
                   padding: const EdgeInsets.symmetric(horizontal: 20.0),
                   child: Container(
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(
-                              20.0) //         <--- border radius here
-                          ),
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(
+                            20.0), //         <--- border radius here
+                      ),
                       color: Constants.COLOR_DARK_GREY,
                     ),
                     child: Padding(
@@ -63,26 +65,27 @@ class _ActivityMyMeetingsState extends ActivityStateBase<ActivityMyMeetings> {
                             child: Padding(
                               padding: const EdgeInsets.only(left: 8.0),
                               child: TextField(
-                                  controller: searchController,
-                                  maxLines: 1,
-                                  style: TextStyle(
+                                controller: searchController,
+                                maxLines: 1,
+                                style: TextStyle(
+                                    fontFamily: 'ProximaNovaSemiMedium',
+                                    color: Colors.white),
+                                onSubmitted: (term) {},
+                                textInputAction: TextInputAction.done,
+                                decoration: new InputDecoration(
+                                  hintText: "Search Bookings",
+                                  border: InputBorder.none,
+                                  focusedBorder: InputBorder.none,
+                                  enabledBorder: InputBorder.none,
+                                  errorBorder: InputBorder.none,
+                                  disabledBorder: InputBorder.none,
+                                  hintStyle: TextStyle(
                                       fontFamily: 'ProximaNovaSemiMedium',
-                                      color: Colors.white),
-                                  onSubmitted: (term) {},
-                                  textInputAction: TextInputAction.done,
-                                  decoration: new InputDecoration(
-                                    hintText: "Search Bookings",
-                                    border: InputBorder.none,
-                                    focusedBorder: InputBorder.none,
-                                    enabledBorder: InputBorder.none,
-                                    errorBorder: InputBorder.none,
-                                    disabledBorder: InputBorder.none,
-                                    hintStyle: TextStyle(
-                                        fontFamily: 'ProximaNovaSemiMedium',
-                                        color: Constants.COLOR_PRIMARY_GREY),
-                                  )),
+                                      color: Constants.COLOR_PRIMARY_GREY),
+                                ),
+                              ),
                             ),
-                          )
+                          ),
                         ],
                       ),
                     ),
@@ -98,7 +101,7 @@ class _ActivityMyMeetingsState extends ActivityStateBase<ActivityMyMeetings> {
                           return MeetingListTile(index);
                         }),
                   ),
-                )
+                ),
               ],
             ),
           ),
@@ -160,9 +163,10 @@ class _ActivityMyMeetingsState extends ActivityStateBase<ActivityMyMeetings> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => ActivityProfile(
-                                      userId: booking.bookedBy.userId,
-                                    )),
+                              builder: (context) => ActivityProfile(
+                                userId: booking.bookedBy.userId,
+                              ),
+                            ),
                           );
                         },
                         child: AlMajlisProfileImageWithStatus(
@@ -176,9 +180,10 @@ class _ActivityMyMeetingsState extends ActivityStateBase<ActivityMyMeetings> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => ActivityProfile(
-                                      userId: booking.bookedBy.userId,
-                                    )),
+                              builder: (context) => ActivityProfile(
+                                userId: booking.bookedBy.userId,
+                              ),
+                            ),
                           );
                         },
                         child: Container(
@@ -193,9 +198,11 @@ class _ActivityMyMeetingsState extends ActivityStateBase<ActivityMyMeetings> {
                             padding: const EdgeInsets.all(4.0),
                             child: Container(
                               decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  gradient: LinearGradient(
-                                      colors: [Colors.purple, Colors.teal])),
+                                shape: BoxShape.circle,
+                                gradient: LinearGradient(
+                                  colors: [Colors.purple, Colors.teal],
+                                ),
+                              ),
                             ),
                           ),
                         ),
@@ -218,7 +225,9 @@ class _ActivityMyMeetingsState extends ActivityStateBase<ActivityMyMeetings> {
                             child: Row(
                               children: <Widget>[
                                 AlMajlisTextViewBold(
-                                    null != booking.bookedBy.occupation ? booking.bookedBy.occupation : ""),
+                                    null != booking.bookedBy.occupation
+                                        ? booking.bookedBy.occupation
+                                        : ""),
                               ],
                             ),
                           ),
@@ -230,11 +239,13 @@ class _ActivityMyMeetingsState extends ActivityStateBase<ActivityMyMeetings> {
                           Row(
                             children: <Widget>[
                               AlMajlisTextViewMedium(
-                                null != booking.bookedBy.country ? booking.bookedBy.country : " ",
+                                null != booking.bookedBy.country
+                                    ? booking.bookedBy.country
+                                    : " ",
                                 color: Colors.grey,
                               ),
                             ],
-                          )
+                          ),
                         ],
                       ),
                     ),
@@ -269,7 +280,7 @@ class _ActivityMyMeetingsState extends ActivityStateBase<ActivityMyMeetings> {
                       height: 20,
                     ),
                   ),
-                )
+                ),
               ],
             ),
             Padding(
@@ -278,7 +289,7 @@ class _ActivityMyMeetingsState extends ActivityStateBase<ActivityMyMeetings> {
                 color: Constants.COLOR_PRIMARY_GREY,
                 thickness: 2.5,
               ),
-            )
+            ),
           ],
         ),
       ),
@@ -289,10 +300,11 @@ class _ActivityMyMeetingsState extends ActivityStateBase<ActivityMyMeetings> {
     Navigator.push(
       context,
       MaterialPageRoute(
-          builder: (context) => ActivityUserChat(
-                myUserId: core.getCurrentUser().userId,
-                otherPersonUserId: meetings.elementAt(index).bookedBy.userId,
-              )),
+        builder: (context) => ActivityUserChat(
+          myUserId: core.getCurrentUser().userId,
+          otherPersonUserId: meetings.elementAt(index).bookedBy.userId,
+        ),
+      ),
     );
   }
 
@@ -301,13 +313,16 @@ class _ActivityMyMeetingsState extends ActivityStateBase<ActivityMyMeetings> {
     Navigator.push(
       context,
       MaterialPageRoute(
-          builder: (context) => IndexPage(meetings.elementAt(index), isInitiatedByMe: true)),
+        builder: (context) =>
+            IndexPage(meetings.elementAt(index), isInitiatedByMe: true),
+      ),
     );
   }
 
   void clickMenu(index) {
-    scaffoldState.currentState
-        .showBottomSheet((context) => MyMeetingsBottomSheet());
+    scaffoldState.currentState.showBottomSheet(
+      (context) => MyMeetingsBottomSheet(),
+    );
   }
 
   void getMeetings() async {

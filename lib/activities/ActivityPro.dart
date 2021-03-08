@@ -5,7 +5,7 @@ import 'package:almajlis/activities/ActivityGoPro.dart';
 import 'package:almajlis/core/server/wrappers/ResponseOk.dart';
 import 'package:almajlis/core/server/wrappers/ResponseUser.dart';
 import 'package:almajlis/core/wrappers/AlMajlisAvailabilityDays.dart';
-import 'package:almajlis/core/wrappers/AlMajlisTimeZone.dart';
+
 import 'package:almajlis/core/constants/TimeZoneConstants.dart';
 import 'package:almajlis/core/wrappers/AlMajlisTimeZones.dart';
 import 'package:almajlis/core/wrappers/User.dart';
@@ -14,11 +14,10 @@ import 'package:almajlis/views/components/AlMajlisBackButton.dart';
 import 'package:almajlis/views/components/AlMajlisBackground.dart';
 import 'package:almajlis/views/components/AlMajlisButton.dart';
 import 'package:almajlis/views/components/AlMajlisTimePicker.dart';
-import 'package:almajlis/views/dialogs/DialogSuccessFailure.dart';
-import 'package:almajlis/views/widgets/AlMajlisDatePicker.dart';
+
 import 'package:almajlis/views/widgets/AlMajlisTextFiled.dart';
 import 'package:almajlis/views/widgets/AlMajlisTextViewBold.dart';
-import 'package:almajlis/views/widgets/AlMajlisTextViewRegular.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_native_timezone/flutter_native_timezone.dart';
@@ -26,6 +25,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 class ActivityPro extends StatefulWidget {
   bool fromSeetings;
+
   ActivityPro({Key key, this.fromSeetings = true}) : super(key: key);
 
   @override
@@ -39,7 +39,15 @@ class _ActivityProState extends ActivityStateBase<ActivityPro> {
   TextEditingController fromDateController = TextEditingController();
   TextEditingController toDateController = TextEditingController();
   List<bool> selectedValue = [true, false];
-  List<bool> selectDay = [false, false, false, false, false, false, false];
+  List<bool> selectDay = [
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+  ];
   BuildContext _context;
   User user;
   int selectedFromTime;
@@ -54,6 +62,7 @@ class _ActivityProState extends ActivityStateBase<ActivityPro> {
   bool isMenuOpen = false;
   Offset buttonPosition;
   Size buttonSize;
+
   // bool hasOccupation = false;
   OverlayEntry callDurationOverlay;
   IconData iconDropDown = Icons.keyboard_arrow_down;
@@ -113,18 +122,22 @@ class _ActivityProState extends ActivityStateBase<ActivityPro> {
                             color: Constants.COLOR_PRIMARY_TEAL,
                           ),
                           onTap: editUser,
-                        )
+                        ),
                       ],
                     ),
                     SizedBox(
                       height: 30.0,
                     ),
                     AlMajlisTextField(
-                        "IBAN/Benefit Pay no.", benifitPayNoController),
+                      "IBAN/Benefit Pay no.",
+                      benifitPayNoController,
+                    ),
                     Padding(
                       padding: EdgeInsets.only(top: 16.0),
-                      child:
-                          AlMajlisTextField("Call Title", callTitleController),
+                      child: AlMajlisTextField(
+                        "Call Title",
+                        callTitleController,
+                      ),
                     ),
                     Padding(
                       padding: EdgeInsets.only(top: 16.0, bottom: 16.0),
@@ -171,10 +184,14 @@ class _ActivityProState extends ActivityStateBase<ActivityPro> {
                                         fillColor: Colors.white,
                                         borderColor: Colors.white,
                                         borderRadius: BorderRadius.all(
-                                            Radius.circular(10.0)),
+                                          Radius.circular(10.0),
+                                        ),
                                         isSelected: selectedValue,
                                         onPressed: (index) {
-                                          List<bool> selected = [false, false];
+                                          List<bool> selected = [
+                                            false,
+                                            false,
+                                          ];
                                           setState(() {
                                             selectedValue = selected;
                                             selected[index] = true;
@@ -183,7 +200,7 @@ class _ActivityProState extends ActivityStateBase<ActivityPro> {
                                       ),
                                     ],
                                   ),
-                                )
+                                ),
                               ],
                             ),
                           ),
@@ -209,7 +226,7 @@ class _ActivityProState extends ActivityStateBase<ActivityPro> {
                                 ),
                               ],
                             ),
-                          )
+                          ),
                         ],
                       ),
                     ),
@@ -314,7 +331,7 @@ class _ActivityProState extends ActivityStateBase<ActivityPro> {
                                 ),
                               ),
                             ),
-                          )
+                          ),
                         ],
                       ),
                     ),
@@ -350,7 +367,7 @@ class _ActivityProState extends ActivityStateBase<ActivityPro> {
                               maxLines: 2,
                               align: TextAlign.center,
                             ),
-                          )
+                          ),
                         ],
                       ),
                     ),
@@ -362,8 +379,10 @@ class _ActivityProState extends ActivityStateBase<ActivityPro> {
                         () async {
                           //TODO: Check here for in app purchases using apple pay
                           var data = await Navigator.of(context).push(
-                              MaterialPageRoute(
-                                  builder: (context) => ActivityGoPro(user)));
+                            MaterialPageRoute(
+                              builder: (context) => ActivityGoPro(user),
+                            ),
+                          );
                           if (data != null) {
                             if (data) {
                               getUser();
@@ -441,32 +460,33 @@ class _ActivityProState extends ActivityStateBase<ActivityPro> {
                       timeZonesList.length,
                       (index) {
                         return GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                selectedCallTimeZone = timeZonesList[index];
-                              });
-                              closeMenu();
-                            },
-                            child: Container(
-                              margin: EdgeInsets.only(top: 4.0),
-                              child: Column(
-                                children: <Widget>[
-                                  Padding(
-                                    padding: const EdgeInsets.all(12.0),
-                                    child: Text(
-                                      timeZonesList[index],
-                                      style: TextStyle(color: Colors.white),
-                                    ),
+                          onTap: () {
+                            setState(() {
+                              selectedCallTimeZone = timeZonesList[index];
+                            });
+                            closeMenu();
+                          },
+                          child: Container(
+                            margin: EdgeInsets.only(top: 4.0),
+                            child: Column(
+                              children: <Widget>[
+                                Padding(
+                                  padding: const EdgeInsets.all(12.0),
+                                  child: Text(
+                                    timeZonesList[index],
+                                    style: TextStyle(color: Colors.white),
                                   ),
-                                  index != timeZonesList.length - 1
-                                      ? Divider(
-                                          height: 2,
-                                          color: Colors.white,
-                                        )
-                                      : Container()
-                                ],
-                              ),
-                            ));
+                                ),
+                                index != timeZonesList.length - 1
+                                    ? Divider(
+                                        height: 2,
+                                        color: Colors.white,
+                                      )
+                                    : Container(),
+                              ],
+                            ),
+                          ),
+                        );
                       },
                     ),
                   ),
@@ -493,26 +513,28 @@ class _ActivityProState extends ActivityStateBase<ActivityPro> {
     return Padding(
       padding: const EdgeInsets.only(top: 8.0, bottom: 8.0, right: 8.0),
       child: CircleAvatar(
-          radius: 20,
-          backgroundColor: Colors.white,
-          child: GestureDetector(
-            onTap: () {
-              setState(() {
-                if (selectDay[index] == false) {
-                  selectDay[index] = true;
-                } else {
-                  selectDay[index] = false;
-                }
-              });
-            },
-            child: CircleAvatar(
-                radius: 19,
-                backgroundColor: selectDay[index] ? Colors.white : Colors.black,
-                child: AlMajlisTextViewBold(
-                  day,
-                  color: selectDay[index] ? Colors.black : Colors.white,
-                )),
-          )),
+        radius: 20,
+        backgroundColor: Colors.white,
+        child: GestureDetector(
+          onTap: () {
+            setState(() {
+              if (selectDay[index] == false) {
+                selectDay[index] = true;
+              } else {
+                selectDay[index] = false;
+              }
+            });
+          },
+          child: CircleAvatar(
+            radius: 19,
+            backgroundColor: selectDay[index] ? Colors.white : Colors.black,
+            child: AlMajlisTextViewBold(
+              day,
+              color: selectDay[index] ? Colors.black : Colors.white,
+            ),
+          ),
+        ),
+      ),
       //),
     );
   }

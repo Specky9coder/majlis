@@ -3,7 +3,7 @@ import 'dart:io';
 
 import 'package:almajlis/activities/ActivityBase.dart';
 import 'package:almajlis/activities/ActivityNotification.dart';
-import 'package:almajlis/activities/ActivityProfile.dart';
+
 import 'package:almajlis/activities/ActivityUserChat.dart';
 import 'package:almajlis/core/server/firebase/database.dart';
 import 'package:almajlis/core/server/wrappers/ResponseUsers.dart';
@@ -15,7 +15,7 @@ import 'package:almajlis/views/widgets/AlMajlisTextViewBold.dart';
 import 'package:almajlis/views/widgets/AlMajlisTextViewMedium.dart';
 import 'package:almajlis/views/widgets/AlMajlisTextViewWithVerified.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -38,6 +38,7 @@ class _ActivityUserChatListState
   TextEditingController searchController = TextEditingController();
   BuildContext _context;
   bool isSearchBtnClicked = false;
+
   @override
   void initState() {
     getusers();
@@ -131,12 +132,13 @@ class _ActivityUserChatListState
                                                           height: 70,
                                                           width: 70,
                                                           decoration: BoxDecoration(
-                                                              shape:
-                                                                  BoxShape.circle,
+                                                              shape: BoxShape
+                                                                  .circle,
                                                               color: user.isPro
                                                                   ? Constants
                                                                       .COLOR_PRIMARY_TEAL
-                                                                  : Colors.white),
+                                                                  : Colors
+                                                                      .white),
                                                           child: Padding(
                                                             padding:
                                                                 const EdgeInsets
@@ -183,10 +185,8 @@ class _ActivityUserChatListState
                                                                     Widget>[
                                                                   AlMajlisTextViewBold(
                                                                       null != user.Occupation &&
-                                                                              !user
-                                                                                  .Occupation.isEmpty
-                                                                          ? user
-                                                                              .Occupation
+                                                                              !user.Occupation.isEmpty
+                                                                          ? user.Occupation
                                                                           : ""
                                                                       // booking.bookedBy.occupation
                                                                       ),
@@ -194,14 +194,16 @@ class _ActivityUserChatListState
                                                               ),
                                                             ),
                                                             Row(
-                                                              children: <Widget>[
+                                                              children: <
+                                                                  Widget>[
                                                                 AlMajlisTextViewMedium(null !=
                                                                             user
                                                                                 .country &&
                                                                         !user
                                                                             .country
                                                                             .isEmpty
-                                                                    ? user.country
+                                                                    ? user
+                                                                        .country
                                                                     : ""),
                                                               ],
                                                             )
@@ -273,53 +275,58 @@ class _ActivityUserChatListState
                             ),
                             Expanded(
                                 child: Container(
-                                  height: 32.0,
-                                  margin: EdgeInsets.only(left: 10.0),
-                                  padding: EdgeInsets.only(top: 4.0),
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(20.0),
-                                      color: Constants.COLOR_DARK_GREY),
-                                  child: TextField(
-                                    controller: searchController,
-                                    onChanged: _onChangeHandler,
-                                    style: TextStyle(
-                                        fontFamily: 'ProximaNovaSemiBold',
-                                        color: Colors.white,
-                                        fontSize: 16),
-                                    decoration: InputDecoration(
-                                      contentPadding: EdgeInsets.symmetric(vertical: -10),
-                                      border: OutlineInputBorder(
-                                        borderSide: BorderSide.none,
-                                      ),
-                                      fillColor: Constants.COLOR_DARK_GREY,
-                                      prefixIcon: Padding(
-                                          padding: const EdgeInsets.only(bottom: 4.0),
-                                          child: Icon(
-                                            Icons.search,
-                                            color: Colors.white30,
-                                            size: 20,
-                                          )),
-                                      hintText: 'Search',
-                                      hintStyle: TextStyle(
-                                          fontSize: 18,
-                                          color: Colors.grey,
-                                          fontFamily: "ProximaNovaSemiBold",
-                                          fontWeight: FontWeight.normal),
-                                    ),
+                              height: 32.0,
+                              margin: EdgeInsets.only(left: 10.0),
+                              padding: EdgeInsets.only(top: 4.0),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20.0),
+                                  color: Constants.COLOR_DARK_GREY),
+                              child: TextField(
+                                controller: searchController,
+                                onChanged: _onChangeHandler,
+                                style: TextStyle(
+                                    fontFamily: 'ProximaNovaSemiBold',
+                                    color: Colors.white,
+                                    fontSize: 16),
+                                decoration: InputDecoration(
+                                  contentPadding:
+                                      EdgeInsets.symmetric(vertical: -10),
+                                  border: OutlineInputBorder(
+                                    borderSide: BorderSide.none,
                                   ),
-                                ))
+                                  fillColor: Constants.COLOR_DARK_GREY,
+                                  prefixIcon: Padding(
+                                      padding:
+                                          const EdgeInsets.only(bottom: 4.0),
+                                      child: Icon(
+                                        Icons.search,
+                                        color: Colors.white30,
+                                        size: 20,
+                                      )),
+                                  hintText: 'Search',
+                                  hintStyle: TextStyle(
+                                      fontSize: 18,
+                                      color: Colors.grey,
+                                      fontFamily: "ProximaNovaSemiBold",
+                                      fontWeight: FontWeight.normal),
+                                ),
+                              ),
+                            ))
                           ],
                         ),
                         Expanded(
                           child: ListView.builder(
                               itemCount: serachUsers.length,
                               itemBuilder: (BuildContext contex, int index) {
-
                                 String name = "";
-                                if(null != serachUsers.elementAt(index).firstName) {
-                                  name = serachUsers.elementAt(index).firstName + " ";
+                                if (null !=
+                                    serachUsers.elementAt(index).firstName) {
+                                  name =
+                                      serachUsers.elementAt(index).firstName +
+                                          " ";
                                 }
-                                if(null != serachUsers.elementAt(index).lastName) {
+                                if (null !=
+                                    serachUsers.elementAt(index).lastName) {
                                   name = serachUsers.elementAt(index).lastName;
                                 }
                                 return InkWell(
@@ -327,8 +334,7 @@ class _ActivityUserChatListState
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder:
-                                              (context) =>
+                                          builder: (context) =>
                                               ActivityUserChat(
                                                 myUserId: core
                                                     .getCurrentUser()
@@ -367,11 +373,10 @@ class _ActivityUserChatListState
                                                                     myUserId: core
                                                                         .getCurrentUser()
                                                                         .userId,
-                                                                    otherPersonUserId:
-                                                                        serachUsers
-                                                                            .elementAt(
-                                                                                index)
-                                                                            .userId,
+                                                                    otherPersonUserId: serachUsers
+                                                                        .elementAt(
+                                                                            index)
+                                                                        .userId,
                                                                   )),
                                                         );
                                                       },
@@ -401,11 +406,10 @@ class _ActivityUserChatListState
                                                                     myUserId: core
                                                                         .getCurrentUser()
                                                                         .userId,
-                                                                    otherPersonUserId:
-                                                                        serachUsers
-                                                                            .elementAt(
-                                                                                index)
-                                                                            .userId,
+                                                                    otherPersonUserId: serachUsers
+                                                                        .elementAt(
+                                                                            index)
+                                                                        .userId,
                                                                   )),
                                                         );
                                                       },
@@ -435,7 +439,8 @@ class _ActivityUserChatListState
                                                                         colors: [
                                                                       Colors
                                                                           .purple,
-                                                                      Colors.teal
+                                                                      Colors
+                                                                          .teal
                                                                     ])),
                                                           ),
                                                         ),
@@ -443,8 +448,9 @@ class _ActivityUserChatListState
                                                     ),
                                               Expanded(
                                                 child: Padding(
-                                                  padding: const EdgeInsets.only(
-                                                      left: 8.0),
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 8.0),
                                                   child: Container(
                                                     child: Column(
                                                       mainAxisAlignment:
@@ -459,12 +465,10 @@ class _ActivityUserChatListState
                                                                   builder:
                                                                       (context) =>
                                                                           ActivityUserChat(
-                                                                            myUserId: core
-                                                                                .getCurrentUser()
-                                                                                .userId,
-                                                                            otherPersonUserId: serachUsers
-                                                                                .elementAt(index)
-                                                                                .userId,
+                                                                            myUserId:
+                                                                                core.getCurrentUser().userId,
+                                                                            otherPersonUserId:
+                                                                                serachUsers.elementAt(index).userId,
                                                                           )),
                                                             );
                                                           },

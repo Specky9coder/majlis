@@ -1,4 +1,3 @@
-import 'package:almajlis/views/components/AlMajlisNavigationBar.dart';
 import 'package:flutter/material.dart';
 
 class AlMajlisBackground extends StatefulWidget {

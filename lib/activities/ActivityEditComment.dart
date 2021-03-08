@@ -3,33 +3,25 @@ import 'dart:io';
 import 'package:almajlis/activities/ActivityBase.dart';
 import 'package:almajlis/activities/ActivityProfile.dart';
 import 'package:almajlis/core/server/wrappers/ResponseOk.dart';
-import 'package:almajlis/core/server/wrappers/ResponseSignedUrl.dart';
 import 'package:almajlis/core/server/wrappers/ResponseUser.dart';
 import 'package:almajlis/core/wrappers/AlMajlisComment.dart';
 import 'package:almajlis/core/wrappers/AlMajlisPost.dart';
 import 'package:almajlis/core/wrappers/User.dart';
 import 'package:almajlis/utils/Constants.dart';
 import 'package:almajlis/views/components/AlMajlisBackground.dart';
-import 'package:almajlis/views/components/AlMajlisButton.dart';
-import 'package:almajlis/views/components/AlMajlisImageIcons.dart';
 import 'package:almajlis/views/components/AlMajlisShortPostCard.dart';
 import 'package:almajlis/views/components/AlmajlisProfileImageWithStatus.dart';
 import 'package:almajlis/views/widgets/AlMajlisTextViewBold.dart';
-import 'package:almajlis/views/widgets/AlMajlisTextViewMedium.dart';
 import 'package:almajlis/views/widgets/AlMajlisTextViewSemiBold.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:path/path.dart' as path;
-import 'package:http/http.dart' as http;
 import 'package:timeago/timeago.dart' as timeago;
-import 'package:path_provider/path_provider.dart' as path_provider;
 
 class ActivityEditComment extends StatefulWidget {
   AlMajlisPost post;
   AlMajlisComment comment;
+
   ActivityEditComment({Key key, this.post, this.comment}) : super(key: key);
 
   @override
@@ -90,14 +82,16 @@ class _ActivityEditCommentState extends ActivityStateBase<ActivityEditComment> {
                     height: 40.0,
                     width: 80.0,
                     decoration: BoxDecoration(
-                        color: Constants.COLOR_DARK_TEAL,
-                        borderRadius: BorderRadius.circular(12.0)),
+                      color: Constants.COLOR_DARK_TEAL,
+                      borderRadius: BorderRadius.circular(12.0),
+                    ),
                     child: InkWell(
                       child: Center(
-                          child: AlMajlisTextViewBold(
-                        "UPDATE",
-                        size: 16,
-                      )),
+                        child: AlMajlisTextViewBold(
+                          "UPDATE",
+                          size: 16,
+                        ),
+                      ),
                     ),
                   ),
                 ),
@@ -130,9 +124,10 @@ class _ActivityEditCommentState extends ActivityStateBase<ActivityEditComment> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => ActivityProfile(
-                                        userId: userId,
-                                      )),
+                                builder: (context) => ActivityProfile(
+                                  userId: userId,
+                                ),
+                              ),
                             );
                           },
                           child: AlMajlisProfileImageWithStatus(
@@ -146,9 +141,10 @@ class _ActivityEditCommentState extends ActivityStateBase<ActivityEditComment> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => ActivityProfile(
-                                        userId: userId,
-                                      )),
+                                builder: (context) => ActivityProfile(
+                                  userId: userId,
+                                ),
+                              ),
                             );
                           },
                           child: Container(
@@ -163,9 +159,11 @@ class _ActivityEditCommentState extends ActivityStateBase<ActivityEditComment> {
                               padding: const EdgeInsets.all(4.0),
                               child: Container(
                                 decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    gradient: LinearGradient(
-                                        colors: [Colors.purple, Colors.teal])),
+                                  shape: BoxShape.circle,
+                                  gradient: LinearGradient(
+                                    colors: [Colors.purple, Colors.teal],
+                                  ),
+                                ),
                               ),
                             ),
                           ),
@@ -196,7 +194,7 @@ class _ActivityEditCommentState extends ActivityStateBase<ActivityEditComment> {
                         ],
                       ),
                     ),
-                  )
+                  ),
                 ],
               ),
             ),

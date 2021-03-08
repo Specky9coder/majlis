@@ -1,8 +1,6 @@
 import 'dart:io';
-import 'package:almajlis/core/server/Server.dart';
 import 'package:almajlis/core/server/wrappers/ResponseOk.dart';
 import 'package:almajlis/core/server/wrappers/ResponsePost.dart';
-import 'package:almajlis/core/server/wrappers/ResponseSignedUrl.dart';
 import 'package:almajlis/core/server/wrappers/ResponseUser.dart';
 import 'package:almajlis/core/wrappers/AlMajlisPost.dart';
 import 'package:almajlis/core/wrappers/AlMajlisLocation.dart';
@@ -22,6 +20,7 @@ import 'ActivityBase.dart';
 
 class ActivityEditPost extends StatefulWidget {
   var postId;
+
   ActivityEditPost({Key key, this.postId}) : super(key: key);
 
   @override
@@ -123,17 +122,19 @@ class _ActivityEditPostState extends ActivityStateBase<ActivityEditPost> {
                       height: 40.0,
                       width: 80.0,
                       decoration: BoxDecoration(
-                          color: Constants.COLOR_DARK_TEAL,
-                          borderRadius: BorderRadius.circular(12.0)),
+                        color: Constants.COLOR_DARK_TEAL,
+                        borderRadius: BorderRadius.circular(12.0),
+                      ),
                       child: InkWell(
                         child: Center(
-                            child: AlMajlisTextViewBold(
-                          "UPDATE",
-                          size: 16,
-                        )),
+                          child: AlMajlisTextViewBold(
+                            "UPDATE",
+                            size: 16,
+                          ),
+                        ),
                       ),
                     ),
-                  )
+                  ),
                 ],
               ),
             ),
@@ -159,9 +160,11 @@ class _ActivityEditPostState extends ActivityStateBase<ActivityEditPost> {
                             padding: const EdgeInsets.all(4.0),
                             child: Container(
                               decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  gradient: LinearGradient(
-                                      colors: [Colors.purple, Colors.teal])),
+                                shape: BoxShape.circle,
+                                gradient: LinearGradient(
+                                  colors: [Colors.purple, Colors.teal],
+                                ),
+                              ),
                             ),
                           ),
                         ),
@@ -179,7 +182,7 @@ class _ActivityEditPostState extends ActivityStateBase<ActivityEditPost> {
                           hintText: " What are you looking for ? "),
                     ),
                   ),
-                )
+                ),
               ],
             ),
             Spacer(
@@ -199,8 +202,9 @@ class _ActivityEditPostState extends ActivityStateBase<ActivityEditPost> {
                         height: 100.0,
                         width: 150.0,
                         decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8.0),
-                            border: Border.all(color: Colors.white)),
+                          borderRadius: BorderRadius.circular(8.0),
+                          border: Border.all(color: Colors.white),
+                        ),
                         child: _pickedImage != null
                             ? Image.file(
                                 _pickedImage,
@@ -209,20 +213,22 @@ class _ActivityEditPostState extends ActivityStateBase<ActivityEditPost> {
                             : Container(),
                       ),
                       Positioned(
-                          right: 6.0,
-                          top: 4.0,
-                          child: GestureDetector(
-                              onTap: () {
-                                print("clicked");
-                                setState(() {
-                                  _pickedImage = null;
-                                  isCameraClicked = false;
-                                });
-                              },
-                              child: AlMajlisImageIcons(
-                                "drawables/delete-01.png",
-                                iconHeight: 16,
-                              )))
+                        right: 6.0,
+                        top: 4.0,
+                        child: GestureDetector(
+                          onTap: () {
+                            print("clicked");
+                            setState(() {
+                              _pickedImage = null;
+                              isCameraClicked = false;
+                            });
+                          },
+                          child: AlMajlisImageIcons(
+                            "drawables/delete-01.png",
+                            iconHeight: 16,
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ],
@@ -244,10 +250,10 @@ class _ActivityEditPostState extends ActivityStateBase<ActivityEditPost> {
                             isLocationPickerClicked),
                       ),
                     ),
-                  )
+                  ),
                 ],
               ),
-            )
+            ),
             //))),
           ],
         ),
@@ -266,11 +272,12 @@ class _ActivityEditPostState extends ActivityStateBase<ActivityEditPost> {
           height: 50.0,
           padding: const EdgeInsets.all(8.0),
           decoration: BoxDecoration(
-              color: Constants.COLOR_DARK_GREY,
-              borderRadius: BorderRadius.circular(10.0),
-              border: displayText == null
-                  ? Border.all(color: Colors.black)
-                  : Border.all(color: Colors.white)),
+            color: Constants.COLOR_DARK_GREY,
+            borderRadius: BorderRadius.circular(10.0),
+            border: displayText == null
+                ? Border.all(color: Colors.black)
+                : Border.all(color: Colors.white),
+          ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
@@ -290,27 +297,29 @@ class _ActivityEditPostState extends ActivityStateBase<ActivityEditPost> {
                     align: TextAlign.center,
                   ),
                 ),
-              )
+              ),
             ],
           ),
         ),
         Visibility(
           visible: displayText == null ? false : true,
           child: Positioned(
-              right: 0.0,
-              top: 6.0,
-              child: GestureDetector(
-                  onTap: () {
-                    print("clicked");
-                    setState(() {
-                      displayText = null;
-                    });
-                  },
-                  child: AlMajlisImageIcons(
-                    "drawables/delete-01.png",
-                    iconHeight: 16,
-                  ))),
-        )
+            right: 0.0,
+            top: 6.0,
+            child: GestureDetector(
+              onTap: () {
+                print("clicked");
+                setState(() {
+                  displayText = null;
+                });
+              },
+              child: AlMajlisImageIcons(
+                "drawables/delete-01.png",
+                iconHeight: 16,
+              ),
+            ),
+          ),
+        ),
       ],
     );
   }

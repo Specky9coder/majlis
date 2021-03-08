@@ -56,6 +56,7 @@ class ActivityCreditCardPayment extends StatefulWidget {
   bool isBooking;
   AlMajlisBooking booking;
   num charges;
+
   ActivityCreditCardPayment(this.charges,
       {Key key, this.isBooking = false, this.booking})
       : super(key: key);
@@ -176,26 +177,29 @@ class _ActivityCreditCardPaymentState
                                     ),
                                     children: [
                                       TextSpan(
-                                          text: 'MEETING CALL',
-                                          style: TextStyle(
-                                              fontSize: 12,
-                                              color: Colors.white,
-                                              fontFamily: "ProximaNovaBold",
-                                              fontWeight: FontWeight.bold)),
+                                        text: 'MEETING CALL',
+                                        style: TextStyle(
+                                            fontSize: 12,
+                                            color: Colors.white,
+                                            fontFamily: "ProximaNovaBold",
+                                            fontWeight: FontWeight.bold),
+                                      ),
                                       TextSpan(
-                                          text: ' - ',
-                                          style: TextStyle(
-                                              fontSize: 12,
-                                              color: Colors.white,
-                                              fontFamily: "ProximaNovaBold",
-                                              fontWeight: FontWeight.bold)),
+                                        text: ' - ',
+                                        style: TextStyle(
+                                            fontSize: 12,
+                                            color: Colors.white,
+                                            fontFamily: "ProximaNovaBold",
+                                            fontWeight: FontWeight.bold),
+                                      ),
                                       TextSpan(
-                                          text: widget.booking.bookingTitle,
-                                          style: TextStyle(
-                                              fontSize: 12,
-                                              color: Colors.white,
-                                              fontFamily: "ProximaNovaBold",
-                                              fontWeight: FontWeight.bold)),
+                                        text: widget.booking.bookingTitle,
+                                        style: TextStyle(
+                                            fontSize: 12,
+                                            color: Colors.white,
+                                            fontFamily: "ProximaNovaBold",
+                                            fontWeight: FontWeight.bold),
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -219,12 +223,14 @@ class _ActivityCreditCardPaymentState
                                                     const EdgeInsets.all(4.0),
                                                 child: Container(
                                                   decoration: BoxDecoration(
-                                                      shape: BoxShape.circle,
-                                                      gradient: LinearGradient(
-                                                          colors: [
-                                                            Colors.purple,
-                                                            Colors.teal
-                                                          ])),
+                                                    shape: BoxShape.circle,
+                                                    gradient: LinearGradient(
+                                                      colors: [
+                                                        Colors.purple,
+                                                        Colors.teal
+                                                      ],
+                                                    ),
+                                                  ),
                                                 ),
                                               ),
                                             ),
@@ -272,7 +278,7 @@ class _ActivityCreditCardPaymentState
                               AlMajlisTextViewBold(
                                 widget.charges.toString() + " BD",
                                 size: 20.0,
-                              )
+                              ),
                             ],
                           ),
                         ],
@@ -330,21 +336,23 @@ class _ActivityCreditCardPaymentState
                                   ),
                                   children: [
                                     TextSpan(
-                                        text: widget.charges.toString() + ' BD',
-                                        style: TextStyle(
-                                            fontSize: 14,
-                                            color: Colors.white,
-                                            fontFamily: "ProximaNovaBold",
-                                            fontWeight: FontWeight.bold)),
-                                    WidgetSpan(
-                                        child: Text(
-                                      "/3 Months",
+                                      text: widget.charges.toString() + ' BD',
                                       style: TextStyle(
-                                          color: Colors.white, fontSize: 12),
-                                    )),
+                                          fontSize: 14,
+                                          color: Colors.white,
+                                          fontFamily: "ProximaNovaBold",
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    WidgetSpan(
+                                      child: Text(
+                                        "/3 Months",
+                                        style: TextStyle(
+                                            color: Colors.white, fontSize: 12),
+                                      ),
+                                    ),
                                   ],
                                 ),
-                              )
+                              ),
                             ],
                           ),
                           Row(
@@ -356,7 +364,7 @@ class _ActivityCreditCardPaymentState
                               AlMajlisTextViewBold(
                                 widget.charges.toString() + "BD",
                                 size: 20.0,
-                              )
+                              ),
                             ],
                           ),
                         ],
@@ -368,10 +376,13 @@ class _ActivityCreditCardPaymentState
               child: Row(
                 children: <Widget>[
                   Expanded(
-                    child: AlMajlisButton("CONFIRM & PAY", Constants.TEAL, () {
-                      if (!widget.isBooking) {
-                        if (Platform.isIOS) {
-                          openInAppPurchases();
+                    child: AlMajlisButton(
+                      "CONFIRM & PAY",
+                      Constants.TEAL,
+                      () {
+                        if (!widget.isBooking) {
+                          if (Platform.isIOS) {
+                            openInAppPurchases();
 //                          showDialog(
 //                              context: _context,
 //                              builder: (BuildContext context) {
@@ -402,17 +413,18 @@ class _ActivityCreditCardPaymentState
 //                                  ],
 //                                );
 //                              });
+                          } else {
+                            subscribeToPro();
+                          }
                         } else {
-                          subscribeToPro();
+                          bookMeeting();
                         }
-                      } else {
-                        bookMeeting();
-                      }
-                    },
-                        icon: AlMajlisImageIcons(
-                          "drawables/lock-01.png",
-                        )),
-                  )
+                      },
+                      icon: AlMajlisImageIcons(
+                        "drawables/lock-01.png",
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -483,8 +495,11 @@ class _ActivityCreditCardPaymentState
         if (widget.charges == 0 && response.payload == null) {
           Navigator.pop(context, true);
         } else {
-          var data = await Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => ActivityPaymentView(response.payload)));
+          var data = await Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => ActivityPaymentView(response.payload),
+            ),
+          );
           Navigator.pop(context, null != data ? data : false);
         }
 //        var data = await Navigator.of(context).push(MaterialPageRoute(
@@ -621,13 +636,19 @@ class _ActivityCreditCardPaymentState
     core.stopLoading(_context);
     if (!core.systemCanHandel(response)) {
       if (response.status.statusCode == 0) {
-        var data = await Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => ActivityPaymentView(response.payload)));
+        var data = await Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => ActivityPaymentView(response.payload),
+          ),
+        );
 
         if (null != data) {
           if (data) {
-            await Navigator.of(context)
-                .push(MaterialPageRoute(builder: (context) => ActivityPro()));
+            await Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => ActivityPro(),
+              ),
+            );
             print("1...");
             Navigator.pop(context, true);
           } else {
@@ -655,13 +676,17 @@ class _ActivityCreditCardPaymentState
   }
 
   void openInAppPurchases() {
-    Map<String, PurchaseDetails> purchases =
-        Map.fromEntries(_purchases.map((PurchaseDetails purchase) {
-      if (purchase.pendingCompletePurchase) {
-        InAppPurchaseConnection.instance.completePurchase(purchase);
-      }
-      return MapEntry<String, PurchaseDetails>(purchase.productID, purchase);
-    }));
+    Map<String, PurchaseDetails> purchases = Map.fromEntries(
+      _purchases.map(
+        (PurchaseDetails purchase) {
+          if (purchase.pendingCompletePurchase) {
+            InAppPurchaseConnection.instance.completePurchase(purchase);
+          }
+          return MapEntry<String, PurchaseDetails>(
+              purchase.productID, purchase);
+        },
+      ),
+    );
 
     PurchaseParam purchaseParam = PurchaseParam(
         productDetails: _products.first,
@@ -869,5 +894,5 @@ class _ActivityCreditCardPaymentState
       }
     });
   }
-  //In app end
+//In app end
 }

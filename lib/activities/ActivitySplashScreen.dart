@@ -2,27 +2,14 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:almajlis/activities/ActivityBase.dart';
-import 'package:almajlis/activities/ActivityEditProfile.dart';
-import 'package:almajlis/activities/ActivityLogin.dart';
-import 'package:almajlis/activities/ActivityNotification.dart';
+
 import 'package:almajlis/activities/ActivityPosts.dart';
-import 'package:almajlis/activities/ActivityProfile.dart';
-import 'package:almajlis/activities/ActivityUserChat.dart';
-import 'package:almajlis/activities/ActivityVideoCallOperationsScreen.dart';
-import 'package:almajlis/activities/ActivityWorkExperience.dart';
-import 'package:almajlis/core/wrappers/AlMajlisComment.dart';
-import 'package:almajlis/core/wrappers/AlMajlisPost.dart';
-import 'package:almajlis/core/wrappers/Booking.dart';
-import 'package:almajlis/core/wrappers/User.dart';
-import 'package:almajlis/services/NavigationService.dart';
-import 'package:almajlis/services/PushRegisterService.dart';
+
 import 'package:almajlis/views/components/AlMajlisBackground.dart';
-import 'package:almajlis/views/widgets/AlMajlisTextViewBold.dart';
-import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
+
 import 'package:flutter/material.dart';
 
 import 'ActivityHomeScreens.dart';
-import 'ActivitySinglePost.dart';
 
 class ActivitySplashScreen extends StatefulWidget {
   @override

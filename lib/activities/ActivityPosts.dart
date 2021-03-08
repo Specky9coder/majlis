@@ -17,7 +17,7 @@ import 'package:almajlis/core/constants/countryStateConstant.dart';
 import 'package:almajlis/core/server/wrappers/ResponseOk.dart';
 import 'package:almajlis/core/server/wrappers/ResponsePosts.dart';
 import 'package:almajlis/core/server/wrappers/ResponseUser.dart';
-import 'package:almajlis/core/server/wrappers/ResponseUsers.dart';
+
 import 'package:almajlis/core/wrappers/AlMajlisComment.dart';
 import 'package:almajlis/core/wrappers/AlMajlisCountries.dart';
 import 'package:almajlis/core/wrappers/AlMajlisPost.dart';
@@ -32,13 +32,13 @@ import 'package:almajlis/views/bottomsheets/PostShareBottomSheet.dart';
 import 'package:almajlis/views/bottomsheets/ReportPostBottomSheet.dart';
 import 'package:almajlis/views/components/AlMajlisButton.dart';
 import 'package:almajlis/views/components/AlMajlisImageIcons.dart';
-import 'package:almajlis/views/components/AlMajlisNavigationBar.dart';
+
 import 'package:almajlis/views/components/AlMajlisRadioButton.dart';
 import 'package:almajlis/views/components/AlmajlisProfileImageWithStatus.dart';
 import 'package:almajlis/views/dialogs/DialogReport.dart';
 import 'package:almajlis/views/widgets/AlMajlisTextViewBold.dart';
 import 'package:almajlis/views/widgets/AlMajlisTextViewMedium.dart';
-import 'package:almajlis/views/widgets/AlMajlisTextViewRegular.dart';
+
 import 'package:almajlis/views/widgets/AlMajlisTextViewSemiBold.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:clipboard_manager/clipboard_manager.dart';
@@ -108,8 +108,13 @@ class _ActivityPostsState extends ActivityStateBase<ActivityPosts>
 
   void _onRefresh() async {
     // monitor network fetch
-    if (isUserLoggedIn) getPosts(DateTime.now());
-    getPosts(DateTime.now());
+    if (isUserLoggedIn)
+      getPosts(
+        DateTime.now(),
+      );
+    getPosts(
+      DateTime.now(),
+    );
     // if failed,use refreshFailed()
   }
 
@@ -152,9 +157,11 @@ class _ActivityPostsState extends ActivityStateBase<ActivityPosts>
     if (searchOnStoppedTyping != null) {
       setState(() => searchOnStoppedTyping.cancel()); // clear timer
     }
-    setState(() => searchOnStoppedTyping = new Timer(duration, () {
-          if (value.length > 2) {}
-        }));
+    setState(
+      () => searchOnStoppedTyping = new Timer(duration, () {
+        if (value.length > 2) {}
+      }),
+    );
   }
 
   @override
@@ -162,115 +169,115 @@ class _ActivityPostsState extends ActivityStateBase<ActivityPosts>
     _context = context;
     return SafeArea(
       child: Scaffold(
-          key: scaffoldState,
-          body: Container(
-            color: Colors.black,
-            height: double.infinity,
-            width: double.infinity,
-            child: Stack(
-              children: <Widget>[
-                Padding(
-                  padding:
-                      const EdgeInsets.only(top: 20.0, right: 20.0, left: 20.0),
-                  child: Column(
-                    children: <Widget>[
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          isUserLoggedIn
-                              ? InkWell(
+        key: scaffoldState,
+        body: Container(
+          color: Colors.black,
+          height: double.infinity,
+          width: double.infinity,
+          child: Stack(
+            children: <Widget>[
+              Padding(
+                padding:
+                    const EdgeInsets.only(top: 20.0, right: 20.0, left: 20.0),
+                child: Column(
+                  children: <Widget>[
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        isUserLoggedIn
+                            ? InkWell(
+                                child: AlMajlisRoundIconButton(
+                                    "drawables/settings.png",
+                                    isSelected: isSelected),
+                                onTap: () {
+                                  setState(() {
+                                    isSelected = !isSelected;
+                                  });
+                                },
+                              )
+                            : Row(
+                                children: <Widget>[
+                                  Container(
+                                    height: 30,
+                                    width: 30,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(4.0),
+                                      child: Image.asset(
+                                        "drawables/majlislogo.png",
+                                      ),
+                                    ),
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.all(
+                                          Radius.circular(
+                                              10.0), //         <--- border radius here
+                                        ),
+                                        color: Constants.COLOR_DARK_GREY),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 8.0),
+                                    child: AlMajlisTextViewBold(
+                                      "Majlis",
+                                      size: 20,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                        isSelected
+                            ? GestureDetector(
+                                child: Center(
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      getPosts(new DateTime.now());
+                                    },
+                                    child: AlMajlisTextViewBold(
+                                      "APPLY",
+                                      size: 12,
+                                      color: Constants.COLOR_PRIMARY_TEAL,
+                                    ),
+                                  ),
+                                ),
+                                onTap: () {},
+                              )
+                            : Visibility(
+                                visible: isUserLoggedIn,
+                                child: GestureDetector(
                                   child: AlMajlisRoundIconButton(
-                                      "drawables/settings.png",
-                                      isSelected: isSelected),
+                                      "drawables/searchwhite.png",
+                                      isSelected: false),
                                   onTap: () {
                                     setState(() {
-                                      isSelected = !isSelected;
+                                      // isSearchBtnClicked = true;
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => ActivitySearch(
+                                            isFromActivityPost: true,
+                                          ),
+                                        ),
+                                      );
                                     });
                                   },
-                                )
-                              : Row(
-                                  children: <Widget>[
-                                    Container(
-                                      height: 30,
-                                      width: 30,
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(4.0),
-                                        child: Image.asset(
-                                          "drawables/majlislogo.png",
-                                        ),
-                                      ),
-                                      decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(
-                                                  10.0) //         <--- border radius here
-                                              ),
-                                          color: Constants.COLOR_DARK_GREY),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(left: 8.0),
-                                      child: AlMajlisTextViewBold(
-                                        "Majlis",
-                                        size: 20,
-                                      ),
-                                    ),
-                                  ],
                                 ),
-                          isSelected
-                              ? GestureDetector(
-                                  child: Center(
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        getPosts(new DateTime.now());
-                                      },
-                                      child: AlMajlisTextViewBold(
-                                        "APPLY",
-                                        size: 12,
-                                        color: Constants.COLOR_PRIMARY_TEAL,
-                                      ),
-                                    ),
-                                  ),
-                                  onTap: () {},
-                                )
-                              : Visibility(
-                                  visible: isUserLoggedIn,
-                                  child: GestureDetector(
-                                    child: AlMajlisRoundIconButton(
-                                        "drawables/searchwhite.png",
-                                        isSelected: false),
-                                    onTap: () {
-                                      setState(() {
-                                        // isSearchBtnClicked = true;
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  ActivitySearch(
-                                                    isFromActivityPost: true,
-                                                  )),
-                                        );
-                                      });
-                                    },
-                                  ),
-                                )
-                        ],
-                      ),
-                      isUserLoggedIn
-                          ? Padding(
-                              padding: const EdgeInsets.only(bottom: 8.0),
-                              child: Column(
-                                children: <Widget>[
-                                  if (isSelected)
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 20.0),
-                                      child: Column(
-                                        children: <Widget>[
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: <Widget>[
-                                              Container(
-                                                  child: Row(
+                              ),
+                      ],
+                    ),
+                    isUserLoggedIn
+                        ? Padding(
+                            padding: const EdgeInsets.only(bottom: 8.0),
+                            child: Column(
+                              children: <Widget>[
+                                if (isSelected)
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 20.0),
+                                    child: Column(
+                                      children: <Widget>[
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: <Widget>[
+                                            Container(
+                                              child: Row(
                                                 children: <Widget>[
                                                   AlMajlisTextViewMedium(
                                                     "Majlis",
@@ -287,23 +294,24 @@ class _ActivityPostsState extends ActivityStateBase<ActivityPosts>
                                                     size: 16,
                                                   ),
                                                 ],
-                                              )),
-                                              Switch(
-                                                value: toogleValue,
-                                                onChanged: (value) {
-                                                  setState(() {
-                                                    toogleValue = value;
-                                                  });
-                                                },
-                                                activeColor: Colors.green,
-                                                inactiveTrackColor: Constants
-                                                    .COLOR_PRIMARY_GREY,
-                                              )
-                                            ],
-                                          ),
-                                          Divider(
-                                            color: Colors.white,
-                                          ),
+                                              ),
+                                            ),
+                                            Switch(
+                                              value: toogleValue,
+                                              onChanged: (value) {
+                                                setState(() {
+                                                  toogleValue = value;
+                                                });
+                                              },
+                                              activeColor: Colors.green,
+                                              inactiveTrackColor:
+                                                  Constants.COLOR_PRIMARY_GREY,
+                                            ),
+                                          ],
+                                        ),
+                                        Divider(
+                                          color: Colors.white,
+                                        ),
 //                                              Row(
 //                                                children: <Widget>[
 //                                                  Expanded(
@@ -330,285 +338,285 @@ class _ActivityPostsState extends ActivityStateBase<ActivityPosts>
 //                                              Divider(
 //                                                color: Colors.white,
 //                                              ),
-                                          Column(
-                                            children: <Widget>[
-                                              Row(
-                                                children: <Widget>[
-                                                  AlMajlisTextViewMedium(
-                                                    "Country",
-                                                    size: 16,
-                                                  ),
-                                                ],
-                                              ),
-                                              Padding(
-                                                padding: const EdgeInsets.only(
-                                                    top: 16.0),
-                                                child: Container(
-                                                  height: 40,
-                                                  child: ListView.builder(
-                                                      scrollDirection:
-                                                          Axis.horizontal,
-                                                      itemCount:
-                                                          countryList.length,
-                                                      itemBuilder:
-                                                          (BuildContext ctxt,
-                                                              int index) {
-                                                        bool isCountySelected =
-                                                            false;
-                                                        if (selectedCountry ==
-                                                            countryList
-                                                                .elementAt(
-                                                                    index)) {
-                                                          isCountySelected =
-                                                              true;
-                                                        }
-
-                                                        return Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                      .only(
-                                                                  right: 8.0),
-                                                          child:
-                                                              GestureDetector(
-                                                            child: Container(
-                                                              width: 100,
-                                                              decoration:
-                                                                  BoxDecoration(
-                                                                border: Border.all(
-                                                                    width: 1.0,
-                                                                    color: Colors
-                                                                        .white),
-                                                                borderRadius:
-                                                                    BorderRadius.all(
-                                                                        Radius.circular(
-                                                                            10.0) //         <--- border radius here
-                                                                        ),
-                                                                color: isCountySelected
-                                                                    ? Constants
-                                                                        .COLOR_PRIMARY_TEAL
-                                                                    : Constants
-                                                                        .COLOR_DARK_GREY,
-                                                              ),
-                                                              child: Padding(
-                                                                padding:
-                                                                    const EdgeInsets
-                                                                            .all(
-                                                                        4.0),
-                                                                child: Row(
-                                                                  children: <
-                                                                      Widget>[
-                                                                    Expanded(
-                                                                      child:
-                                                                          AlMajlisTextViewMedium(
-                                                                        countryList
-                                                                            .elementAt(index),
-                                                                        align: TextAlign
-                                                                            .center,
-                                                                      ),
-                                                                    ),
-                                                                  ],
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            onTap: () {
-                                                              setState(() {
-                                                                if (selectedCountry ==
-                                                                    countryList
-                                                                        .elementAt(
-                                                                            index)) {
-                                                                  selectedCountry =
-                                                                      null;
-                                                                } else {
-                                                                  selectedCountry =
-                                                                      countryList
-                                                                          .elementAt(
-                                                                              index);
-                                                                }
-                                                              });
-                                                            },
-                                                          ),
-                                                        );
-                                                      }),
-                                                ),
-                                              )
-                                            ],
-                                          ),
-                                          Divider(
-                                            color: Colors.white,
-                                          ),
-                                          Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: <Widget>[
-                                              AlMajlisTextViewMedium(
-                                                "Distance",
-                                                size: 16,
-                                              ),
-                                              Padding(
-                                                padding: const EdgeInsets.only(
-                                                    top: 16.0),
-                                                child: Container(
-                                                  height: 40,
-                                                  child: ListView.builder(
-                                                      scrollDirection:
-                                                          Axis.horizontal,
-                                                      itemCount:
-                                                          distanceList.length,
-                                                      itemBuilder:
-                                                          (BuildContext ctxt,
-                                                              int index) {
-                                                        bool
-                                                            isDistanceSelected =
-                                                            false;
-                                                        if (selectedDistance ==
-                                                            distanceList
-                                                                .elementAt(
-                                                                    index)) {
-                                                          isDistanceSelected =
-                                                              true;
-                                                        }
-
-                                                        return Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                      .only(
-                                                                  right: 8.0),
-                                                          child:
-                                                              GestureDetector(
-                                                            child: Container(
-                                                              width: 75,
-                                                              decoration:
-                                                                  BoxDecoration(
-                                                                border: Border.all(
-                                                                    width: 1.0,
-                                                                    color: Colors
-                                                                        .white),
-                                                                borderRadius:
-                                                                    BorderRadius.all(
-                                                                        Radius.circular(
-                                                                            10.0) //         <--- border radius here
-                                                                        ),
-                                                                color: isDistanceSelected
-                                                                    ? Constants
-                                                                        .COLOR_PRIMARY_TEAL
-                                                                    : Constants
-                                                                        .COLOR_DARK_GREY,
-                                                              ),
-                                                              child: Padding(
-                                                                padding:
-                                                                    const EdgeInsets
-                                                                            .all(
-                                                                        4.0),
-                                                                child: Row(
-                                                                  children: <
-                                                                      Widget>[
-                                                                    Expanded(
-                                                                      child:
-                                                                          AlMajlisTextViewMedium(
-                                                                        distanceList.elementAt(index).toString() +
-                                                                            " km",
-                                                                        align: TextAlign
-                                                                            .center,
-                                                                      ),
-                                                                    ),
-                                                                  ],
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            onTap: () {
-                                                              setState(() {
-                                                                if (selectedDistance ==
-                                                                    distanceList
-                                                                        .elementAt(
-                                                                            index)) {
-                                                                  selectedDistance =
-                                                                      0;
-                                                                } else {
-                                                                  selectedDistance =
-                                                                      distanceList
-                                                                          .elementAt(
-                                                                              index);
-                                                                }
-                                                              });
-                                                            },
-                                                          ),
-                                                        );
-                                                      }),
-                                                ),
-                                              )
-                                            ],
-                                          )
-                                        ],
-                                      ),
-                                    )
-                                  else
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 2.0),
-                                    ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                        top: 10.0, bottom: 8.0),
-                                    child: Column(
-                                      children: <Widget>[
-                                        Row(
+                                        Column(
                                           children: <Widget>[
-                                            null != imageUrl &&
-                                                    !imageUrl.isEmpty
-                                                ? GestureDetector(
-                                                    onTap: () {
-                                                      Navigator.push(
-                                                        context,
-                                                        MaterialPageRoute(
-                                                            builder: (context) =>
-                                                                ActivityProfile()),
-                                                      );
-                                                    },
-                                                    child:
-                                                        AlMajlisProfileImageWithStatus(
-                                                            imageUrl, 50.0,
-                                                            isPro: isPro),
-                                                  )
-                                                : GestureDetector(
-                                                    onTap: () {
-                                                      Navigator.push(
-                                                        context,
-                                                        MaterialPageRoute(
-                                                            builder: (context) =>
-                                                                ActivityProfile()),
-                                                      );
-                                                    },
-                                                    child: Container(
-                                                      height: 50,
-                                                      width: 50,
-                                                      decoration: BoxDecoration(
-                                                          shape:
-                                                              BoxShape.circle,
-                                                          color: isPro
-                                                              ? Constants
-                                                                  .COLOR_PRIMARY_TEAL
-                                                              : Colors.white),
-                                                      child: Padding(
+                                            Row(
+                                              children: <Widget>[
+                                                AlMajlisTextViewMedium(
+                                                  "Country",
+                                                  size: 16,
+                                                ),
+                                              ],
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  top: 16.0),
+                                              child: Container(
+                                                height: 40,
+                                                child: ListView.builder(
+                                                    scrollDirection:
+                                                        Axis.horizontal,
+                                                    itemCount:
+                                                        countryList.length,
+                                                    itemBuilder:
+                                                        (BuildContext ctxt,
+                                                            int index) {
+                                                      bool isCountySelected =
+                                                          false;
+                                                      if (selectedCountry ==
+                                                          countryList.elementAt(
+                                                              index)) {
+                                                        isCountySelected = true;
+                                                      }
+
+                                                      return Padding(
                                                         padding:
                                                             const EdgeInsets
-                                                                .all(2.0),
-                                                        child: Container(
-                                                          decoration: BoxDecoration(
-                                                              shape: BoxShape
-                                                                  .circle,
-                                                              gradient:
-                                                                  LinearGradient(
-                                                                      colors: [
-                                                                    Colors
-                                                                        .purple,
-                                                                    Colors.teal
-                                                                  ])),
+                                                                    .only(
+                                                                right: 8.0),
+                                                        child: GestureDetector(
+                                                          child: Container(
+                                                            width: 100,
+                                                            decoration:
+                                                                BoxDecoration(
+                                                              border: Border.all(
+                                                                  width: 1.0,
+                                                                  color: Colors
+                                                                      .white),
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .all(
+                                                                Radius.circular(
+                                                                    10.0), //         <--- border radius here
+                                                              ),
+                                                              color: isCountySelected
+                                                                  ? Constants
+                                                                      .COLOR_PRIMARY_TEAL
+                                                                  : Constants
+                                                                      .COLOR_DARK_GREY,
+                                                            ),
+                                                            child: Padding(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                      .all(4.0),
+                                                              child: Row(
+                                                                children: <
+                                                                    Widget>[
+                                                                  Expanded(
+                                                                    child:
+                                                                        AlMajlisTextViewMedium(
+                                                                      countryList
+                                                                          .elementAt(
+                                                                              index),
+                                                                      align: TextAlign
+                                                                          .center,
+                                                                    ),
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            ),
+                                                          ),
+                                                          onTap: () {
+                                                            setState(() {
+                                                              if (selectedCountry ==
+                                                                  countryList
+                                                                      .elementAt(
+                                                                          index)) {
+                                                                selectedCountry =
+                                                                    null;
+                                                              } else {
+                                                                selectedCountry =
+                                                                    countryList
+                                                                        .elementAt(
+                                                                            index);
+                                                              }
+                                                            });
+                                                          },
+                                                        ),
+                                                      );
+                                                    }),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        Divider(
+                                          color: Colors.white,
+                                        ),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: <Widget>[
+                                            AlMajlisTextViewMedium(
+                                              "Distance",
+                                              size: 16,
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  top: 16.0),
+                                              child: Container(
+                                                height: 40,
+                                                child: ListView.builder(
+                                                    scrollDirection:
+                                                        Axis.horizontal,
+                                                    itemCount:
+                                                        distanceList.length,
+                                                    itemBuilder:
+                                                        (BuildContext ctxt,
+                                                            int index) {
+                                                      bool isDistanceSelected =
+                                                          false;
+                                                      if (selectedDistance ==
+                                                          distanceList
+                                                              .elementAt(
+                                                                  index)) {
+                                                        isDistanceSelected =
+                                                            true;
+                                                      }
+
+                                                      return Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .only(
+                                                                right: 8.0),
+                                                        child: GestureDetector(
+                                                          child: Container(
+                                                            width: 75,
+                                                            decoration:
+                                                                BoxDecoration(
+                                                              border: Border.all(
+                                                                  width: 1.0,
+                                                                  color: Colors
+                                                                      .white),
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .all(
+                                                                Radius.circular(
+                                                                    10.0), //         <--- border radius here
+                                                              ),
+                                                              color: isDistanceSelected
+                                                                  ? Constants
+                                                                      .COLOR_PRIMARY_TEAL
+                                                                  : Constants
+                                                                      .COLOR_DARK_GREY,
+                                                            ),
+                                                            child: Padding(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                      .all(4.0),
+                                                              child: Row(
+                                                                children: <
+                                                                    Widget>[
+                                                                  Expanded(
+                                                                    child:
+                                                                        AlMajlisTextViewMedium(
+                                                                      distanceList
+                                                                              .elementAt(index)
+                                                                              .toString() +
+                                                                          " km",
+                                                                      align: TextAlign
+                                                                          .center,
+                                                                    ),
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            ),
+                                                          ),
+                                                          onTap: () {
+                                                            setState(() {
+                                                              if (selectedDistance ==
+                                                                  distanceList
+                                                                      .elementAt(
+                                                                          index)) {
+                                                                selectedDistance =
+                                                                    0;
+                                                              } else {
+                                                                selectedDistance =
+                                                                    distanceList
+                                                                        .elementAt(
+                                                                            index);
+                                                              }
+                                                            });
+                                                          },
+                                                        ),
+                                                      );
+                                                    }),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                                else
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 2.0),
+                                  ),
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      top: 10.0, bottom: 8.0),
+                                  child: Column(
+                                    children: <Widget>[
+                                      Row(
+                                        children: <Widget>[
+                                          null != imageUrl && !imageUrl.isEmpty
+                                              ? GestureDetector(
+                                                  onTap: () {
+                                                    Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            ActivityProfile(),
+                                                      ),
+                                                    );
+                                                  },
+                                                  child:
+                                                      AlMajlisProfileImageWithStatus(
+                                                          imageUrl, 50.0,
+                                                          isPro: isPro),
+                                                )
+                                              : GestureDetector(
+                                                  onTap: () {
+                                                    Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            ActivityProfile(),
+                                                      ),
+                                                    );
+                                                  },
+                                                  child: Container(
+                                                    height: 50,
+                                                    width: 50,
+                                                    decoration: BoxDecoration(
+                                                        shape: BoxShape.circle,
+                                                        color: isPro
+                                                            ? Constants
+                                                                .COLOR_PRIMARY_TEAL
+                                                            : Colors.white),
+                                                    child: Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              2.0),
+                                                      child: Container(
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          shape:
+                                                              BoxShape.circle,
+                                                          gradient:
+                                                              LinearGradient(
+                                                            colors: [
+                                                              Colors.purple,
+                                                              Colors.teal
+                                                            ],
+                                                          ),
                                                         ),
                                                       ),
                                                     ),
                                                   ),
-                                            Expanded(
-                                                child: Container(
+                                                ),
+                                          Expanded(
+                                            child: Container(
                                               height: 45.0,
                                               margin:
                                                   EdgeInsets.only(left: 10.0),
@@ -628,412 +636,426 @@ class _ActivityPostsState extends ActivityStateBase<ActivityPosts>
                                                         await Navigator.push(
                                                           context,
                                                           MaterialPageRoute(
-                                                              builder: (context) =>
-                                                                  ActivityAddNewPost()),
+                                                            builder: (context) =>
+                                                                ActivityAddNewPost(),
+                                                          ),
                                                         );
                                                         getPosts(
-                                                            DateTime.now());
+                                                          DateTime.now(),
+                                                        );
                                                       },
                                                       child: Text(
                                                         "who are you looking for?",
                                                         style: TextStyle(
-                                                            fontFamily:
-                                                                'ProximaNovaMedium',
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .normal,
-                                                            fontSize: 16,
-                                                            color: Colors.grey),
+                                                          fontFamily:
+                                                              'ProximaNovaMedium',
+                                                          fontWeight:
+                                                              FontWeight.normal,
+                                                          fontSize: 16,
+                                                          color: Colors.grey,
+                                                        ),
                                                       ),
                                                     ),
                                                   ),
                                                   InkWell(
-                                                      onTap: () {
-                                                        scaffoldState
-                                                            .currentState
-                                                            .showBottomSheet((context) =>
-                                                                PostMenuBottomSheet(
-                                                                    getImageFromCamera,
-                                                                    getImageFromGallary));
-                                                      },
-                                                      child: Image.asset(
-                                                        "drawables/add_image-01.png",
-                                                        height: 20,
-                                                      )),
+                                                    onTap: () {
+                                                      scaffoldState.currentState
+                                                          .showBottomSheet(
+                                                        (context) =>
+                                                            PostMenuBottomSheet(
+                                                          getImageFromCamera,
+                                                          getImageFromGallary,
+                                                        ),
+                                                      );
+                                                    },
+                                                    child: Image.asset(
+                                                      "drawables/add_image-01.png",
+                                                      height: 20,
+                                                    ),
+                                                  ),
                                                 ],
                                               ),
-                                            ))
-                                          ],
-                                        )
-                                      ],
-                                    ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
                                   ),
-                                ],
-                              ),
-                            )
-                          : Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(vertical: 16.0),
-                              child: Row(
-                                children: <Widget>[
-                                  Expanded(
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 8.0),
-                                      child: AlMajlisButton(
-                                          "SIGN IN", Constants.TRANS, () async {
-                                        await Navigator.of(context)
-                                            .push(MaterialPageRoute(
-                                                builder: (context) =>
-                                                    ActivityLogin()))
-                                            .then((value) => value != null
-                                                ? {
-                                                    Navigator.of(context)
-                                                        .pushReplacement(
-                                                            MaterialPageRoute(
-                                                                builder:
-                                                                    (context) =>
-                                                                        Home())),
-                                                  }
-                                                : null);
-                                        // setState(() {
-                                        //   // isUserLoggedIn =
-                                        //   //     core.isUserLoggedIn();
-                                        //   // getPosts(DateTime.now());
-                                        //   Navigator.of(context).pushReplacement(
-                                        //       MaterialPageRoute(
-                                        //           builder: (context) =>
-                                        //               Home()));
-                                        // });
-                                      }),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 8.0),
-                                      child: AlMajlisButton(
-                                          "SIGN UP", Constants.TEAL, () async {
-                                        await Navigator.of(context)
-                                            .push(MaterialPageRoute(
-                                                builder: (context) =>
-                                                    ActivityLogin()))
-                                            .then((value) => value != null
-                                                ? {
-                                                    Navigator.of(context)
-                                                        .pushReplacement(
-                                                            MaterialPageRoute(
-                                                                builder:
-                                                                    (context) =>
-                                                                        Home())),
-                                                  }
-                                                : null);
-                                        // setState(() {
-                                        //   // isUserLoggedIn =
-                                        //   //     core.isUserLoggedIn();
-                                        //   // getPosts(DateTime.now());
-                                        //   Navigator.of(context).pushReplacement(
-                                        //       MaterialPageRoute(
-                                        //           builder: (context) =>
-                                        //               Home()));
-                                        // });
-                                      }),
-                                    ),
-                                  )
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
-                      Expanded(
-                        child: SmartRefresher(
-                          controller: _refreshController,
-                          onRefresh: () {
-                            getPosts(DateTime.now(), isPulltorefresh: true);
-                          },
-                          child: ListView.builder(
-                              scrollDirection: Axis.vertical,
-                              itemCount: posts.length,
-                              itemBuilder: (BuildContext ctxt, int index) {
-                                if (index == posts.length - 1) {
-                                  if (fetchMore) {
-                                    Future.delayed(Duration(seconds: 1), () {
-                                      getPosts(
-                                          posts
-                                              .elementAt(posts.length - 1)
-                                              .createdAt,
-                                          isPaginationCall: true);
-                                    });
-                                  }
+                          )
+                        : Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 16.0),
+                            child: Row(
+                              children: <Widget>[
+                                Expanded(
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 8.0),
+                                    child: AlMajlisButton(
+                                        "SIGN IN", Constants.TRANS, () async {
+                                      await Navigator.of(context)
+                                          .push(
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  ActivityLogin(),
+                                            ),
+                                          )
+                                          .then((value) => value != null
+                                              ? {
+                                                  Navigator.of(context)
+                                                      .pushReplacement(
+                                                    MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          Home(),
+                                                    ),
+                                                  ),
+                                                }
+                                              : null);
+                                      // setState(() {
+                                      //   // isUserLoggedIn =
+                                      //   //     core.isUserLoggedIn();
+                                      //   // getPosts(DateTime.now());
+                                      //   Navigator.of(context).pushReplacement(
+                                      //       MaterialPageRoute(
+                                      //           builder: (context) =>
+                                      //               Home()));
+                                      // });
+                                    }),
+                                  ),
+                                ),
+                                Expanded(
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 8.0),
+                                    child: AlMajlisButton(
+                                        "SIGN UP", Constants.TEAL, () async {
+                                      await Navigator.of(context)
+                                          .push(MaterialPageRoute(
+                                              builder: (context) =>
+                                                  ActivityLogin()))
+                                          .then(
+                                            (value) => value != null
+                                                ? {
+                                                    Navigator.of(context)
+                                                        .pushReplacement(
+                                                      MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            Home(),
+                                                      ),
+                                                    ),
+                                                  }
+                                                : null,
+                                          );
+                                      // setState(() {
+                                      //   // isUserLoggedIn =
+                                      //   //     core.isUserLoggedIn();
+                                      //   // getPosts(DateTime.now());
+                                      //   Navigator.of(context).pushReplacement(
+                                      //       MaterialPageRoute(
+                                      //           builder: (context) =>
+                                      //               Home()));
+                                      // });
+                                    }),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                    Expanded(
+                      child: SmartRefresher(
+                        controller: _refreshController,
+                        onRefresh: () {
+                          getPosts(DateTime.now(), isPulltorefresh: true);
+                        },
+                        child: ListView.builder(
+                            scrollDirection: Axis.vertical,
+                            itemCount: posts.length,
+                            itemBuilder: (BuildContext ctxt, int index) {
+                              if (index == posts.length - 1) {
+                                if (fetchMore) {
+                                  Future.delayed(Duration(seconds: 1), () {
+                                    getPosts(
+                                        posts
+                                            .elementAt(posts.length - 1)
+                                            .createdAt,
+                                        isPaginationCall: true);
+                                  });
                                 }
-                                return PostListItem(context, index);
-                              }),
-                        ),
-                      )
-                    ],
-                  ),
+                              }
+                              return PostListItem(context, index);
+                            }),
+                      ),
+                    ),
+                  ],
                 ),
-                Visibility(
-                  visible: isSharePostBtnClicked ? true : false,
-                  child: Stack(
-                    children: <Widget>[
-                      ClipRect(
-                        child: BackdropFilter(
-                          filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
-                          child: Container(
-                            height: MediaQuery.of(context).size.height,
-                            width: MediaQuery.of(context).size.width,
-                            decoration: BoxDecoration(
-                                color: Colors.grey.shade200.withOpacity(0.5)),
+              ),
+              Visibility(
+                visible: isSharePostBtnClicked ? true : false,
+                child: Stack(
+                  children: <Widget>[
+                    ClipRect(
+                      child: BackdropFilter(
+                        filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+                        child: Container(
+                          height: MediaQuery.of(context).size.height,
+                          width: MediaQuery.of(context).size.width,
+                          decoration: BoxDecoration(
+                            color: Colors.grey.shade200.withOpacity(0.5),
                           ),
                         ),
                       ),
-                      Align(
-                        alignment: Alignment.bottomCenter,
-                        child: Container(
-                          height: 420,
-                          width: MediaQuery.of(context).size.width,
-                          decoration: BoxDecoration(
-                              color: Constants.COLOR_DARK_GREY,
-                              borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(12.0),
-                                  topRight: Radius.circular(12.0))),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: <Widget>[
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                    top: 8.0, bottom: 8.0, left: 8.0),
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: <Widget>[
-                                    Padding(
-                                      padding: const EdgeInsets.only(top: 8.0),
-                                      child: InkWell(
-                                        onTap: () {
-                                          setState(() {
-                                            isSharePostBtnClicked = false;
-                                          });
-                                        },
-                                        child: Padding(
-                                          padding:
-                                              const EdgeInsets.only(left: 8.0),
-                                          child: AlMajlisTextViewBold(
-                                            "CANCEL",
-                                            size: 12.0,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(
-                                          top: 8.0, left: 60.0, bottom: 8.0),
-                                      child: AlMajlisTextViewBold(
-                                        "Share post with",
-                                        size: 14.0,
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                height: 32.0,
-                                margin:
-                                    EdgeInsets.only(left: 10.0, right: 10.0),
-                                padding: EdgeInsets.only(top: 8.0),
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(20.0),
-                                    color: Constants.COLOR_PRIMARY_TEAL_SHADOW),
-                                child: TextField(
-                                  controller: searchController,
-                                  autofocus: true,
-                                  onTap: () {},
-                                  style: TextStyle(
-                                    fontFamily: 'ProximaNovaSemiBold',
-                                    color: Colors.white,
-                                  ),
-                                  decoration: InputDecoration(
-                                    border: OutlineInputBorder(
-                                      borderSide: BorderSide.none,
-                                    ),
-                                    fillColor:
-                                        Constants.COLOR_PRIMARY_TEAL_SHADOW,
-                                    prefixIcon: Padding(
-                                        padding:
-                                            const EdgeInsets.only(bottom: 8.0),
-                                        child: Padding(
-                                          padding: const EdgeInsets.only(
-                                              bottom: 8.0),
-                                          child: Icon(
-                                            Icons.search,
-                                            color: Colors.white30,
-                                            size: 20,
-                                          ),
-                                        )),
-                                    hintText: 'Search People',
-                                    hintStyle: TextStyle(
-                                        fontSize: 14,
-                                        color: Colors.grey,
-                                        fontFamily: "ProximaNovaSemiBold",
-                                        fontWeight: FontWeight.normal),
-                                  ),
-                                ),
-                              ),
-                              Container(
-                                height: 200.0,
-                                padding:
-                                    const EdgeInsets.only(left: 8.0, top: 12.0),
-                                // child: Expanded(
-                                child: ListView.builder(
-                                    scrollDirection: Axis.vertical,
-                                    itemCount: 3,
-                                    itemBuilder:
-                                        (BuildContext ctxt, int index) {
-                                      return Container(
-                                        padding: EdgeInsets.only(bottom: 10.0),
-                                        width: double.infinity,
-                                        child: Column(
-                                          children: <Widget>[
-                                            Row(
-                                              children: <Widget>[
-                                                AlMajlisProfileImageWithStatus(
-                                                    "https://thumbor.forbes.com/thumbor/fit-in/416x416/filters%3Aformat%28jpg%29/https%3A%2F%2Fspecials-images.forbesimg.com%2Fimageserve%2F593b2e4b31358e03e55a0e8c%2F0x0.jpg%3Fbackground%3D000000%26cropX1%3D634%26cropX2%3D2468%26cropY1%3D39%26cropY2%3D1874",
-                                                    50.0),
-                                                Expanded(
-                                                  child: Padding(
-                                                    padding: const EdgeInsets
-                                                            .symmetric(
-                                                        horizontal: 16.0),
-                                                    child: Column(
-                                                      children: <Widget>[
-                                                        Row(
-                                                          children: <Widget>[
-                                                            Expanded(
-                                                              child:
-                                                                  AlMajlisTextViewBold(
-                                                                "Khalid Janahi",
-                                                                size: 16,
-                                                              ),
-                                                            ),
-                                                            Icon(
-                                                              Icons.done,
-                                                              color:
-                                                                  Colors.teal,
-                                                              size: 12,
-                                                            ),
-                                                            InkWell(
-                                                              splashColor: Colors
-                                                                  .blueAccent,
-                                                              onTap: () {
-                                                                setState(() {
-                                                                  // radioBtnData.forEach(
-                                                                  //     (radioBtn) => radioBtn.isSelected = false);
-                                                                  // radioBtnData[index].isSelected = true;
-                                                                  //radioBtnData[index].isSelected = true;
-                                                                  if (isSelectRadioBtn) {
-                                                                    isSelectRadioBtn =
-                                                                        false;
-                                                                  } else {
-                                                                    isSelectRadioBtn =
-                                                                        true;
-                                                                  }
-                                                                });
-                                                              },
-                                                              child: new RadioItem(
-                                                                  RadioModel(
-                                                                      isSelectRadioBtn
-                                                                          ? true
-                                                                          : false,
-                                                                      ""),
-                                                                  Constants
-                                                                      .COLOR_DARK_GREY),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                        Row(
-                                                          children: <Widget>[
-                                                            Expanded(
-                                                              child:
-                                                                  AlMajlisTextViewMedium(
-                                                                "UI/UX Designer",
-                                                                size: 12,
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                      );
-                                    }),
-                              ),
-                              //  ),
-                              Divider(
-                                height: 2,
-                                color: Colors.white,
-                              ),
-                              GestureDetector(
-                                child: shareLinkWidgetRow(
-                                    context, Icons.link, "Copy link to post"),
-                              ),
-                              shareLinkWidgetRow(context, Icons.file_upload,
-                                  "Share post via..."),
-                              Container(
-                                width: 300.0,
-                                height: 40.0,
-                                margin: EdgeInsets.only(top: 12.0),
-                                padding: EdgeInsets.only(
-                                    left: 2.0,
-                                    right: 2.0,
-                                    top: 3.0,
-                                    bottom: 3.0),
-                                decoration: BoxDecoration(
-                                  color: Constants.COLOR_DARK_TEAL,
-                                  borderRadius: BorderRadius.circular(10.0),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Constants.COLOR_PRIMARY_TEAL,
-                                      blurRadius: 2.0,
-                                      spreadRadius: 0.0,
-                                      offset: Offset(1.0,
-                                          1.0), // shadow direction: bottom right
-                                    )
-                                  ],
-                                ),
-                                child: FlatButton(
-                                  color: Constants.COLOR_DARK_TEAL,
-                                  onPressed: () {},
-                                  child: Text(
-                                    "SEND",
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                ),
-                              )
-                            ],
+                    ),
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Container(
+                        height: 420,
+                        width: MediaQuery.of(context).size.width,
+                        decoration: BoxDecoration(
+                          color: Constants.COLOR_DARK_GREY,
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(12.0),
+                            topRight: Radius.circular(12.0),
                           ),
                         ),
-                      )
-                    ],
-                  ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  top: 8.0, bottom: 8.0, left: 8.0),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: <Widget>[
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 8.0),
+                                    child: InkWell(
+                                      onTap: () {
+                                        setState(() {
+                                          isSharePostBtnClicked = false;
+                                        });
+                                      },
+                                      child: Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 8.0),
+                                        child: AlMajlisTextViewBold(
+                                          "CANCEL",
+                                          size: 12.0,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        top: 8.0, left: 60.0, bottom: 8.0),
+                                    child: AlMajlisTextViewBold(
+                                      "Share post with",
+                                      size: 14.0,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Container(
+                              height: 32.0,
+                              margin: EdgeInsets.only(left: 10.0, right: 10.0),
+                              padding: EdgeInsets.only(top: 8.0),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20.0),
+                                  color: Constants.COLOR_PRIMARY_TEAL_SHADOW),
+                              child: TextField(
+                                controller: searchController,
+                                autofocus: true,
+                                onTap: () {},
+                                style: TextStyle(
+                                  fontFamily: 'ProximaNovaSemiBold',
+                                  color: Colors.white,
+                                ),
+                                decoration: InputDecoration(
+                                  border: OutlineInputBorder(
+                                    borderSide: BorderSide.none,
+                                  ),
+                                  fillColor:
+                                      Constants.COLOR_PRIMARY_TEAL_SHADOW,
+                                  prefixIcon: Padding(
+                                    padding: const EdgeInsets.only(bottom: 8.0),
+                                    child: Padding(
+                                      padding:
+                                          const EdgeInsets.only(bottom: 8.0),
+                                      child: Icon(
+                                        Icons.search,
+                                        color: Colors.white30,
+                                        size: 20,
+                                      ),
+                                    ),
+                                  ),
+                                  hintText: 'Search People',
+                                  hintStyle: TextStyle(
+                                    fontSize: 14,
+                                    color: Colors.grey,
+                                    fontFamily: "ProximaNovaSemiBold",
+                                    fontWeight: FontWeight.normal,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Container(
+                              height: 200.0,
+                              padding:
+                                  const EdgeInsets.only(left: 8.0, top: 12.0),
+                              // child: Expanded(
+                              child: ListView.builder(
+                                  scrollDirection: Axis.vertical,
+                                  itemCount: 3,
+                                  itemBuilder: (BuildContext ctxt, int index) {
+                                    return Container(
+                                      padding: EdgeInsets.only(bottom: 10.0),
+                                      width: double.infinity,
+                                      child: Column(
+                                        children: <Widget>[
+                                          Row(
+                                            children: <Widget>[
+                                              AlMajlisProfileImageWithStatus(
+                                                "https://thumbor.forbes.com/thumbor/fit-in/416x416/filters%3Aformat%28jpg%29/https%3A%2F%2Fspecials-images.forbesimg.com%2Fimageserve%2F593b2e4b31358e03e55a0e8c%2F0x0.jpg%3Fbackground%3D000000%26cropX1%3D634%26cropX2%3D2468%26cropY1%3D39%26cropY2%3D1874",
+                                                50.0,
+                                              ),
+                                              Expanded(
+                                                child: Padding(
+                                                  padding: const EdgeInsets
+                                                          .symmetric(
+                                                      horizontal: 16.0),
+                                                  child: Column(
+                                                    children: <Widget>[
+                                                      Row(
+                                                        children: <Widget>[
+                                                          Expanded(
+                                                            child:
+                                                                AlMajlisTextViewBold(
+                                                              "Khalid Janahi",
+                                                              size: 16,
+                                                            ),
+                                                          ),
+                                                          Icon(
+                                                            Icons.done,
+                                                            color: Colors.teal,
+                                                            size: 12,
+                                                          ),
+                                                          InkWell(
+                                                            splashColor: Colors
+                                                                .blueAccent,
+                                                            onTap: () {
+                                                              setState(() {
+                                                                // radioBtnData.forEach(
+                                                                //     (radioBtn) => radioBtn.isSelected = false);
+                                                                // radioBtnData[index].isSelected = true;
+                                                                //radioBtnData[index].isSelected = true;
+                                                                if (isSelectRadioBtn) {
+                                                                  isSelectRadioBtn =
+                                                                      false;
+                                                                } else {
+                                                                  isSelectRadioBtn =
+                                                                      true;
+                                                                }
+                                                              });
+                                                            },
+                                                            child: new RadioItem(
+                                                                RadioModel(
+                                                                    isSelectRadioBtn
+                                                                        ? true
+                                                                        : false,
+                                                                    ""),
+                                                                Constants
+                                                                    .COLOR_DARK_GREY),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      Row(
+                                                        children: <Widget>[
+                                                          Expanded(
+                                                            child:
+                                                                AlMajlisTextViewMedium(
+                                                              "UI/UX Designer",
+                                                              size: 12,
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  }),
+                            ),
+                            //  ),
+                            Divider(
+                              height: 2,
+                              color: Colors.white,
+                            ),
+                            GestureDetector(
+                              child: shareLinkWidgetRow(
+                                  context, Icons.link, "Copy link to post"),
+                            ),
+                            shareLinkWidgetRow(context, Icons.file_upload,
+                                "Share post via..."),
+                            Container(
+                              width: 300.0,
+                              height: 40.0,
+                              margin: EdgeInsets.only(top: 12.0),
+                              padding: EdgeInsets.only(
+                                  left: 2.0, right: 2.0, top: 3.0, bottom: 3.0),
+                              decoration: BoxDecoration(
+                                color: Constants.COLOR_DARK_TEAL,
+                                borderRadius: BorderRadius.circular(10.0),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Constants.COLOR_PRIMARY_TEAL,
+                                    blurRadius: 2.0,
+                                    spreadRadius: 0.0,
+                                    offset: Offset(
+                                      1.0,
+                                      1.0,
+                                    ), // shadow direction: bottom right
+                                  ),
+                                ],
+                              ),
+                              child: FlatButton(
+                                color: Constants.COLOR_DARK_TEAL,
+                                onPressed: () {},
+                                child: Text(
+                                  "SEND",
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-                // Visibility(
-                //   visible: isUserLoggedIn,
-                //   child: Container(
-                //     height: double.infinity,
-                //     width: double.infinity,
-                //     child: Column(
-                //       mainAxisAlignment: MainAxisAlignment.end,
-                //       children: <Widget>[AlMajlisNavigationBar(0, getPosts)],
-                //     ),
-                //   ),
-                // )
-              ],
-            ),
-          )),
+              ),
+              // Visibility(
+              //   visible: isUserLoggedIn,
+              //   child: Container(
+              //     height: double.infinity,
+              //     width: double.infinity,
+              //     child: Column(
+              //       mainAxisAlignment: MainAxisAlignment.end,
+              //       children: <Widget>[AlMajlisNavigationBar(0, getPosts)],
+              //     ),
+              //   ),
+              // )
+            ],
+          ),
+        ),
+      ),
     );
   }
 
@@ -1410,9 +1432,12 @@ class _ActivityPostsState extends ActivityStateBase<ActivityPosts>
       await Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => ActivityAddNewPost(image: pickedFile)),
+          builder: (context) => ActivityAddNewPost(image: pickedFile),
+        ),
       );
-      getPosts(DateTime.now());
+      getPosts(
+        DateTime.now(),
+      );
     }
   }
 
@@ -1423,9 +1448,12 @@ class _ActivityPostsState extends ActivityStateBase<ActivityPosts>
       await Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => ActivityAddNewPost(image: pickedFile)),
+          builder: (context) => ActivityAddNewPost(image: pickedFile),
+        ),
       );
-      getPosts(DateTime.now());
+      getPosts(
+        DateTime.now(),
+      );
     }
   }
 
@@ -1455,21 +1483,22 @@ class _ActivityPostsState extends ActivityStateBase<ActivityPosts>
           await Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => ActivitySinglePost(id: post.postId)),
+              builder: (context) => ActivitySinglePost(id: post.postId),
+            ),
           );
           getPosts(DateTime.now());
         } else {
           await Navigator.of(context)
-              .push(MaterialPageRoute(builder: (context) => ActivityLogin())).then((value) => value != null
-                                                ? {
-                                                    Navigator.of(context)
-                                                        .pushReplacement(
-                                                            MaterialPageRoute(
-                                                                builder:
-                                                                    (context) =>
-                                                                        Home())),
-                                                  }
-                                                : null);
+              .push(MaterialPageRoute(builder: (context) => ActivityLogin()))
+              .then((value) => value != null
+                  ? {
+                      Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(
+                          builder: (context) => Home(),
+                        ),
+                      ),
+                    }
+                  : null);
           // setState(() {
           //   isUserLoggedIn = core.isUserLoggedIn();
           //   getPosts(DateTime.now());
@@ -1477,438 +1506,89 @@ class _ActivityPostsState extends ActivityStateBase<ActivityPosts>
         }
       },
       child: Padding(
-          padding: EdgeInsets.only(
-              top: 4.0, bottom: index == posts.length - 1 ? 100 : 0),
-          child: Container(
-            width: MediaQuery.of(context).size.width,
-            child: Stack(
-              children: <Widget>[
-                Container(
-                  decoration: BoxDecoration(
-                    color: Constants.COLOR_DARK_GREY,
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(10.0),
-                        topRight: Radius.circular(10.0),
-                        bottomRight: Radius.circular(10.0)),
-                    border: Border.all(width: 0),
+        padding: EdgeInsets.only(
+            top: 4.0, bottom: index == posts.length - 1 ? 100 : 0),
+        child: Container(
+          width: MediaQuery.of(context).size.width,
+          child: Stack(
+            children: <Widget>[
+              Container(
+                decoration: BoxDecoration(
+                  color: Constants.COLOR_DARK_GREY,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(10.0),
+                    topRight: Radius.circular(10.0),
+                    bottomRight: Radius.circular(10.0),
                   ),
-                  child: Row(
-                    children: <Widget>[
-                      post.postUser.isPro
-                          ? Padding(
-                              padding: const EdgeInsets.only(top: 8.0),
-                              child: Container(
-                                width: 2.0,
-                                decoration: BoxDecoration(
-                                  color: Constants.COLOR_PRIMARY_TEAL,
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Constants.COLOR_PRIMARY_TEAL,
-                                      blurRadius: 2.0,
-                                      spreadRadius: 0.0,
-                                      offset: Offset(2.0,
-                                          2.0), // shadow direction: bottom right
-                                    )
-                                  ],
-                                ),
-                              ),
-                            )
-                          : Container(
+                  border: Border.all(width: 0),
+                ),
+                child: Row(
+                  children: <Widget>[
+                    post.postUser.isPro
+                        ? Padding(
+                            padding: const EdgeInsets.only(top: 8.0),
+                            child: Container(
                               width: 2.0,
-                              color: Constants.COLOR_DARK_GREY,
-                            ),
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.only(
-                              top: 16, bottom: 16, left: 12, right: 16),
-                          child: Column(
-                            children: <Widget>[
-                              Row(
-                                children: <Widget>[
-                                  null != post.postUser.thumbUrl &&
-                                          !post.postUser.thumbUrl.isEmpty
-                                      ? GestureDetector(
-                                          onTap: () async {
-                                            if (isUserLoggedIn) {
-                                              Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        ActivityProfile(
-                                                          userId: post
-                                                              .postUser.userId,
-                                                        )),
-                                              );
-                                            } else {
-                                              await Navigator.of(context).push(
-                                                  MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          ActivityLogin())).then((value) => value != null
-                                                ? {
-                                                    Navigator.of(context)
-                                                        .pushReplacement(
-                                                            MaterialPageRoute(
-                                                                builder:
-                                                                    (context) =>
-                                                                        Home())),
-                                                  }
-                                                : null);
-                                              // setState(() {
-                                              //   isUserLoggedIn =
-                                              //       core.isUserLoggedIn();
-                                              //   getPosts(DateTime.now());
-                                              // });
-                                            }
-                                          },
-                                          child: AlMajlisProfileImageWithStatus(
-                                              post.postUser.thumbUrl, 50.0,
-                                              isPro: null != post.postUser.isPro
-                                                  ? post.postUser.isPro
-                                                  : false),
-                                        )
-                                      : GestureDetector(
-                                          onTap: () async {
-                                            if (isUserLoggedIn) {
-                                              Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        ActivityProfile(
-                                                          userId: post
-                                                              .postUser.userId,
-                                                        )),
-                                              );
-                                            } else {
-                                              await Navigator.of(context).push(
-                                                  MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          ActivityLogin())).then((value) => value != null
-                                                ? {
-                                                    Navigator.of(context)
-                                                        .pushReplacement(
-                                                            MaterialPageRoute(
-                                                                builder:
-                                                                    (context) =>
-                                                                        Home())),
-                                                  }
-                                                : null);
-                                              // setState(() {
-                                              //   isUserLoggedIn =
-                                              //       core.isUserLoggedIn();
-                                              //   getPosts(DateTime.now());
-                                              // });
-                                            }
-                                          },
-                                          child: Container(
-                                            height: 50,
-                                            width: 50,
-                                            decoration: BoxDecoration(
-                                                shape: BoxShape.circle,
-                                                color: post.postUser.isPro
-                                                    ? Constants
-                                                        .COLOR_PRIMARY_TEAL
-                                                    : Colors.white),
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsets.all(2.0),
-                                              child: Container(
-                                                decoration: BoxDecoration(
-                                                    shape: BoxShape.circle,
-                                                    gradient: LinearGradient(
-                                                        colors: [
-                                                          Colors.purple,
-                                                          Colors.teal
-                                                        ])),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                  Expanded(
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(
-                                          left: 12, right: 8),
-                                      child: Column(
-                                        children: <Widget>[
-                                          Row(
-                                            children: <Widget>[
-                                              Expanded(
-                                                child: Row(
-                                                  children: <Widget>[
-                                                    Expanded(
-                                                      child: GestureDetector(
-                                                        onTap: () async {
-                                                          if (isUserLoggedIn) {
-                                                            Navigator.push(
-                                                              context,
-                                                              MaterialPageRoute(
-                                                                  builder:
-                                                                      (context) =>
-                                                                          ActivityProfile(
-                                                                            userId:
-                                                                                post.postUser.userId,
-                                                                          )),
-                                                            );
-                                                          } else {
-                                                            await Navigator.of(
-                                                                    context)
-                                                                .push(MaterialPageRoute(
-                                                                    builder:
-                                                                        (context) =>
-                                                                            ActivityLogin())).then((value) => value != null
-                                                ? {
-                                                    Navigator.of(context)
-                                                        .pushReplacement(
-                                                            MaterialPageRoute(
-                                                                builder:
-                                                                    (context) =>
-                                                                        Home())),
-                                                  }
-                                                : null);
-                                                            // setState(() {
-                                                            //   isUserLoggedIn = core
-                                                            //       .isUserLoggedIn();
-                                                            //   getPosts(DateTime
-                                                            //       .now());
-                                                            // });
-                                                          }
-                                                        },
-                                                        child:
-                                                            AlMajlisTextViewBold(
-                                                          post.postUser
-                                                                  .firstName +
-                                                              " " +
-                                                              post.postUser
-                                                                  .lastName,
-                                                          size: 16,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              left: 4.0),
-                                                      child:
-                                                          AlMajlisTextViewBold(
-                                                        timeago
-                                                            .format(
-                                                                post.createdAt,
-                                                                locale:
-                                                                    'en_short')
-                                                            .toUpperCase(),
-                                                        size: 10,
-                                                        color: Colors.grey,
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          null != location && !location.isEmpty
-                                              ? Row(
-                                                  children: <Widget>[
-                                                    Expanded(
-                                                      child:
-                                                          AlMajlisTextViewMedium(
-                                                        location,
-                                                        size: 12,
-                                                        color: Colors.grey,
-                                                      ),
-                                                    ),
-                                                    Visibility(
-                                                      visible: showExpiry,
-                                                      child: Row(
-                                                        children: <Widget>[
-                                                          Padding(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                        .only(
-                                                                    left: 10.0,
-                                                                    right: 2.0),
-                                                            child: Image.asset(
-                                                                "drawables/time-01.png",
-                                                                height: 8.0),
-                                                          ),
-                                                          Text(
-                                                            "3 hr left",
-                                                            style: TextStyle(
-                                                                fontSize: 12.0,
-                                                                color:
-                                                                    Colors.red),
-                                                          )
-                                                        ],
-                                                      ),
-                                                    ),
-                                                  ],
-                                                )
-                                              : Container(),
-                                        ],
-                                      ),
-                                    ),
+                              decoration: BoxDecoration(
+                                color: Constants.COLOR_PRIMARY_TEAL,
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Constants.COLOR_PRIMARY_TEAL,
+                                    blurRadius: 2.0,
+                                    spreadRadius: 0.0,
+                                    offset: Offset(2.0,
+                                        2.0), // shadow direction: bottom right
                                   ),
                                 ],
                               ),
-                              Padding(
-                                padding: const EdgeInsets.only(top: 6.0),
-                                child: Row(
-                                  children: <Widget>[
-                                    SizedBox(
-                                      width: 62.0,
-                                    ),
-                                    Expanded(
-                                        child: Linkify(
-                                      onOpen: (link) async {
-                                        if (await canLaunch(link.url)) {
-                                          await launch(link.url);
-                                        } else {
-                                          throw 'Could not launch $link';
-                                        }
-                                      },
-                                      text: post.text,
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 14,
-                                        fontFamily: 'ProximaNovaRegular',
-                                      ),
-                                      linkStyle: TextStyle(
-                                        color: Constants.COLOR_PRIMARY_TEAL,
-                                        fontFamily: 'ProximaNovaRegular',
-                                      ),
-                                    )
-
-//                                          AlMajlisTextViewRegular(
-//                                        post.text,
-//                                        size: 14,
-//                                      ),
-                                        ),
-                                  ],
-                                ),
-                              ),
-                              null != image && !image.isEmpty
-                                  ? Padding(
-                                      padding: const EdgeInsets.only(top: 8.0),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: <Widget>[
-                                          // SizedBox(
-                                          //   width: 55.0,
-                                          // ),
-                                          Center(
-                                            child: GestureDetector(
-                                              onTap: () {
-                                                Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          ActivityPhotoZoom(
-                                                              image)),
-                                                );
-                                              },
-                                              child: Container(
-                                                margin: EdgeInsets.only(
-                                                    // left: 15.0,
-                                                    // right: 14.0,
-                                                    top: 8.0),
-                                                padding: EdgeInsets.only(
-                                                    top: 2.0,
-                                                    bottom: 2.0,
-                                                    left: 2.0,
-                                                    right: 2.0),
-                                                height: 150.0,
-                                                width: 150.0,
-                                                decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            8.0),
-                                                    border: Border.all(
-                                                        color: Colors.white)),
-                                                child: CachedNetworkImage(
-                                                  imageUrl: image,
-                                                  errorWidget:
-                                                      (context, url, error) {
-                                                    return Container();
-                                                  },
-                                                  placeholder: (context, url) =>
-                                                      Container(
-                                                          child: Center(
-                                                              child:
-                                                                  CircularProgressIndicator())),
-                                                  fit: BoxFit.fitWidth,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    )
-                                  : Container(),
-                              Padding(
-                                padding: const EdgeInsets.only(top: 16.0),
-                                child: Padding(
-                                  padding: const EdgeInsets.only(left: 62.0),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: <Widget>[
-                                      GestureDetector(
+                            ),
+                          )
+                        : Container(
+                            width: 2.0,
+                            color: Constants.COLOR_DARK_GREY,
+                          ),
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            top: 16, bottom: 16, left: 12, right: 16),
+                        child: Column(
+                          children: <Widget>[
+                            Row(
+                              children: <Widget>[
+                                null != post.postUser.thumbUrl &&
+                                        !post.postUser.thumbUrl.isNotEmpty
+                                    ? GestureDetector(
                                         onTap: () async {
                                           if (isUserLoggedIn) {
-                                            await Navigator.push(
+                                            Navigator.push(
                                               context,
                                               MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      ActivityReplyToPost(
-                                                        post: post,
-                                                      )),
+                                                builder: (context) =>
+                                                    ActivityProfile(
+                                                  userId: post.postUser.userId,
+                                                ),
+                                              ),
                                             );
                                           } else {
-                                            await Navigator.of(context).push(
-                                                MaterialPageRoute(
+                                            await Navigator.of(context)
+                                                .push(
+                                                  MaterialPageRoute(
                                                     builder: (context) =>
-                                                        ActivityLogin())).then((value) => value != null
-                                                ? {
-                                                    Navigator.of(context)
-                                                        .pushReplacement(
-                                                            MaterialPageRoute(
-                                                                builder:
-                                                                    (context) =>
-                                                                        Home())),
-                                                  }
-                                                : null);
-                                            // setState(() {
-                                            //   isUserLoggedIn =
-                                            //       core.isUserLoggedIn();
-                                            // });
-                                          }
-                                          getPosts(DateTime.now());
-                                        },
-                                        child: widegtIconWithCounterText(
-                                            "drawables/comment-01.png",
-                                            null != post.commentCount
-                                                ? post.commentCount.toString()
-                                                : "0"),
-                                      ),
-                                      InkWell(
-                                        onTap: () async {
-                                          if (isUserLoggedIn) {
-                                            post.isLiked
-                                                ? decrement(index)
-                                                : increment(index);
-                                          } else {
-                                            await Navigator.of(context).push(
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        ActivityLogin())).then((value) => value != null
-                                                ? {
-                                                    Navigator.of(context)
-                                                        .pushReplacement(
-                                                            MaterialPageRoute(
-                                                                builder:
-                                                                    (context) =>
-                                                                        Home())),
-                                                  }
-                                                : null);
+                                                        ActivityLogin(),
+                                                  ),
+                                                )
+                                                .then((value) => value != null
+                                                    ? {
+                                                        Navigator.of(context)
+                                                            .pushReplacement(
+                                                          MaterialPageRoute(
+                                                            builder:
+                                                                (context) =>
+                                                                    Home(),
+                                                          ),
+                                                        ),
+                                                      }
+                                                    : null);
                                             // setState(() {
                                             //   isUserLoggedIn =
                                             //       core.isUserLoggedIn();
@@ -1916,186 +1596,575 @@ class _ActivityPostsState extends ActivityStateBase<ActivityPosts>
                                             // });
                                           }
                                         },
-                                        child: RichText(
-                                          text: TextSpan(
-                                            children: [
-                                              WidgetSpan(
-                                                child: Padding(
+                                        child: AlMajlisProfileImageWithStatus(
+                                            post.postUser.thumbUrl, 50.0,
+                                            isPro: null != post.postUser.isPro
+                                                ? post.postUser.isPro
+                                                : false),
+                                      )
+                                    : GestureDetector(
+                                        onTap: () async {
+                                          if (isUserLoggedIn) {
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    ActivityProfile(
+                                                  userId: post.postUser.userId,
+                                                ),
+                                              ),
+                                            );
+                                          } else {
+                                            await Navigator.of(context)
+                                                .push(MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        ActivityLogin()))
+                                                .then((value) => value != null
+                                                    ? {
+                                                        Navigator.of(context)
+                                                            .pushReplacement(
+                                                          MaterialPageRoute(
+                                                            builder:
+                                                                (context) =>
+                                                                    Home(),
+                                                          ),
+                                                        ),
+                                                      }
+                                                    : null);
+                                            // setState(() {
+                                            //   isUserLoggedIn =
+                                            //       core.isUserLoggedIn();
+                                            //   getPosts(DateTime.now());
+                                            // });
+                                          }
+                                        },
+                                        child: Container(
+                                          height: 50,
+                                          width: 50,
+                                          decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              color: post.postUser.isPro
+                                                  ? Constants.COLOR_PRIMARY_TEAL
+                                                  : Colors.white),
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(2.0),
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                shape: BoxShape.circle,
+                                                gradient: LinearGradient(
+                                                  colors: [
+                                                    Colors.purple,
+                                                    Colors.teal
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                Expanded(
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 12, right: 8),
+                                    child: Column(
+                                      children: <Widget>[
+                                        Row(
+                                          children: <Widget>[
+                                            Expanded(
+                                              child: Row(
+                                                children: <Widget>[
+                                                  Expanded(
+                                                    child: GestureDetector(
+                                                      onTap: () async {
+                                                        if (isUserLoggedIn) {
+                                                          Navigator.push(
+                                                            context,
+                                                            MaterialPageRoute(
+                                                              builder: (context) =>
+                                                                  ActivityProfile(
+                                                                userId: post
+                                                                    .postUser
+                                                                    .userId,
+                                                              ),
+                                                            ),
+                                                          );
+                                                        } else {
+                                                          await Navigator.of(
+                                                                  context)
+                                                              .push(MaterialPageRoute(
+                                                                  builder:
+                                                                      (context) =>
+                                                                          ActivityLogin()))
+                                                              .then((value) =>
+                                                                  value != null
+                                                                      ? {
+                                                                          Navigator.of(context)
+                                                                              .pushReplacement(
+                                                                            MaterialPageRoute(
+                                                                              builder: (context) => Home(),
+                                                                            ),
+                                                                          ),
+                                                                        }
+                                                                      : null);
+                                                          // setState(() {
+                                                          //   isUserLoggedIn = core
+                                                          //       .isUserLoggedIn();
+                                                          //   getPosts(DateTime
+                                                          //       .now());
+                                                          // });
+                                                        }
+                                                      },
+                                                      child:
+                                                          AlMajlisTextViewBold(
+                                                        post.postUser
+                                                                .firstName +
+                                                            " " +
+                                                            post.postUser
+                                                                .lastName,
+                                                        size: 16,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Padding(
                                                     padding:
                                                         const EdgeInsets.only(
-                                                            right: 5.0),
-                                                    child: Icon(
-                                                      post.isLiked
-                                                          ? Icons.favorite
-                                                          : Icons
-                                                              .favorite_border,
-                                                      color: post.isLiked
-                                                          ? Colors.red
-                                                          : Colors.grey,
-                                                      size: 16,
-                                                    )),
+                                                            left: 4.0),
+                                                    child: AlMajlisTextViewBold(
+                                                      timeago
+                                                          .format(
+                                                              post.createdAt,
+                                                              locale:
+                                                                  'en_short')
+                                                          .toUpperCase(),
+                                                      size: 10,
+                                                      color: Colors.grey,
+                                                    ),
+                                                  ),
+                                                ],
                                               ),
-                                              TextSpan(
-                                                  text:
-                                                      post.likeCount.toString(),
-                                                  style: TextStyle(
-                                                      color: post.isLiked
-                                                          ? Constants
-                                                              .COLOR_PRIMARY_TEAL
-                                                          : Colors.grey)),
-                                            ],
-                                          ),
+                                            ),
+                                          ],
                                         ),
-                                      ),
-                                      // GestureDetector(
-                                      //   onTap: () async {
-                                      //     if (isUserLoggedIn) {
-                                      //       scaffoldState.currentState
-                                      //           .showBottomSheet((context) =>
-                                      //               PostShareBottomSheet(
-                                      //                 copyLink: copyLink,
-                                      //                 shareLink: shareLink,
-                                      //                 sahreToUsers:
-                                      //                     shareToUsers,
-                                      //                 index: index,
-                                      //               ));
-                                      //       newShare(post.postId);
-                                      //     } else {
-                                      //       await Navigator.of(context).push(
-                                      //           MaterialPageRoute(
-                                      //               builder: (context) =>
-                                      //                   ActivityLogin())).then((value) => value != null
-                                                // ? {
-                                                //     Navigator.of(context)
-                                                //         .pushReplacement(
-                                                //             MaterialPageRoute(
-                                                //                 builder:
-                                                //                     (context) =>
-                                                //                         Home())),
-                                                //   }
-                                                // : null);
-                                          //   setState(() {
-                                          //     isUserLoggedIn =
-                                          //         core.isUserLoggedIn();
-                                          //     getPosts(DateTime.now());
-                                          //   });
-                                          // }
-                                      //   },
-                                      //   child: widegtIconWithCounterText(
-                                      //       "drawables/upload-01.png",
-                                      //       null != post.shareCount
-                                      //           ? post.shareCount.toString()
-                                      //           : "0"),
-                                      // ),
-                                      Padding(
-                                        padding:
-                                            const EdgeInsets.only(right: 8.0),
-                                        child: GestureDetector(
-                                          onTap: () async {
-                                            if (isUserLoggedIn) {
-                                              if (post.postUser.userId ==
-                                                  core
-                                                      .getCurrentUser()
-                                                      .userId) {
-                                                scaffoldState.currentState
-                                                    .showBottomSheet((context) =>
-                                                        BottomSheetOperations(
-                                                            editPost,
-                                                            deletePostThroughDialog,
-                                                            index));
-                                              } else {
-                                                scaffoldState.currentState
-                                                    .showBottomSheet((context) =>
-                                                        ReportPostBottomSheet(
-                                                          reportClicked: () {
-                                                            reportClicked(
-                                                                index);
-                                                          },
-                                                        ));
-                                              }
-                                            } else {
-                                              await Navigator.of(context).push(
-                                                  MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          ActivityLogin())).then((value) => value != null
-                                                ? {
-                                                    Navigator.of(context)
-                                                        .pushReplacement(
-                                                            MaterialPageRoute(
-                                                                builder:
-                                                                    (context) =>
-                                                                        Home())),
-                                                  }
-                                                : null);
-                                              // setState(() {
-                                              //   isUserLoggedIn =
-                                              //       core.isUserLoggedIn();
-                                              //   getPosts(DateTime.now());
-                                              // });
-                                            }
-                                          },
-                                          child: AlMajlisImageIcons(
-                                            "drawables/More_grey-01.png",
-                                            iconHeight: 16,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
+                                        null != location && !location.isNotEmpty
+                                            ? Row(
+                                                children: <Widget>[
+                                                  Expanded(
+                                                    child:
+                                                        AlMajlisTextViewMedium(
+                                                      location,
+                                                      size: 12,
+                                                      color: Colors.grey,
+                                                    ),
+                                                  ),
+                                                  Visibility(
+                                                    visible: showExpiry,
+                                                    child: Row(
+                                                      children: <Widget>[
+                                                        Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                      .only(
+                                                                  left: 10.0,
+                                                                  right: 2.0),
+                                                          child: Image.asset(
+                                                              "drawables/time-01.png",
+                                                              height: 8.0),
+                                                        ),
+                                                        Text(
+                                                          "3 hr left",
+                                                          style: TextStyle(
+                                                            fontSize: 12.0,
+                                                            color: Colors.red,
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ],
+                                              )
+                                            : Container(),
+                                      ],
+                                    ),
                                   ),
                                 ),
+                              ],
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 6.0),
+                              child: Row(
+                                children: <Widget>[
+                                  SizedBox(
+                                    width: 62.0,
+                                  ),
+                                  Expanded(
+                                      child: Linkify(
+                                    onOpen: (link) async {
+                                      if (await canLaunch(link.url)) {
+                                        await launch(link.url);
+                                      } else {
+                                        throw 'Could not launch $link';
+                                      }
+                                    },
+                                    text: post.text,
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 14,
+                                      fontFamily: 'ProximaNovaRegular',
+                                    ),
+                                    linkStyle: TextStyle(
+                                      color: Constants.COLOR_PRIMARY_TEAL,
+                                      fontFamily: 'ProximaNovaRegular',
+                                    ),
+                                  )
+
+//                                          AlMajlisTextViewRegular(
+//                                        post.text,
+//                                        size: 14,
+//                                      ),
+                                      ),
+                                ],
+                              ),
+                            ),
+                            null != image && !image.isNotEmpty
+                                ? Padding(
+                                    padding: const EdgeInsets.only(top: 8.0),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: <Widget>[
+                                        // SizedBox(
+                                        //   width: 55.0,
+                                        // ),
+                                        Center(
+                                          child: GestureDetector(
+                                            onTap: () {
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      ActivityPhotoZoom(
+                                                    image,
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                            child: Container(
+                                              margin: EdgeInsets.only(
+                                                  // left: 15.0,
+                                                  // right: 14.0,
+                                                  top: 8.0),
+                                              padding: EdgeInsets.only(
+                                                top: 2.0,
+                                                bottom: 2.0,
+                                                left: 2.0,
+                                                right: 2.0,
+                                              ),
+                                              height: 150.0,
+                                              width: 150.0,
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(8.0),
+                                                border: Border.all(
+                                                  color: Colors.white,
+                                                ),
+                                              ),
+                                              child: CachedNetworkImage(
+                                                imageUrl: image,
+                                                errorWidget:
+                                                    (context, url, error) {
+                                                  return Container();
+                                                },
+                                                placeholder: (context, url) =>
+                                                    Container(
+                                                  child: Center(
+                                                    child:
+                                                        CircularProgressIndicator(),
+                                                  ),
+                                                ),
+                                                fit: BoxFit.fitWidth,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                                : Container(),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 16.0),
+                              child: Padding(
+                                padding: const EdgeInsets.only(left: 62.0),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: <Widget>[
+                                    GestureDetector(
+                                      onTap: () async {
+                                        if (isUserLoggedIn) {
+                                          await Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  ActivityReplyToPost(
+                                                post: post,
+                                              ),
+                                            ),
+                                          );
+                                        } else {
+                                          await Navigator.of(context)
+                                              .push(
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      ActivityLogin(),
+                                                ),
+                                              )
+                                              .then((value) => value != null
+                                                  ? {
+                                                      Navigator.of(context)
+                                                          .pushReplacement(
+                                                        MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              Home(),
+                                                        ),
+                                                      ),
+                                                    }
+                                                  : null);
+                                          // setState(() {
+                                          //   isUserLoggedIn =
+                                          //       core.isUserLoggedIn();
+                                          // });
+                                        }
+                                        getPosts(
+                                          DateTime.now(),
+                                        );
+                                      },
+                                      child: widegtIconWithCounterText(
+                                          "drawables/comment-01.png",
+                                          null != post.commentCount
+                                              ? post.commentCount.toString()
+                                              : "0"),
+                                    ),
+                                    InkWell(
+                                      onTap: () async {
+                                        if (isUserLoggedIn) {
+                                          post.isLiked
+                                              ? decrement(index)
+                                              : increment(index);
+                                        } else {
+                                          await Navigator.of(context)
+                                              .push(
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      ActivityLogin(),
+                                                ),
+                                              )
+                                              .then((value) => value != null
+                                                  ? {
+                                                      Navigator.of(context)
+                                                          .pushReplacement(
+                                                        MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              Home(),
+                                                        ),
+                                                      ),
+                                                    }
+                                                  : null);
+                                          // setState(() {
+                                          //   isUserLoggedIn =
+                                          //       core.isUserLoggedIn();
+                                          //   getPosts(DateTime.now());
+                                          // });
+                                        }
+                                      },
+                                      child: RichText(
+                                        text: TextSpan(
+                                          children: [
+                                            WidgetSpan(
+                                              child: Padding(
+                                                padding: const EdgeInsets.only(
+                                                    right: 5.0),
+                                                child: Icon(
+                                                  post.isLiked
+                                                      ? Icons.favorite
+                                                      : Icons.favorite_border,
+                                                  color: post.isLiked
+                                                      ? Colors.red
+                                                      : Colors.grey,
+                                                  size: 16,
+                                                ),
+                                              ),
+                                            ),
+                                            TextSpan(
+                                              text: post.likeCount.toString(),
+                                              style: TextStyle(
+                                                color: post.isLiked
+                                                    ? Constants
+                                                        .COLOR_PRIMARY_TEAL
+                                                    : Colors.grey,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                    // GestureDetector(
+                                    //   onTap: () async {
+                                    //     if (isUserLoggedIn) {
+                                    //       scaffoldState.currentState
+                                    //           .showBottomSheet((context) =>
+                                    //               PostShareBottomSheet(
+                                    //                 copyLink: copyLink,
+                                    //                 shareLink: shareLink,
+                                    //                 sahreToUsers:
+                                    //                     shareToUsers,
+                                    //                 index: index,
+                                    //               ));
+                                    //       newShare(post.postId);
+                                    //     } else {
+                                    //       await Navigator.of(context).push(
+                                    //           MaterialPageRoute(
+                                    //               builder: (context) =>
+                                    //                   ActivityLogin())).then((value) => value != null
+                                    // ? {
+                                    //     Navigator.of(context)
+                                    //         .pushReplacement(
+                                    //             MaterialPageRoute(
+                                    //                 builder:
+                                    //                     (context) =>
+                                    //                         Home())),
+                                    //   }
+                                    // : null);
+                                    //   setState(() {
+                                    //     isUserLoggedIn =
+                                    //         core.isUserLoggedIn();
+                                    //     getPosts(DateTime.now());
+                                    //   });
+                                    // }
+                                    //   },
+                                    //   child: widegtIconWithCounterText(
+                                    //       "drawables/upload-01.png",
+                                    //       null != post.shareCount
+                                    //           ? post.shareCount.toString()
+                                    //           : "0"),
+                                    // ),
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.only(right: 8.0),
+                                      child: GestureDetector(
+                                        onTap: () async {
+                                          if (isUserLoggedIn) {
+                                            if (post.postUser.userId ==
+                                                core.getCurrentUser().userId) {
+                                              scaffoldState.currentState
+                                                  .showBottomSheet(
+                                                (context) =>
+                                                    BottomSheetOperations(
+                                                  editPost,
+                                                  deletePostThroughDialog,
+                                                  index,
+                                                ),
+                                              );
+                                            } else {
+                                              scaffoldState.currentState
+                                                  .showBottomSheet(
+                                                (context) =>
+                                                    ReportPostBottomSheet(
+                                                  reportClicked: () {
+                                                    reportClicked(
+                                                      index,
+                                                    );
+                                                  },
+                                                ),
+                                              );
+                                            }
+                                          } else {
+                                            await Navigator.of(context)
+                                                .push(MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        ActivityLogin()))
+                                                .then((value) => value != null
+                                                    ? {
+                                                        Navigator.of(context)
+                                                            .pushReplacement(
+                                                          MaterialPageRoute(
+                                                            builder:
+                                                                (context) =>
+                                                                    Home(),
+                                                          ),
+                                                        ),
+                                                      }
+                                                    : null);
+                                            // setState(() {
+                                            //   isUserLoggedIn =
+                                            //       core.isUserLoggedIn();
+                                            //   getPosts(DateTime.now());
+                                            // });
+                                          }
+                                        },
+                                        child: AlMajlisImageIcons(
+                                          "drawables/More_grey-01.png",
+                                          iconHeight: 16,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                margin: EdgeInsets.only(bottom: 19),
+              ),
+              Positioned(
+                bottom: 0,
+                left: 0,
+                child: ClipPath(
+                  child: Container(
+                    width: 30,
+                    height: 20,
+                    color: Constants.COLOR_DARK_GREY,
+                  ),
+                  clipper: MyCustomClipper(),
+                ),
+              ),
+              Positioned(
+                top: 0,
+                bottom: 0,
+                left: 0,
+                child: post.postUser.isPro
+                    ? Padding(
+                        padding: const EdgeInsets.only(
+                            top: 8.0, right: 4, bottom: 5, left: 1),
+                        child: Container(
+                          width: 2.0,
+//                      height: MediaQuery.of(context).size.height / 5.6,
+                          decoration: BoxDecoration(
+                            color: Constants.COLOR_PRIMARY_TEAL,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Constants.COLOR_PRIMARY_TEAL,
+                                blurRadius: 2.0,
+                                spreadRadius: 0.0,
+                                offset: Offset(
+                                  2.0,
+                                  2.0,
+                                ), // shadow direction: bottom right
                               ),
                             ],
                           ),
                         ),
+                      )
+                    : Container(
+                        color: Constants.COLOR_DARK_GREY,
                       ),
-                    ],
-                  ),
-                  margin: EdgeInsets.only(bottom: 19),
-                ),
-                Positioned(
-                  bottom: 0,
-                  left: 0,
-                  child: ClipPath(
-                    child: Container(
-                      width: 30,
-                      height: 20,
-                      color: Constants.COLOR_DARK_GREY,
-                    ),
-                    clipper: MyCustomClipper(),
-                  ),
-                ),
-                Positioned(
-                  top: 0,
-                  bottom: 0,
-                  left: 0,
-                  child: post.postUser.isPro
-                      ? Padding(
-                          padding: const EdgeInsets.only(
-                              top: 8.0, right: 4, bottom: 5, left: 1),
-                          child: Container(
-                            width: 2.0,
-//                      height: MediaQuery.of(context).size.height / 5.6,
-                            decoration: BoxDecoration(
-                              color: Constants.COLOR_PRIMARY_TEAL,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Constants.COLOR_PRIMARY_TEAL,
-                                  blurRadius: 2.0,
-                                  spreadRadius: 0.0,
-                                  offset: Offset(2.0,
-                                      2.0), // shadow direction: bottom right
-                                )
-                              ],
-                            ),
-                          ),
-                        )
-                      : Container(
-                          color: Constants.COLOR_DARK_GREY,
-                        ),
-                ),
-              ],
-            ),
-          )
+              ),
+            ],
+          ),
+        ),
 //        Column(
 //          children: <Widget>[
 //            Container(
@@ -2549,7 +2618,7 @@ class _ActivityPostsState extends ActivityStateBase<ActivityPosts>
 //            )
 //          ],
 //        ),
-          ),
+      ),
     );
   }
 
@@ -2558,9 +2627,10 @@ class _ActivityPostsState extends ActivityStateBase<ActivityPosts>
     await Navigator.push(
       context,
       MaterialPageRoute(
-          builder: (context) => ActivityEditPost(
-                postId: posts.elementAt(index).postId,
-              )),
+        builder: (context) => ActivityEditPost(
+          postId: posts.elementAt(index).postId,
+        ),
+      ),
     );
     getPosts(DateTime.now());
   }
@@ -2659,7 +2729,10 @@ class _ActivityPostsState extends ActivityStateBase<ActivityPosts>
         builder: (BuildContext context) {
           return DialogReport(0);
         }).then((value) {
-      reportPost(index, Constants.reportReasons.elementAt(value));
+      reportPost(
+        index,
+        Constants.reportReasons.elementAt(value),
+      );
     });
   }
 
@@ -2701,10 +2774,11 @@ class _ActivityPostsState extends ActivityStateBase<ActivityPosts>
     if (!core.systemCanHandel(response)) {
       if (response.status.statusCode == 0) {
         Fluttertoast.showToast(
-            msg: "Post Has been reported",
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.CENTER,
-            timeInSecForIosWeb: 2);
+          msg: "Post Has been reported",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 2,
+        );
       }
     }
   }
@@ -2723,13 +2797,14 @@ class _ActivityPostsState extends ActivityStateBase<ActivityPosts>
             size: 22,
           ),
           Expanded(
-              child: Padding(
-            padding: const EdgeInsets.only(left: 8.0),
-            child: AlMajlisTextViewSemiBold(
-              name,
-              size: 14,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 8.0),
+              child: AlMajlisTextViewSemiBold(
+                name,
+                size: 14,
+              ),
             ),
-          ))
+          )
         ],
       ),
     );
@@ -2742,8 +2817,9 @@ class _ActivityPostsState extends ActivityStateBase<ActivityPosts>
         margin: EdgeInsets.only(top: 8.0, right: 12.0),
         padding: EdgeInsets.all(10.0),
         decoration: BoxDecoration(
-            color: Constants.COLOR_DARK_GREY,
-            borderRadius: BorderRadius.circular(8.0)),
+          color: Constants.COLOR_DARK_GREY,
+          borderRadius: BorderRadius.circular(8.0),
+        ),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
@@ -2760,10 +2836,10 @@ class _ActivityPostsState extends ActivityStateBase<ActivityPosts>
               child: Column(
                 children: <Widget>[
                   AlMajlisTextViewBold(totalNumbers),
-                  AlMajlisTextViewBold(name)
+                  AlMajlisTextViewBold(name),
                 ],
               ),
-            )
+            ),
           ],
         ),
       ),
@@ -2783,7 +2859,12 @@ class _ActivityPostsState extends ActivityStateBase<ActivityPosts>
               ),
             ),
           ),
-          TextSpan(text: counter, style: TextStyle(color: Colors.grey)),
+          TextSpan(
+            text: counter,
+            style: TextStyle(
+              color: Colors.grey,
+            ),
+          ),
         ],
       ),
     );
@@ -2910,7 +2991,9 @@ class _ActivityPostsState extends ActivityStateBase<ActivityPosts>
     lng = position.longitude;
     if (isUserLoggedIn) {
       await core.updateLocation(
-          position.latitude.toString(), position.longitude.toString());
+        position.latitude.toString(),
+        position.longitude.toString(),
+      );
     }
   }
 
@@ -2935,9 +3018,11 @@ class _ActivityPostsState extends ActivityStateBase<ActivityPosts>
               print(post);
               if (null != post.postId) {
                 Future.delayed(Duration(seconds: 2), () {
-                  core.getIt<NavigationService>().navigateTo(ActivitySinglePost(
-                        id: post.postId,
-                      ));
+                  core.getIt<NavigationService>().navigateTo(
+                        ActivitySinglePost(
+                          id: post.postId,
+                        ),
+                      );
                 });
               }
             }
@@ -2950,9 +3035,11 @@ class _ActivityPostsState extends ActivityStateBase<ActivityPosts>
               print(comment.post.postId);
               if (null != comment.post.postId) {
                 Future.delayed(Duration(seconds: 2), () {
-                  core.getIt<NavigationService>().navigateTo(ActivitySinglePost(
-                        id: comment.post.postId,
-                      ));
+                  core.getIt<NavigationService>().navigateTo(
+                        ActivitySinglePost(
+                          id: comment.post.postId,
+                        ),
+                      );
                 });
               }
             }
@@ -2966,7 +3053,10 @@ class _ActivityPostsState extends ActivityStateBase<ActivityPosts>
               if (null != booking.id) {
                 Future.delayed(Duration(seconds: 2), () {
                   core.getIt<NavigationService>().navigateTo(
-                      ActivityVideoCallOperationsScreen(booking.id));
+                        ActivityVideoCallOperationsScreen(
+                          booking.id,
+                        ),
+                      );
                 });
               }
             }
@@ -2979,10 +3069,12 @@ class _ActivityPostsState extends ActivityStateBase<ActivityPosts>
               print(user.userId);
               if (null != user.userId) {
                 Future.delayed(Duration(seconds: 2), () {
-                  core.getIt<NavigationService>().navigateTo(ActivityUserChat(
-                        myUserId: core.getCurrentUser().userId,
-                        otherPersonUserId: user.userId,
-                      ));
+                  core.getIt<NavigationService>().navigateTo(
+                        ActivityUserChat(
+                          myUserId: core.getCurrentUser().userId,
+                          otherPersonUserId: user.userId,
+                        ),
+                      );
                 });
               }
             }
@@ -2995,9 +3087,11 @@ class _ActivityPostsState extends ActivityStateBase<ActivityPosts>
               print(user.userId);
               if (null != user.userId) {
                 Future.delayed(Duration(seconds: 2), () {
-                  core.getIt<NavigationService>().navigateTo(ActivityProfile(
-                        userId: user.userId,
-                      ));
+                  core.getIt<NavigationService>().navigateTo(
+                        ActivityProfile(
+                          userId: user.userId,
+                        ),
+                      );
                 });
               }
             }
@@ -3011,9 +3105,11 @@ class _ActivityPostsState extends ActivityStateBase<ActivityPosts>
               print(post);
               if (null != post.postId) {
                 Future.delayed(Duration(seconds: 2), () {
-                  core.getIt<NavigationService>().navigateTo(ActivitySinglePost(
-                        id: post.postId,
-                      ));
+                  core.getIt<NavigationService>().navigateTo(
+                        ActivitySinglePost(
+                          id: post.postId,
+                        ),
+                      );
                 });
               }
             }
@@ -3027,9 +3123,11 @@ class _ActivityPostsState extends ActivityStateBase<ActivityPosts>
               print(comment.post.postId);
               if (null != comment.post.postId) {
                 Future.delayed(Duration(seconds: 2), () {
-                  core.getIt<NavigationService>().navigateTo(ActivitySinglePost(
-                        id: comment.post.postId,
-                      ));
+                  core.getIt<NavigationService>().navigateTo(
+                        ActivitySinglePost(
+                          id: comment.post.postId,
+                        ),
+                      );
                 });
               }
             }
@@ -3044,7 +3142,8 @@ class _ActivityPostsState extends ActivityStateBase<ActivityPosts>
               if (null != booking.id) {
                 Future.delayed(Duration(seconds: 2), () {
                   core.getIt<NavigationService>().navigateTo(
-                      ActivityVideoCallOperationsScreen(booking.id));
+                        ActivityVideoCallOperationsScreen(booking.id),
+                      );
                 });
               }
             }
@@ -3058,10 +3157,12 @@ class _ActivityPostsState extends ActivityStateBase<ActivityPosts>
               print(user.userId);
               if (null != user.userId) {
                 Future.delayed(Duration(seconds: 2), () {
-                  core.getIt<NavigationService>().navigateTo(ActivityUserChat(
-                        myUserId: core.getCurrentUser().userId,
-                        otherPersonUserId: user.userId,
-                      ));
+                  core.getIt<NavigationService>().navigateTo(
+                        ActivityUserChat(
+                          myUserId: core.getCurrentUser().userId,
+                          otherPersonUserId: user.userId,
+                        ),
+                      );
                 });
               }
             }
@@ -3075,9 +3176,11 @@ class _ActivityPostsState extends ActivityStateBase<ActivityPosts>
               print(user.userId);
               if (null != user.userId) {
                 Future.delayed(Duration(seconds: 2), () {
-                  core.getIt<NavigationService>().navigateTo(ActivityProfile(
-                        userId: user.userId,
-                      ));
+                  core.getIt<NavigationService>().navigateTo(
+                        ActivityProfile(
+                          userId: user.userId,
+                        ),
+                      );
                 });
               }
             }
@@ -3100,32 +3203,40 @@ class _ActivityPostsState extends ActivityStateBase<ActivityPosts>
     var data = await FirebaseDynamicLinks.instance.getInitialLink();
     print("data" + data.toString());
     var deepLink = data?.link;
-    print("deeplink" + deepLink.toString());
+    print(
+      "deeplink" + deepLink.toString(),
+    );
     if (null != deepLink) {
       final queryParams = deepLink.queryParameters;
       if (queryParams.length > 0) {
         linkUserId = queryParams['userId'];
         linkPostId = queryParams['postId'];
       }
-      print("user" + linkUserId.toString());
-      print("post" + linkPostId.toString());
+      print(
+        "user" + linkUserId.toString(),
+      );
+      print(
+        "post" + linkPostId.toString(),
+      );
       if (isUserLoggedIn) {
         if (null != linkUserId) {
           Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => ActivityProfile(
-                      userId: linkUserId,
-                    )),
+              builder: (context) => ActivityProfile(
+                userId: linkUserId,
+              ),
+            ),
           );
         }
         if (null != linkPostId) {
           Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => ActivitySinglePost(
-                      id: linkPostId,
-                    )),
+              builder: (context) => ActivitySinglePost(
+                id: linkPostId,
+              ),
+            ),
           );
         }
       }
@@ -3139,25 +3250,31 @@ class _ActivityPostsState extends ActivityStateBase<ActivityPosts>
           linkUserId = queryParams['userId'];
           linkPostId = queryParams['postId'];
         }
-        print("user" + linkUserId.toString());
-        print("post" + linkPostId.toString());
+        print(
+          "user" + linkUserId.toString(),
+        );
+        print(
+          "post" + linkPostId.toString(),
+        );
         if (isUserLoggedIn) {
           if (null != linkUserId) {
             Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => ActivityProfile(
-                        userId: linkUserId,
-                      )),
+                builder: (context) => ActivityProfile(
+                  userId: linkUserId,
+                ),
+              ),
             );
           }
           if (null != linkPostId) {
             Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => ActivitySinglePost(
-                        id: linkPostId,
-                      )),
+                builder: (context) => ActivitySinglePost(
+                  id: linkPostId,
+                ),
+              ),
             );
           }
         }
@@ -3170,6 +3287,7 @@ class _ActivityPostsState extends ActivityStateBase<ActivityPosts>
 
 class AlMajlisRoundIconButton extends StatelessWidget {
   var icon;
+
   AlMajlisRoundIconButton(
     this.icon, {
     Key key,

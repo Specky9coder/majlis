@@ -12,17 +12,17 @@ import 'package:almajlis/core/wrappers/AlMajlisPost.dart';
 import 'package:almajlis/core/wrappers/User.dart';
 import 'package:almajlis/utils/Constants.dart';
 import 'package:almajlis/views/bottomsheets/BottomSheetOperations.dart';
-import 'package:almajlis/views/bottomsheets/PostMenuBottomSheet.dart';
+
 import 'package:almajlis/views/bottomsheets/PostShareBottomSheet.dart';
 import 'package:almajlis/views/bottomsheets/ReportPostBottomSheet.dart';
 import 'package:almajlis/views/components/AlMajlisBackButton.dart';
-import 'package:almajlis/views/components/AlMajlisBackground.dart';
+
 import 'package:almajlis/views/components/AlMajlisImageIcons.dart';
 import 'package:almajlis/views/components/AlmajlisProfileImageWithStatus.dart';
 import 'package:almajlis/views/dialogs/DialogReport.dart';
 import 'package:almajlis/views/widgets/AlMajlisTextViewBold.dart';
 import 'package:almajlis/views/widgets/AlMajlisTextViewMedium.dart';
-import 'package:almajlis/views/widgets/AlMajlisTextViewRegular.dart';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:clipboard_manager/clipboard_manager.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -39,6 +39,7 @@ import 'ActivityPhotoZoom.dart';
 
 class ActivityViewTotalPost extends StatefulWidget {
   String userId;
+
   ActivityViewTotalPost(this.userId, {Key key}) : super(key: key);
 
   @override

@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:almajlis/activities/ActivityBase.dart';
-import 'package:almajlis/activities/ActivityLogin.dart';
+
 import 'package:almajlis/activities/ActivityPhotoZoom.dart';
 import 'package:almajlis/activities/ActivityProfile.dart';
 import 'package:almajlis/activities/ActivityReplyToPost.dart';
@@ -13,13 +13,12 @@ import 'package:almajlis/core/server/wrappers/ResponseUsers.dart';
 import 'package:almajlis/core/wrappers/AlMajlisPost.dart';
 import 'package:almajlis/core/wrappers/User.dart';
 import 'package:almajlis/utils/Constants.dart';
-import 'package:almajlis/views/bottomsheets/BottomSheetOperations.dart';
-import 'package:almajlis/views/bottomsheets/ReportPostBottomSheet.dart';
+
 import 'package:almajlis/views/components/AlMajlisImageIcons.dart';
 import 'package:almajlis/views/components/AlmajlisProfileImageWithStatus.dart';
 import 'package:almajlis/views/widgets/AlMajlisTextViewBold.dart';
 import 'package:almajlis/views/widgets/AlMajlisTextViewMedium.dart';
-import 'package:almajlis/views/widgets/AlMajlisTextViewRegular.dart';
+
 import 'package:almajlis/views/widgets/AlMajlisTextViewWithVerified.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -30,6 +29,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 class ActivitySearch extends StatefulWidget {
   bool isFromActivityPost;
+
   ActivitySearch({Key key, this.isFromActivityPost = false}) : super(key: key);
 
   @override
@@ -121,10 +121,11 @@ class _ActivitySearchState extends ActivityStateBase<ActivitySearch> {
                       child: ListView.builder(
                           itemCount: serachPosts.length,
                           itemBuilder: (BuildContext contex, int index) {
-                            if(index == serachUsers.length -2) {
-                              if(fetchMore) {
+                            if (index == serachUsers.length - 2) {
+                              if (fetchMore) {
                                 Future.delayed(Duration(seconds: 1), () {
-                                  searchPost(searchController.text, offset:serachUsers.length);
+                                  searchPost(searchController.text,
+                                      offset: serachUsers.length);
                                 });
                               }
                             }
@@ -163,10 +164,11 @@ class _ActivitySearchState extends ActivityStateBase<ActivitySearch> {
                               name += serachUsers.elementAt(index).lastName;
                             }
 
-                            if(index == serachUsers.length -2) {
-                              if(fetchMore) {
+                            if (index == serachUsers.length - 2) {
+                              if (fetchMore) {
                                 Future.delayed(Duration(seconds: 1), () {
-                                  searchUser(searchController.text, offset:serachUsers.length);
+                                  searchUser(searchController.text,
+                                      offset: serachUsers.length);
                                 });
                               }
                             }
@@ -373,10 +375,10 @@ class _ActivitySearchState extends ActivityStateBase<ActivitySearch> {
     var image = post.file;
     if (null == post.isLiked) post.isLiked = false;
     String name = "";
-    if(null != post.postUser.firstName) {
+    if (null != post.postUser.firstName) {
       name = post.postUser.firstName + " ";
     }
-    if(null != post.postUser.lastName) {
+    if (null != post.postUser.lastName) {
       name += post.postUser.lastName;
     }
     return InkWell(
@@ -872,7 +874,7 @@ class _ActivitySearchState extends ActivityStateBase<ActivitySearch> {
         }));
   }
 
-  void searchPost(String searchString,{int offset = 0}) async {
+  void searchPost(String searchString, {int offset = 0}) async {
     core.startLoading(_context);
     ResponseSearchPost response;
     try {
@@ -916,7 +918,7 @@ class _ActivitySearchState extends ActivityStateBase<ActivitySearch> {
           tempPost.add(response.payload.elementAt(index));
           // }
         }
-        if(response.payload.length == 0) {
+        if (response.payload.length == 0) {
           fetchMore = false;
         }
         setState(() {
@@ -964,7 +966,7 @@ class _ActivitySearchState extends ActivityStateBase<ActivitySearch> {
     if (!core.systemCanHandel(response)) {
       if (response.status.statusCode == 0) {
         FocusScope.of(context).requestFocus(FocusNode());
-        if(response.payload.length == 0) {
+        if (response.payload.length == 0) {
           fetchMore = false;
         }
         setState(() {

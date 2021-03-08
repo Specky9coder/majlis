@@ -33,17 +33,22 @@ class _ActivityGoProState extends ActivityStateBase<ActivityGoPro> {
   @override
   void initState() {
     super.initState();
-    radioBtnData.add(new RadioModel(false, 'To job search with confidence'));
-    radioBtnData
-        .add(new RadioModel(false, 'To grow my connections and \n business'));
-    radioBtnData.add(new RadioModel(
-        false, 'To find contacts and talents \n more effectively'));
+    radioBtnData.add(
+      new RadioModel(false, 'To job search with confidence'),
+    );
+    radioBtnData.add(
+      new RadioModel(false, 'To grow my connections and \n business'),
+    );
+    radioBtnData.add(
+      new RadioModel(false, 'To find contacts and talents \n more effectively'),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     _context = context;
-    return AlMajlisBackground(Padding(
+    return AlMajlisBackground(
+      Padding(
         padding: EdgeInsets.all(16.0),
         child: SingleChildScrollView(
           child: Column(
@@ -80,9 +85,11 @@ class _ActivityGoProState extends ActivityStateBase<ActivityGoPro> {
                             padding: const EdgeInsets.all(4.0),
                             child: Container(
                               decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  gradient: LinearGradient(
-                                      colors: [Colors.purple, Colors.teal])),
+                                shape: BoxShape.circle,
+                                gradient: LinearGradient(
+                                  colors: [Colors.purple, Colors.teal],
+                                ),
+                              ),
                             ),
                           ),
                         ),
@@ -91,11 +98,11 @@ class _ActivityGoProState extends ActivityStateBase<ActivityGoPro> {
               Padding(
                 padding: const EdgeInsets.only(top: 15.0, bottom: 15.0),
                 child: RichText(
-                    text: TextSpan(
-                  text: 'Hey ',
-                  style: TextStyle(fontSize: 16, color: Colors.grey),
-                  children: <TextSpan>[
-                    TextSpan(
+                  text: TextSpan(
+                    text: 'Hey ',
+                    style: TextStyle(fontSize: 16, color: Colors.grey),
+                    children: <TextSpan>[
+                      TextSpan(
                         text: widget.user.firstName +
                             " " +
                             widget.user.lastName +
@@ -103,12 +110,15 @@ class _ActivityGoProState extends ActivityStateBase<ActivityGoPro> {
                         style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
-                            color: Colors.white)),
-                    TextSpan(
+                            color: Colors.white),
+                      ),
+                      TextSpan(
                         text: ' How would you like AlMajlis Pro to help you?',
-                        style: TextStyle(color: Colors.grey)),
-                  ],
-                )),
+                        style: TextStyle(color: Colors.grey),
+                      ),
+                    ],
+                  ),
+                ),
               ),
               ListView.builder(
                   padding: EdgeInsets.symmetric(vertical: 0.0),
@@ -158,28 +168,31 @@ class _ActivityGoProState extends ActivityStateBase<ActivityGoPro> {
                                 padding: EdgeInsets.symmetric(horizontal: 4.0),
                                 child:
                                     AlMajlisImageIcons("drawables/go_pro.png"),
-                              )
+                              ),
                             ],
                           ),
                         ),
                         RichText(
-                            text: TextSpan(
-                          children: <TextSpan>[
-                            TextSpan(
+                          text: TextSpan(
+                            children: <TextSpan>[
+                              TextSpan(
                                 text: proCharges.toString() + ' BD',
                                 style: TextStyle(
                                   fontSize: 14,
                                   fontWeight: FontWeight.bold,
                                   color: Constants.COLOR_PRIMARY_TEAL,
-                                )),
-                            TextSpan(
+                                ),
+                              ),
+                              TextSpan(
                                 text: '/ 3 MONTHS',
                                 style: TextStyle(
                                   fontSize: 14,
                                   fontWeight: FontWeight.bold,
-                                )),
-                          ],
-                        )),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                       ],
                     ),
                     AlMajlisProFeatureCardRow("Highlighted posts"),
@@ -210,11 +223,11 @@ class _ActivityGoProState extends ActivityStateBase<ActivityGoPro> {
                             var data = await Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) =>
-                                      ActivityCreditCardPayment(
-                                        proCharges,
-                                        isBooking: false,
-                                      )),
+                                builder: (context) => ActivityCreditCardPayment(
+                                  proCharges,
+                                  isBooking: false,
+                                ),
+                              ),
                             );
 //                            print(data != null && data
 //                                ? "4. SUCESSFULL bought subscription"
@@ -228,12 +241,14 @@ class _ActivityGoProState extends ActivityStateBase<ActivityGoPro> {
                     child: AlMajlisTextViewRegular(
                       "This is an ongoing paid plan. By proceeding, you agree \n     to be charged monthly. You can cancel anytime.",
                     ),
-                  )
+                  ),
                 ],
               )
             ],
           ),
-        )));
+        ),
+      ),
+    );
   }
 
   void getUtils() async {
@@ -292,6 +307,7 @@ class _ActivityGoProState extends ActivityStateBase<ActivityGoPro> {
 
 class AlMajlisProFeatureCardRow extends StatelessWidget {
   final String title;
+
   AlMajlisProFeatureCardRow(
     this.title, {
     Key key,

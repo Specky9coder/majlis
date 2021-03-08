@@ -24,6 +24,7 @@ import 'ActivityBase.dart';
 
 class ActivityAddNewPost extends StatefulWidget {
   var image;
+
   ActivityAddNewPost({Key key, this.image}) : super(key: key);
 
   @override
@@ -99,36 +100,36 @@ class _ActivityAddNewPostState extends ActivityStateBase<ActivityAddNewPost> {
   Widget build(BuildContext context) {
     _context = context;
     return SafeArea(
-        child: Scaffold(
-            key: scaffoldState,
-            body: Container(
-              height: double.infinity,
-              width: double.infinity,
-              color: Colors.black,
-              child: Padding(
-                padding: EdgeInsets.only(top: 20.0, bottom: 20.0, right: 15.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Container(
-                      margin: EdgeInsets.only(bottom: 10.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          MaterialButton(
-                            onPressed: () {
-                              if (isMenuOpen) closeMenu();
-                              Navigator.pop(context);
-                            },
-                            child: AlMajlisTextViewBold(
-                              "CANCEL",
-                              size: 16,
-                            ),
-                          ),
-                          Spacer(
-                            flex: 2,
-                          ),
-                          /*
+      child: Scaffold(
+        key: scaffoldState,
+        body: Container(
+          height: double.infinity,
+          width: double.infinity,
+          color: Colors.black,
+          child: Padding(
+            padding: EdgeInsets.only(top: 20.0, bottom: 20.0, right: 15.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Container(
+                  margin: EdgeInsets.only(bottom: 10.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      MaterialButton(
+                        onPressed: () {
+                          if (isMenuOpen) closeMenu();
+                          Navigator.pop(context);
+                        },
+                        child: AlMajlisTextViewBold(
+                          "CANCEL",
+                          size: 16,
+                        ),
+                      ),
+                      Spacer(
+                        flex: 2,
+                      ),
+                      /*
                           Container(
                             color: Colors.black,
                             child: Center(
@@ -183,178 +184,190 @@ class _ActivityAddNewPostState extends ActivityStateBase<ActivityAddNewPost> {
                             ),
                           ),
                           */
-                          GestureDetector(
-                            onTap: () {
-                              print("in post");
-                              if (null != image) {
-                                getSignedUrls();
-                              } else if (null != statusComments.text &&
-                                  !statusComments.text.isEmpty) {
-                                addPost("");
-                              } else {
-                                Fluttertoast.showToast(
-                                    msg: "Image and text both cannot be empty",
-                                    toastLength: Toast.LENGTH_SHORT,
-                                    gravity: ToastGravity.CENTER,
-                                    timeInSecForIosWeb: 2);
-                              }
-                            },
-                            child: Container(
-                              height: 40.0,
-                              width: 80.0,
-                              decoration: BoxDecoration(
-                                  color: Constants.COLOR_DARK_TEAL,
-                                  borderRadius: BorderRadius.circular(12.0)),
-                              child: InkWell(
-                                child: Center(
-                                    child: AlMajlisTextViewBold(
-                                  "POST",
-                                  size: 16,
-                                )),
+                      GestureDetector(
+                        onTap: () {
+                          print("in post");
+                          if (null != image) {
+                            getSignedUrls();
+                          } else if (null != statusComments.text &&
+                              !statusComments.text.isEmpty) {
+                            addPost("");
+                          } else {
+                            Fluttertoast.showToast(
+                                msg: "Image and text both cannot be empty",
+                                toastLength: Toast.LENGTH_SHORT,
+                                gravity: ToastGravity.CENTER,
+                                timeInSecForIosWeb: 2);
+                          }
+                        },
+                        child: Container(
+                          height: 40.0,
+                          width: 80.0,
+                          decoration: BoxDecoration(
+                              color: Constants.COLOR_DARK_TEAL,
+                              borderRadius: BorderRadius.circular(12.0)),
+                          child: InkWell(
+                            child: Center(
+                              child: AlMajlisTextViewBold(
+                                "POST",
+                                size: 16,
                               ),
                             ),
-                          )
-                        ],
+                          ),
+                        ),
                       ),
-                    ),
-                    Expanded(
-                      child: SingleChildScrollView(
-                        child: Column(
+                    ],
+                  ),
+                ),
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: <Widget>[
+                        Row(
                           children: <Widget>[
-                            Row(
-                              children: <Widget>[
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 12.0),
-                                  child: null != imageUrl && !imageUrl.isEmpty
-                                      ? AlMajlisProfileImageWithStatus(
-                                    imageUrl,
-                                    70.0,
-                                    isPro: isPro,
-                                  )
-                                      : Container(
-                                    height: 70,
-                                    width: 70,
-                                    decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: isPro
-                                            ? Constants.COLOR_PRIMARY_TEAL
-                                            : Colors.white),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(2.0),
-                                      child: Container(
-                                        decoration: BoxDecoration(
+                            Padding(
+                              padding: const EdgeInsets.only(left: 12.0),
+                              child: null != imageUrl && !imageUrl.isEmpty
+                                  ? AlMajlisProfileImageWithStatus(
+                                      imageUrl,
+                                      70.0,
+                                      isPro: isPro,
+                                    )
+                                  : Container(
+                                      height: 70,
+                                      width: 70,
+                                      decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: isPro
+                                              ? Constants.COLOR_PRIMARY_TEAL
+                                              : Colors.white),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(2.0),
+                                        child: Container(
+                                          decoration: BoxDecoration(
                                             shape: BoxShape.circle,
-                                            gradient: LinearGradient(colors: [
-                                              Colors.purple,
-                                              Colors.teal
-                                            ])),
+                                            gradient: LinearGradient(
+                                              colors: [
+                                                Colors.purple,
+                                                Colors.teal
+                                              ],
+                                            ),
+                                          ),
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                ),
-                                Expanded(
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 12.0, top: 8.0, bottom: 8.0, right: 8.0),
-                                    child: TextField(
-                                      controller: statusComments,
-                                      autofocus: true,
-                                      style: TextStyle(color: Colors.white),
-                                      maxLines: 5,
-                                      decoration: new InputDecoration(
-                                          border: OutlineInputBorder(
-                                            borderSide: BorderSide.none,
-                                          ),
-                                          hintText:
+                            ),
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 12.0,
+                                    top: 8.0,
+                                    bottom: 8.0,
+                                    right: 8.0),
+                                child: TextField(
+                                  controller: statusComments,
+                                  autofocus: true,
+                                  style: TextStyle(color: Colors.white),
+                                  maxLines: 5,
+                                  decoration: new InputDecoration(
+                                      border: OutlineInputBorder(
+                                        borderSide: BorderSide.none,
+                                      ),
+                                      hintText:
                                           " Who are you looking for ? \n ( post will auto expire from the feed within 14 days )"),
-                                    ),
-                                  ),
-                                )
-                              ],
+                                ),
+                              ),
                             ),
                           ],
                         ),
-                      ),
+                      ],
                     ),
-                    Visibility(
-                      visible: _pickedImage != null ? true : false,
-                      child: Row(
-                        children: <Widget>[
-                          Stack(
-                            children: <Widget>[
-                              Container(
-                                margin: EdgeInsets.only(
-                                    left: 15.0, right: 10.0, top: 8.0),
-                                padding: EdgeInsets.only(
-                                    top: 2.0,
-                                    bottom: 2.0,
-                                    left: 2.0,
-                                    right: 2.0),
-                                height: 100.0,
-                                width: 150.0,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(8.0),
-                                    border: Border.all(color: Colors.white)),
-                                child: _pickedImage != null
-                                    ? Image.file(
-                                        _pickedImage,
-                                        fit: BoxFit.fill,
-                                      )
-                                    : Container(),
-                              ),
-                              Positioned(
-                                  right: 6.0,
-                                  top: 4.0,
-                                  child: GestureDetector(
-                                      onTap: () {
-                                        print("clicked");
-                                        setState(() {
-                                          _pickedImage = null;
-                                          isCameraClicked = false;
-                                        });
-                                      },
-                                      child: AlMajlisImageIcons(
-                                        "drawables/delete-01.png",
-                                        iconHeight: 16,
-                                      )))
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: <Widget>[
-                          InkWell(
-                            onTap: () {
-                              scaffoldState.currentState.showBottomSheet(
-                                  (context) => PostMenuBottomSheet(
-                                      getImageFromCamera, getImageFromGallary));
-                              setState(() {
-                                isCameraClicked = true;
-                              });
-                            },
-                            child: buttonAddImageAddLocation(
-                                "add_image-01", "Add image ", isCameraClicked),
-                          ),
-                          InkWell(
-                            onTap: getLocation,
-                            child: buttonAddLocation(
-                                "Add_location",
-                                null == displayText
-                                    ? "Add Location"
-                                    : displayText,
-                                isLocationPickerClicked),
-                          )
-                        ],
-                      ),
-                    )
-                    //))),
-                  ],
+                  ),
                 ),
-              ),
-            )));
+                Visibility(
+                  visible: _pickedImage != null ? true : false,
+                  child: Row(
+                    children: <Widget>[
+                      Stack(
+                        children: <Widget>[
+                          Container(
+                            margin: EdgeInsets.only(
+                                left: 15.0, right: 10.0, top: 8.0),
+                            padding: EdgeInsets.only(
+                                top: 2.0, bottom: 2.0, left: 2.0, right: 2.0),
+                            height: 100.0,
+                            width: 150.0,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8.0),
+                              border: Border.all(color: Colors.white),
+                            ),
+                            child: _pickedImage != null
+                                ? Image.file(
+                                    _pickedImage,
+                                    fit: BoxFit.fill,
+                                  )
+                                : Container(),
+                          ),
+                          Positioned(
+                            right: 6.0,
+                            top: 4.0,
+                            child: GestureDetector(
+                              onTap: () {
+                                print("clicked");
+                                setState(
+                                  () {
+                                    _pickedImage = null;
+                                    isCameraClicked = false;
+                                  },
+                                );
+                              },
+                              child: AlMajlisImageIcons(
+                                "drawables/delete-01.png",
+                                iconHeight: 16,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      InkWell(
+                        onTap: () {
+                          scaffoldState.currentState.showBottomSheet(
+                            (context) => PostMenuBottomSheet(
+                                getImageFromCamera, getImageFromGallary),
+                          );
+                          setState(
+                            () {
+                              isCameraClicked = true;
+                            },
+                          );
+                        },
+                        child: buttonAddImageAddLocation(
+                            "add_image-01", "Add image ", isCameraClicked),
+                      ),
+                      InkWell(
+                        onTap: getLocation,
+                        child: buttonAddLocation(
+                            "Add_location",
+                            null == displayText ? "Add Location" : displayText,
+                            isLocationPickerClicked),
+                      ),
+                    ],
+                  ),
+                ),
+                //))),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
   }
 
   findButton() {
@@ -403,33 +416,37 @@ class _ActivityAddNewPostState extends ActivityStateBase<ActivityAddNewPost> {
                       dropdownOptions.length,
                       (index) {
                         return GestureDetector(
-                            onTap: () {
-                              onDaysChanged(index);
-                              String s = dropdownOptions[index];
-                              String result = s.substring(0, s.indexOf('a'));
-                              dropDownString = result;
-                              closeMenu();
-                            },
-                            child: Container(
-                              margin: EdgeInsets.only(top: 5.0),
-                              child: Column(
-                                children: <Widget>[
-                                  Padding(
-                                    padding: const EdgeInsets.all(10.0),
-                                    child: Text(
-                                      dropdownOptions[index],
-                                      style: TextStyle(color: Colors.white),
-                                    ),
+                          onTap: () {
+                            onDaysChanged(index);
+                            String s = dropdownOptions[index];
+                            String result = s.substring(
+                              0,
+                              s.indexOf('a'),
+                            );
+                            dropDownString = result;
+                            closeMenu();
+                          },
+                          child: Container(
+                            margin: EdgeInsets.only(top: 5.0),
+                            child: Column(
+                              children: <Widget>[
+                                Padding(
+                                  padding: const EdgeInsets.all(10.0),
+                                  child: Text(
+                                    dropdownOptions[index],
+                                    style: TextStyle(color: Colors.white),
                                   ),
-                                  (index == dropdownOptions.length - 1)
-                                      ? Container()
-                                      : Divider(
-                                          height: 2,
-                                          color: Colors.white,
-                                        )
-                                ],
-                              ),
-                            ));
+                                ),
+                                (index == dropdownOptions.length - 1)
+                                    ? Container()
+                                    : Divider(
+                                        height: 2,
+                                        color: Colors.white,
+                                      ),
+                              ],
+                            ),
+                          ),
+                        );
                       },
                     ),
                   ),
@@ -456,11 +473,12 @@ class _ActivityAddNewPostState extends ActivityStateBase<ActivityAddNewPost> {
           height: 50.0,
           width: 150.0,
           decoration: BoxDecoration(
-              color: Constants.COLOR_DARK_GREY,
-              borderRadius: BorderRadius.circular(10.0),
-              border: displayText == null
-                  ? Border.all(color: Colors.black)
-                  : Border.all(color: Colors.white)),
+            color: Constants.COLOR_DARK_GREY,
+            borderRadius: BorderRadius.circular(10.0),
+            border: displayText == null
+                ? Border.all(color: Colors.black)
+                : Border.all(color: Colors.white),
+          ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
@@ -473,27 +491,29 @@ class _ActivityAddNewPostState extends ActivityStateBase<ActivityAddNewPost> {
                 title,
                 size: 14.0,
                 color: Colors.white,
-              )
+              ),
             ],
           ),
         ),
         Visibility(
           visible: displayText == null ? false : true,
           child: Positioned(
-              right: 0.0,
-              top: 6.0,
-              child: GestureDetector(
-                  onTap: () {
-                    print("clicked");
-                    setState(() {
-                      displayText = null;
-                    });
-                  },
-                  child: AlMajlisImageIcons(
-                    "drawables/delete-01.png",
-                    iconHeight: 16,
-                  ))),
-        )
+            right: 0.0,
+            top: 6.0,
+            child: GestureDetector(
+              onTap: () {
+                print("clicked");
+                setState(() {
+                  displayText = null;
+                });
+              },
+              child: AlMajlisImageIcons(
+                "drawables/delete-01.png",
+                iconHeight: 16,
+              ),
+            ),
+          ),
+        ),
       ],
     );
   }
@@ -522,7 +542,7 @@ class _ActivityAddNewPostState extends ActivityStateBase<ActivityAddNewPost> {
             title,
             size: 14.0,
             color: isClickOccure ? Constants.COLOR_PRIMARY_TEAL : Colors.white,
-          )
+          ),
         ],
       ),
     );
@@ -661,7 +681,10 @@ class _ActivityAddNewPostState extends ActivityStateBase<ActivityAddNewPost> {
     print("Setting token ${core.getToken()}");
     try {
       print("before await");
-      response = await http.put(url, body: image.readAsBytesSync());
+      response = await http.put(
+        url,
+        body: image.readAsBytesSync(),
+      );
       core.stopLoading(_context);
       if (response.statusCode == 200) {
         var urlArray = url.split("?");
