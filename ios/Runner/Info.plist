@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>APS Environment</key>
+	<string>production</string>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>$(DEVELOPMENT_LANGUAGE)</string>
+	<key>CFBundleExecutable</key>
+	<string>$(EXECUTABLE_NAME)</string>
+	<key>CFBundleIdentifier</key>
+	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>Majlis</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>$(MARKETING_VERSION)</string>
+	<key>CFBundleSignature</key>
+	<string>????</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.googleusercontent.apps.152963601389-68b34kgjtgf72sl438pnaoakun8etlv4</string>
+			</array>
+		</dict>
+	</array>
+	<key>CFBundleVersion</key>
+	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<key>LSRequiresIPhoneOS</key>
+	<true/>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>Please allow access to choose media for uploading in posts.</string>
+	<key>NSCalendarsUsageDescription</key>
+	<string>Please enable to get the best experince.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Please allow access to take photos using camera for uploading in posts and profile picutre.</string>
+	<key>NSContactsUsageDescription</key>
+	<string>Please allow access to find nearby users from your contact list.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Location service is to enable users to know which other almajlis users are nearby</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Location service is to enable users to know which other almajlis users are nearby</string>
+	<key>NSLocationUsageDescription</key>
+	<string>Location service is to enable users to know which other almajlis users are nearby</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Location service is to enable users to know which other almajlis users are nearby</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Please enable microphone to use video call feature.</string>
+	<key>NSMotionUsageDescription</key>
+	<string>Please enable to get the best experince.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Please allow access to take photos using library for uploading in posts and profile picutre.</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>Please enable to use video call feature.</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>audio</string>
+	</array>
+	<key>UILaunchStoryboardName</key>
+	<string>LaunchScreen</string>
+	<key>UIMainStoryboardFile</key>
+	<string>Main</string>
+	<key>UISupportedInterfaceOrientations</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+	</array>
+	<key>UISupportedInterfaceOrientations~ipad</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationPortraitUpsideDown</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
+	<key>UIViewControllerBasedStatusBarAppearance</key>
+	<false/>
+	<key>io.flutter.embedded_views_preview</key>
+	<true/>
+	<key>kTCCServiceMediaLibrary</key>
+	<string>Please enable to get the best experince.</string>
+</dict>
+</plist>

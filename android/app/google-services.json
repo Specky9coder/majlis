@@ -1,0 +1,41 @@
+{
+  "project_info": {
+    "project_number": "152963601389",
+    "firebase_url": "https://almajlisprod.firebaseio.com",
+    "project_id": "almajlisprod",
+    "storage_bucket": "almajlisprod.appspot.com"
+  },
+  "client": [{
+    "client_info": {
+      "mobilesdk_app_id": "1:152963601389:android:54ee1c93742703cbc4cde4",
+      "android_client_info": {
+        "package_name": "com.almajlis.almajlis"
+      }
+    },
+    "oauth_client": [{
+        "client_id": "152963601389-uu775dn6bj3m3k5his00fadtr8msopsn.apps.googleusercontent.com",
+        "client_type": 1,
+        "android_info": {
+          "package_name": "com.almajlis.almajlis",
+          "certificate_hash": "8dadb5c303f578ac5e544f1d8e1c4b9c784c9f1f"
+        }
+      },
+      {
+        "client_id": "152963601389-k5qm8aabqambun250nfefid6067slkde.apps.googleusercontent.com",
+        "client_type": 3
+      }
+    ],
+    "api_key": [{
+      "current_key": "AIzaSyAPG97b7qMoXQ7-74LV3TKAvVFlXKRJnh0"
+    }],
+    "services": {
+      "appinvite_service": {
+        "other_platform_oauth_client": [{
+          "client_id": "152963601389-k5qm8aabqambun250nfefid6067slkde.apps.googleusercontent.com",
+          "client_type": 3
+        }]
+      }
+    }
+  }],
+  "configuration_version": "1"
+}
