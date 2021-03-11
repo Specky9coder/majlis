@@ -56,7 +56,7 @@ class _ActivityNotificatonState extends ActivityStateBase<ActivityNotificaton> {
   List<Booking> meetings = List();
   int actualLength = 0;
   int notificationLength = 0;
-  List<User> serachUsers = List();
+  List<User> searchUsers = List();
   Timer searchOnStoppedTyping;
   bool isVideoCallDone = false;
   bool fetchMore = true;
@@ -106,7 +106,8 @@ class _ActivityNotificatonState extends ActivityStateBase<ActivityNotificaton> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => ActivitySearch()),
+                                    builder: (context) => ActivitySearch(),
+                                  ),
                                 );
                               });
                             },
@@ -120,7 +121,11 @@ class _ActivityNotificatonState extends ActivityStateBase<ActivityNotificaton> {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(
-                          left: 20, right: 16, top: 16, bottom: 12),
+                        left: 20,
+                        right: 16,
+                        top: 16,
+                        bottom: 12,
+                      ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
@@ -152,7 +157,10 @@ class _ActivityNotificatonState extends ActivityStateBase<ActivityNotificaton> {
                                   if (meetings.length > 0 && index == 0) {
                                     return Padding(
                                       padding: const EdgeInsets.only(
-                                          left: 20.0, right: 20.0, bottom: 12),
+                                        left: 20.0,
+                                        right: 20.0,
+                                        bottom: 12,
+                                      ),
                                       child: Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
@@ -166,12 +174,12 @@ class _ActivityNotificatonState extends ActivityStateBase<ActivityNotificaton> {
                                                 TextSpan(
                                                   text: 'My Meetings',
                                                   style: TextStyle(
-                                                      fontSize: 28,
-                                                      color: Colors.white,
-                                                      fontFamily:
-                                                          "ProximaNovaBold",
-                                                      fontWeight:
-                                                          FontWeight.bold),
+                                                    fontSize: 28,
+                                                    color: Colors.white,
+                                                    fontFamily:
+                                                        "ProximaNovaBold",
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
                                                 ),
                                                 WidgetSpan(
                                                   child: Padding(
@@ -206,7 +214,7 @@ class _ActivityNotificatonState extends ActivityStateBase<ActivityNotificaton> {
                                             },
                                             child:
                                                 AlMajlisTextViewBold("SEE ALL"),
-                                          )
+                                          ),
                                         ],
                                       ),
                                     );
@@ -308,7 +316,7 @@ class _ActivityNotificatonState extends ActivityStateBase<ActivityNotificaton> {
           ),
           onWillPop: () {
             if (isMenuOpen) closeMenu();
-            // return;
+            return;
           },
         ), //
       ),
