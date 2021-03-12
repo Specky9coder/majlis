@@ -1,6 +1,5 @@
 import 'package:almajlis/activities/ActivityBase.dart';
 import 'package:almajlis/activities/ActivityNotification.dart';
-import 'package:almajlis/activities/ActivityProfile.dart';
 import 'package:almajlis/activities/ActivitySplashScreen.dart';
 import 'package:almajlis/core/core.dart';
 import 'package:almajlis/ios_in_app_purchase/consumable_store.dart';
